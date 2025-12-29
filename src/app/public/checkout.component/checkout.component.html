@@ -1,0 +1,147 @@
+<section class="checkout-page">
+
+  <header class="checkout-header">
+    <h1>Secure Checkout</h1>
+    <p>Review your order and complete payment</p>
+  </header>
+
+  <div class="checkout-layout">
+
+    <!-- LEFT -->
+    <div class="checkout-left">
+
+      <!-- USER -->
+      <div class="card">
+        <h3>Account</h3>
+        <p>
+          <strong>{{ user?.name }}</strong><br />
+          {{ user?.email }}
+        </p>
+      </div>
+
+      <!-- COUPON -->
+      <div class="card">
+        <h3>Coupon</h3>
+
+        <div class="coupon-row">
+          <input
+            [(ngModel)]="couponCode"
+            placeholder="Enter coupon"
+          />
+          <button
+            (click)="applyCoupon()"
+            [disabled]="couponApplied"
+          >
+            Apply
+          </button>
+        </div>
+
+        <p class="success" *ngIf="couponApplied">
+          Coupon applied 🎉
+        </p>
+
+        <p class="error" *ngIf="couponError">
+          Invalid coupon
+        </p>
+
+        <button
+          *ngIf="couponApplied"
+          class="remove"
+          (click)="removeCoupon()"
+        >
+          Remove Coupon
+        </button>
+      </div>
+
+      <!-- BILL PREVIEW -->
+      <div class="card">
+        <button class="preview-btn" (click)="previewBill()">
+          Preview Bill →
+        </button>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <aside class="checkout-summary">
+
+      <h3>Order Summary</h3>
+
+      <ul>
+        <li *ngFor="let item of items">
+          {{ item }}
+          <span>₹{{ itemPrice }}</span>
+        </li>
+      </ul>
+
+      <div class="line">
+        <span>Subtotal</span>
+        <span>₹{{ subtotal }}</span>
+      </div>
+
+      <div class="line discount" *ngIf="discount">
+        <span>Discount</span>
+        <span>-₹{{ discount }}</span>
+      </div>
+
+      <div class="total">
+        Total: ₹{{ total }}
+      </div>
+
+      <button
+        class="pay-btn"
+        (click)="pay()"
+        [disabled]="paymentState === 'processing'"
+      >
+        {{ paymentState === 'processing'
+          ? 'Processing…'
+          : 'Pay Securely →' }}
+      </button>
+
+      <small class="trust">
+        🔒 Razorpay Secure Checkout
+      </small>
+
+    </aside>
+
+  </div>
+
+  <!-- ================= BILL MODAL ================= -->
+  <div class="modal" *ngIf="showBillPreview">
+    <div class="modal-box">
+      <h3>Bill Preview</h3>
+      <p>Total Amount: ₹{{ total }}</p>
+      <button (click)="pay()">Confirm & Pay</button>
+      <button
+        class="secondary"
+        (click)="showBillPreview = false"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= INVOICE ================= -->
+  <div class="invoice" *ngIf="showInvoice">
+    <h2>JavaArray Invoice</h2>
+
+    <p>Invoice ID: {{ invoice?.invoiceId }}</p>
+    <p>Date: {{ invoice?.date }}</p>
+    <p>Name: {{ invoice?.name }}</p>
+    <p>Email: {{ invoice?.email }}</p>
+
+    <ul>
+      <li *ngFor="let item of invoice?.items">
+        {{ item }} - ₹{{ invoice?.itemPrice }}
+      </li>
+    </ul>
+
+    <h3>Total Paid: ₹{{ invoice?.amount }}</h3>
+
+    <button (click)="downloadInvoice()">Download Invoice</button>
+    <button routerLink="/dashboard/home">
+      Go to Dashboard
+    </button>
+  </div>
+
+</section>

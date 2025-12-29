@@ -1,0 +1,22 @@
+<div class="mini-editor-wrapper">
+
+  <!-- HEADER -->
+  <div class="mini-header">
+    <button (click)="run()" [disabled]="isRunning">▶ Run</button>
+    <button (click)="toggleTheme()">🌙 Theme</button>
+    <button (click)="showLogs = !showLogs">📜 Logs</button>
+  </div>
+
+  <!-- EDITOR -->
+  <div id="mini-editor" class="editor"></div>
+
+  <!-- LOGS -->
+  <div class="logs" *ngIf="showLogs">
+    <div class="log-header">
+      Execution Logs
+      <span *ngIf="executionTime">⚡ {{ executionTime }} ms</span>
+    </div>
+    <pre>{{ logs.join('\n') }}</pre>
+  </div>
+
+</div>

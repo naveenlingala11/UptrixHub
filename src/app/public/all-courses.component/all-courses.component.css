@@ -1,0 +1,340 @@
+/* ============================
+   PAGE
+============================ */
+.courses-page {
+  padding: 60px 40px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, #ffffff, #eef2ff);
+}
+
+/* HEADER FLEX */
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* FILTER */
+.price-filter {
+  position: relative;
+}
+
+.filter-btn {
+  background: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .12);
+}
+
+.filter-btn i {
+  font-size: 16px;
+  color: #2563eb;
+}
+
+.filter-dropdown {
+  position: absolute;
+  right: 0;
+  top: 46px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.filter-dropdown div {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.filter-dropdown div:hover {
+  background: #e0ecff;
+}
+
+/* ============================
+   HEADER
+============================ */
+.courses-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.courses-header h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.courses-header p {
+  font-size: 16px;
+  color: #475569;
+}
+
+/* ============================
+   GRID
+============================ */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+/* ============================
+   COURSE CARD
+============================ */
+.course-card {
+  background: white;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 18px 45px rgba(37, 99, 235, .25);
+  transition: all .35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.course-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+      transparent,
+      rgba(124, 58, 237, .15),
+      transparent);
+  opacity: 0;
+  transition: .35s;
+}
+
+.course-card:hover::before {
+  opacity: 1;
+}
+
+.course-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 28px 70px rgba(124, 58, 237, .35);
+}
+
+/* ============================
+   CARD TOP
+============================ */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.category {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #e0ecff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.level {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.level-beginner {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.level-intermediate {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.level-advanced {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* ============================
+   CONTENT
+============================ */
+.course-card h3 {
+  font-size: 18px;
+  margin: 12px 0 8px;
+}
+
+.course-card p {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+/* ============================
+   FOOTER
+============================ */
+.card-footer {
+  margin-top: 18px;
+}
+
+.card-footer button {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  color: white;
+  transition: .25s;
+}
+
+.card-footer button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(124, 58, 237, .45);
+}
+
+/* ============================
+   LOCKED
+============================ */
+.course-card.locked {
+  opacity: .75;
+}
+
+.locked-btn {
+  background: #334155 !important;
+  cursor: not-allowed;
+}
+
+/* SEARCH */
+.course-search {
+  max-width: 420px;
+  margin: 0 auto 25px;
+}
+
+.course-search input {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 18px;
+  border: 1px solid #c7d2fe;
+}
+
+/* CATEGORY TABS */
+.category-tabs {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 35px;
+  flex-wrap: wrap;
+}
+
+.category-tabs button {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  background: #e0ecff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.category-tabs button.active {
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  color: white;
+}
+
+/* PROGRESS */
+.progress {
+  margin-top: 10px;
+}
+
+.progress-bar {
+  height: 6px;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  border-radius: 10px;
+}
+
+.progress span {
+  font-size: 12px;
+  color: #475569;
+}
+
+/* PRICE */
+.price-tag {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.price-tag.pro {
+  color: #dc2626;
+}
+
+/* SKELETON */
+.skeleton {
+  height: 220px;
+  background: linear-gradient(90deg,
+      #e5e7eb 25%,
+      #f1f5f9 37%,
+      #e5e7eb 63%);
+  background-size: 400% 100%;
+  animation: skeleton 1.4s ease infinite;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 100% 0
+  }
+
+  100% {
+    background-position: 0 0
+  }
+}
+
+.pro-label {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+}
+
+/* 🔥 FIX CLICK ISSUE */
+.course-card.locked {
+  pointer-events: auto;
+}
+
+.course-card .card-footer button {
+  position: relative;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.course-card::before {
+  pointer-events: none;
+}
+
+.lock-overlay {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(0, 0, 0, .75);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 12px;
+  z-index: 6;
+}
+
+.empty-state {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #64748b;
+  margin-top: 40px;
+}

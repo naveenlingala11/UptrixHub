@@ -1,0 +1,31 @@
+<div class="verify-wrapper">
+    <div class="verify-box shadow">
+
+        <!-- LOADING -->
+        <p *ngIf="loading">Verifying your email...</p>
+
+        <!-- SUCCESS -->
+        <div *ngIf="success">
+            <h3 class="text-success">✅ Email Verified</h3>
+            <p>Your account is now active.</p>
+            <p>Redirecting to dashboard...</p>
+        </div>
+
+        <!-- FORM -->
+        <form *ngIf="!success" [formGroup]="form" (ngSubmit)="submit()">
+
+            <input type="email" formControlName="email" readonly />
+
+            <input type="text" placeholder="OTP" formControlName="otp">
+
+            <button type="submit" [disabled]="loading">
+                Verify
+            </button>
+
+            <p class="text-danger" *ngIf="error">
+                ❌ {{ error }}
+            </p>
+        </form>
+
+    </div>
+</div>

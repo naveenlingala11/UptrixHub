@@ -1,0 +1,139 @@
+/* WRAPPER */
+.auth-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #eef2ff, #f8fafc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* MAIN BOX */
+.auth-box {
+  width: 900px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  animation: fadeUp 0.6s ease;
+}
+
+/* LEFT PANEL */
+.auth-left {
+  width: 45%;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff;
+  padding: 50px;
+  align-items: center;
+}
+
+.auth-left p {
+  opacity: 0.9;
+}
+
+.auth-features {
+  list-style: none;
+  padding: 0;
+}
+
+.auth-features li {
+  margin-bottom: 12px;
+}
+
+.auth-features i {
+  margin-right: 8px;
+  color: #bbf7d0;
+}
+
+/* RIGHT PANEL */
+.auth-right {
+  width: 55%;
+  padding: 50px;
+}
+
+/* INPUT ICONS */
+.form-group {
+  position: relative;
+}
+
+.form-group i {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.form-group input {
+  padding-left: 42px;
+  height: 48px;
+}
+
+/* FIX: BUTTON VISIBILITY ISSUE */
+
+/* Primary button - always visible */
+.btn-primary {
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  opacity: 1;
+}
+
+/* Outline primary - make it visible normally */
+.btn-outline-primary {
+  color: #2563eb;
+  border: 2px solid #2563eb;
+  background-color: transparent;
+  font-weight: 500;
+  opacity: 1;
+}
+
+/* Hover effect (optional but subtle) */
+.btn-outline-primary:hover {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+/* Light button (CTA section) */
+.btn-light {
+  color: #2563eb;
+  font-weight: 600;
+  opacity: 1;
+}
+
+/* Remove unwanted opacity on hover/focus */
+.btn:hover,
+.btn:focus {
+  opacity: 1;
+}
+
+/* ANIMATION */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .auth-box {
+    width: 95%;
+  }
+  .auth-right {
+    width: 100%;
+    padding: 40px 25px;
+  }
+}
+.social-login img {
+  vertical-align: middle;
+}
+
+.social-login .btn {
+  height: 48px;
+  font-weight: 500;
+}

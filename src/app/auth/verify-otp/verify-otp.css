@@ -1,0 +1,61 @@
+/* OTP BOX */
+.otp-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.otp-box input {
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+}
+
+.otp-box input:focus {
+  border-color: #2563eb;
+}
+
+/* SOCIAL */
+.social-login a {
+  font-weight: 500;
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #2563eb;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  animation: fadeInOut 2.5s ease;
+  z-index: 9999;
+}
+
+/* AUTH ANIMATION */
+.auth-box {
+  animation: slideFade 0.6s ease;
+}
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(10px); }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}

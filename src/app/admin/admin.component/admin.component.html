@@ -1,0 +1,336 @@
+<div class="admin-wrapper">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="admin-sidebar">
+        <h3 class="brand">JavaArray Admin</h3>
+
+        <button class="menu-item" [class.active]="activeTab === 'users'" (click)="activeTab = 'users'">
+            👥 User Management
+        </button>
+
+        <button class="menu-item" [class.active]="activeTab === 'courses'" (click)="activeTab = 'courses'">
+            📚 Course Creator
+        </button>
+
+        <a href="/" class="menu-item back">
+            ⬅ Back to Site
+        </a>
+    </aside>
+
+    <!-- ================= CONTENT ================= -->
+    <main class="admin-content">
+
+        <!-- ===================================================== -->
+        <!-- =============== USERS DASHBOARD ONLY ================= -->
+        <!-- ===================================================== -->
+
+        <ng-container *ngIf="activeTab === 'users'">
+
+            <!-- ================= DASHBOARD CARDS ================= -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <h4>Total Users</h4>
+                    <p>{{ stats?.users || 0 }}</p>
+                    <small>Registered users</small>
+                </div>
+
+                <div class="stat-card pro">
+                    <h4>PRO Users</h4>
+                    <p>{{ stats?.proUsers || 0 }}</p>
+                    <small>Active subscriptions</small>
+                </div>
+
+                <div class="stat-card warn">
+                    <h4>Free Users</h4>
+                    <p>{{ (stats?.users || 0) - (stats?.proUsers || 0) }}</p>
+                    <small>No subscription</small>
+                </div>
+
+                <div class="stat-card info">
+                    <h4>System Status</h4>
+                    <p>LIVE</p>
+                    <small>WebSocket connected</small>
+                </div>
+            </section>
+
+            <!-- ================= CHARTS ================= -->
+            <section class="charts-grid">
+                <div class="chart-card">
+                    <h3>User Growth</h3>
+                    <canvas id="usersChart"></canvas>
+                </div>
+
+                <div class="chart-card revenue">
+                    <h3>Monthly Revenue</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </section>
+
+            <!-- ================= USERS TAB ================= -->
+            <section class="users-section">
+
+                <!-- HEADER -->
+                <div class="section-header">
+                    <div>
+                        <h2>User Management</h2>
+                        <p class="subtitle">
+                            Search, sort, manage subscriptions & access
+                        </p>
+                    </div>
+
+                    <div class="header-actions">
+                        <input type="text" class="search-input" placeholder="Search name / email"
+                            [(ngModel)]="searchQuery" (input)="searchUsers()" />
+
+                        <select class="sort-select" [(ngModel)]="sortOption" (change)="applySort()">
+                            <option value="">Sort</option>
+                            <option value="name">Name</option>
+                            <option value="email">Email</option>
+                            <option value="role">Role</option>
+                            <option value="subscription">Subscription</option>
+                        </select>
+
+                        <button class="btn outline" (click)="exportCSV()">
+                            📁 Export CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div *ngIf="loadingUsers" class="loader">
+                    Loading users...
+                </div>
+
+                <!-- USERS TABLE -->
+                <table *ngIf="!loadingUsers" class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>User</th>
+                            <th>Role</th>
+                            <th>Login</th>
+                            <th>Subscription</th>
+                            <th width="360">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let u of users; index as i">
+                            <td>{{ i + 1 }}</td>
+
+                            <td>
+                                <div class="user-info">
+                                    <strong>{{ u.name }}</strong>
+                                    <small>{{ u.email }}</small>
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="badge" [ngClass]="u.role === 'ADMIN' ? 'admin' : 'user'">
+                                    {{ u.role }}
+                                </span>
+                            </td>
+
+                            <!-- ENABLE / DISABLE LOGIN -->
+                            <td>
+                                <label class="switch">
+                                    <input type="checkbox" [checked]="u.enabled" [disabled]="u.role === 'ADMIN'"
+                                        (change)="toggleLogin(u.id)">
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+
+                            <!-- SUBSCRIPTION -->
+                            <td>
+                                <span *ngIf="u.subscriptionActive" class="badge pro" [class.expiring]="u.expiringSoon">
+                                    PRO
+                                    <small>till {{ u.subscriptionExpiry }}</small>
+                                    <span *ngIf="u.expiringSoon" class="alert">
+                                        ⚠ Expiring
+                                    </span>
+                                </span>
+
+                                <span *ngIf="!u.subscriptionActive" class="badge free">
+                                    FREE
+                                </span>
+                            </td>
+
+                            <!-- ACTIONS -->
+                            <td class="actions">
+                                <div class="action-group">
+                                    <button class="btn outline" (click)="setSubscription(u.id,7)">+7d</button>
+                                    <button class="btn outline" (click)="setSubscription(u.id,14)">+14d</button>
+                                    <button class="btn outline" (click)="setSubscription(u.id,41)">+41d</button>
+                                    <button class="btn warn" (click)="disableSubscription(u.id)">Disable</button>
+                                </div>
+
+                                <div class="action-group">
+                                    <button class="btn outline" (click)="openResetModal(u)">
+                                        Reset Password
+                                    </button>
+
+                                    <button *ngIf="u.role !== 'ADMIN'" class="btn danger" (click)="deleteUser(u.id)">
+                                        Delete User
+                                    </button>
+
+                                    <span *ngIf="u.role === 'ADMIN'" class="note">
+                                        Protected Account
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- PAGINATION -->
+                <div class="pagination">
+                    <button (click)="loadUsers(currentPage - 1)" [disabled]="currentPage === 0">
+                        ◀ Prev
+                    </button>
+
+                    <span>
+                        Page {{ currentPage + 1 }} of {{ totalPages }}
+                    </span>
+
+                    <button (click)="loadUsers(currentPage + 1)" [disabled]="currentPage + 1 >= totalPages">
+                        Next ▶
+                    </button>
+                </div>
+
+            </section>
+
+            <!-- ================= ADMIN LIVE DASHBOARD ================= -->
+            <div class="admin-dashboard">
+                <h2>Admin Live Dashboard</h2>
+                <canvas id="usersChart"></canvas>
+
+                <div class="toast" *ngIf="toast">
+                    {{ toast }}
+                </div>
+            </div>
+
+            <!-- 🔔 LIVE EVENT -->
+            <div class="toast live" *ngIf="liveEvent">
+                🔔 {{ liveEvent }}
+            </div>
+
+        </ng-container>
+
+        <!-- ===================================================== -->
+        <!-- ================= COURSE CREATOR ONLY ================ -->
+        <!-- ===================================================== -->
+
+        <section class="course-creator">
+
+            <!-- STEP BAR -->
+            <div class="steps">
+                <div [class.active]="currentStep==='UPLOAD'">Upload</div>
+                <div [class.active]="currentStep==='PREVIEW'">Preview</div>
+                <div [class.active]="currentStep==='PUBLISH'">Publish</div>
+            </div>
+
+            <!-- HEADER -->
+            <header class="header">
+                <div>
+                    <h2>Course Creator</h2>
+                    <p>Draft → Preview → Publish</p>
+                </div>
+
+                <span class="status" [class.live]="courseStatus==='PUBLISHED'">
+                    {{ courseStatus }}
+                </span>
+            </header>
+
+            <!-- UPLOAD -->
+            <div class="card upload">
+                <input type="file" accept=".json" (change)="onFileUpload($event)" />
+
+                <small *ngIf="uploadedFileName">📄 {{ uploadedFileName }}</small>
+
+                <ul class="errors" *ngIf="validationErrors.length">
+                    <li *ngFor="let e of validationErrors">⚠ {{ e }}</li>
+                </ul>
+
+                <button class="btn primary" (click)="submitDraft()">
+                    Save Draft
+                </button>
+
+                <span class="autosave">
+                    {{ autoSaveStatus==='SAVING' ? 'Saving…' :
+                    autoSaveStatus==='SAVED' ? '✓ Saved' : '' }}
+                </span>
+            </div>
+
+            <!-- PREVIEW -->
+            <div class="card preview" *ngIf="showPreview">
+                <button class="btn ghost" (click)="previewVersion(selectedVersion!)">
+                    👀 Preview Version
+                </button>
+
+                <div class="card preview" *ngIf="showPreview">
+                    <div class="preview-header">
+                        <h3>Previewing Version {{ selectedVersion }}</h3>
+                        <button (click)="showPreview=false">✖</button>
+                    </div>
+
+                    <app-course-player [courseData]="selectedVersionData">
+                    </app-course-player>
+                </div>
+
+            </div>
+
+            <!-- VERSION -->
+            <select [(ngModel)]="selectedVersion" class="version-select">
+                <option *ngFor="let v of versions" [value]="v.version">
+                    v{{ v.version }} • {{ v.createdAt | date:'short' }}
+                </option>
+            </select>
+
+            <button class="btn warn" [disabled]="courseStatus === 'PUBLISHED'" (click)="rollback(selectedVersion!)">
+                ↩ Rollback
+            </button>
+
+            <p class="lock-msg" *ngIf="courseStatus==='PUBLISHED'">
+                🔒 Unpublish course to enable rollback
+            </p>
+
+            <!-- ACTIONS -->
+            <div class="card actions" *ngIf="parsedJson">
+                <button class="btn success" [disabled]="courseStatus==='PUBLISHED'" (click)="publishCourse()">
+                    Publish
+                </button>
+
+                <button class="btn warn" [disabled]="courseStatus!=='PUBLISHED'" (click)="unpublishCourse()">
+                    Move to Draft
+                </button>
+            </div>
+
+            <div class="diff-panel" *ngIf="diffResult.length">
+                <h4>Changes in this version</h4>
+
+                <div *ngFor="let d of diffResult" class="diff-item" [class.added]="d.type==='ADDED'"
+                    [class.removed]="d.type==='REMOVED'" [class.modified]="d.type==='MODIFIED'">
+
+                    {{ d.type }} • {{ d.title }}
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= RESET PASSWORD MODAL ================= -->
+        <div class="modal-backdrop" *ngIf="resetUser">
+            <div class="modal">
+                <h3>Reset Password</h3>
+                <p>
+                    Reset password for
+                    <strong>{{ resetUser.email }}</strong>?
+                </p>
+
+                <div class="modal-actions">
+                    <button class="btn danger" (click)="confirmReset()">Reset</button>
+                    <button class="btn outline" (click)="resetUser = null">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>

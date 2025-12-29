@@ -1,0 +1,40 @@
+<div class="public-root" *ngIf="!loading && profile; else loadingTpl">
+
+  <section class="public-hero">
+    <img *ngIf="profile.avatar"
+         [src]="profile.avatar"
+         class="avatar">
+
+    <h1>{{ profile.name }}</h1>
+    <p class="bio">
+      {{ profile.bio || 'Developer learning and building on JavaArray.' }}
+    </p>
+  </section>
+
+  <section class="public-stats">
+    <div>
+      <strong>{{ profile.skills?.length || 0 }}</strong>
+      <span>Skills</span>
+    </div>
+    <div>
+      <strong>{{ profile.badges?.length || 0 }}</strong>
+      <span>Achievements</span>
+    </div>
+  </section>
+
+  <section class="card" *ngIf="profile.skills?.length">
+    <h2>Skills</h2>
+
+    <div class="skill" *ngFor="let s of profile.skills">
+      <span>{{ s.name }}</span>
+      <div class="bar">
+        <div class="fill" [style.width.%]="s.proficiency"></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<ng-template #loadingTpl>
+  <p class="loading">Loading public profile…</p>
+</ng-template>

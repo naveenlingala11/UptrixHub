@@ -1,0 +1,30 @@
+<section class="invoice-page">
+
+  <h1>🎉 Payment Successful</h1>
+  <p>Your purchase is complete. Download your invoice below.</p>
+
+  <div class="invoice-card">
+
+    <h2>Invoice</h2>
+
+    <p><strong>Name:</strong> {{ invoice?.name }}</p>
+    <p><strong>Email:</strong> {{ invoice?.email }}</p>
+    <p><strong>Invoice No:</strong> {{ invoice?.invoiceId }}</p>
+
+    <ul>
+      <li *ngFor="let item of invoice?.items">
+        {{ item }} <span>₹{{ invoice?.itemPrice }}</span>
+      </li>
+    </ul>
+
+    <div class="invoice-total">
+      Total Paid: ₹{{ invoice?.amount }}
+    </div>
+
+    <button (click)="downloadInvoice()">
+      Download Invoice →
+    </button>
+
+  </div>
+
+</section>

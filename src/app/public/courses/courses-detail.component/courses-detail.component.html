@@ -1,0 +1,50 @@
+<section class="course-detail" *ngIf="!loading && course">
+
+  <header class="course-header">
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.description }}</p>
+
+    <div class="start-course">
+      <button
+        class="start-btn"
+        [routerLink]="['/courses', course.id, 'learn']">
+        ▶ Start Learning
+      </button>
+    </div>
+  </header>
+
+  <!-- PRO CTA -->
+  <div class="pro-cta" *ngIf="course.priceType === 'PRO'">
+    <h3>🚀 Unlock Full Course</h3>
+    <p>Access all premium reading materials & practice editor</p>
+
+    <div class="cta-actions">
+      <button (click)="addToCart()">Add to Cart</button>
+      <button (click)="buyNow()">Buy PRO</button>
+    </div>
+  </div>
+
+  <!-- SYLLABUS (OPTIONAL – ONLY IF PRESENT) -->
+  <div class="syllabus" *ngIf="course.syllabus">
+
+    <div class="section" *ngFor="let sec of course.syllabus">
+      <h3>{{ sec.title }}</h3>
+
+      <div
+        class="lesson"
+        *ngFor="let lesson of sec.lessons"
+        [class.locked]="isLocked(lesson)">
+
+        <span class="lesson-title">{{ lesson.title }}</span>
+        <span *ngIf="isLocked(lesson)">🔒</span>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- LOADER -->
+<div *ngIf="loading" class="loading">
+  Loading course...
+</div>

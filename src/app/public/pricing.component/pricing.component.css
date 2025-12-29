@@ -1,0 +1,290 @@
+/* ================= ROOT ================= */
+:root {
+  --blue: #2563eb;
+  --purple: #7c3aed;
+  --violet: #9333ea;
+  --gradient: linear-gradient(135deg, #2563eb, #7c3aed, #9333ea);
+
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+
+  --radius: 18px;
+  --shadow-soft: 0 10px 30px rgba(0,0,0,.08);
+  --shadow-strong: 0 30px 80px rgba(124,58,237,.35);
+}
+
+/* ================= PAGE ================= */
+.pricing-page {
+  background: var(--bg);
+  padding: 110px 0;
+  min-height: 100vh;
+}
+
+/* ================= HERO ================= */
+.pricing-hero {
+  text-align: center;
+  max-width: 900px;
+  margin: auto;
+  margin-bottom: 90px;
+}
+
+.pricing-hero h1 {
+  font-size: 52px;
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--text-dark);
+}
+
+.pricing-hero p {
+  margin-top: 14px;
+  font-size: 18px;
+  color: var(--text-muted);
+}
+
+/* ================= LAYOUT ================= */
+.pricing-layout {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+/* ================= LEFT ================= */
+.pricing-left h2 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 22px;
+  color: var(--text-dark);
+}
+
+/* ================= COURSE LIST ================= */
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.course-item {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow-soft);
+  transition: all .35s ease;
+}
+
+.course-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-strong);
+}
+
+.course-item.selected {
+  border-color: var(--purple);
+  background: linear-gradient(0deg,#f5f3ff,#fff);
+}
+
+.course-item h4 {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.course-item small {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.course-item .price {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--purple);
+}
+
+/* ================= BUNDLES ================= */
+.mt {
+  margin-top: 80px;
+}
+
+.bundle-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 26px;
+}
+
+.bundle-card {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 34px 26px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  transition: all .4s ease;
+}
+
+.bundle-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-strong);
+}
+
+.bundle-card.highlight {
+  background: var(--gradient);
+  color: #fff;
+  transform: scale(1.06);
+}
+
+.bundle-card.highlight * {
+  color: #fff;
+}
+
+.bundle-card h3 {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.bundle-price {
+  font-size: 34px;
+  font-weight: 900;
+  margin: 16px 0;
+}
+
+.bundle-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.bundle-card li {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.bundle-card button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 900;
+  font-size: 15px;
+  cursor: pointer;
+  background: #0f172a;
+  color: #fff;
+}
+
+.bundle-card.highlight button {
+  background: #fff;
+  color: #0f172a;
+}
+
+/* ================= SUMMARY ================= */
+.pricing-summary {
+  position: sticky;
+  top: 120px;
+  background: var(--card);
+  padding: 34px;
+  border-radius: 26px;
+  box-shadow: var(--shadow-strong);
+}
+
+.pricing-summary h3 {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 18px;
+}
+
+.pricing-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pricing-summary li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.pricing-summary .empty {
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 14px 0;
+}
+
+/* ================= TOTAL ================= */
+.total {
+  font-size: 26px;
+  font-weight: 900;
+  margin: 24px 0;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 20px;
+}
+
+/* ================= BUTTON ================= */
+.proceed {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  border: none;
+  background: var(--gradient);
+  color: #fff;
+  font-weight: 900;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: var(--shadow-strong);
+  transition: transform .3s ease;
+}
+
+.proceed:hover {
+  transform: translateY(-3px);
+}
+
+.proceed:disabled {
+  background: #c7c7c7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ================= TRUST ================= */
+.pricing-summary .note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 16px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1100px) {
+  .bundle-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .pricing-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-summary {
+    position: relative;
+    top: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .bundle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-hero h1 {
+    font-size: 38px;
+  }
+}

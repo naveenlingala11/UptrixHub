@@ -1,0 +1,17 @@
+<div class="cookie-banner" *ngIf="visible">
+  <img src="assets/logo/uptrixhub-logo.svg" />
+
+  <div>
+    <h4>Your Privacy Matters</h4>
+    <p>
+      Uptrix Hub uses cookies to comply with the Digital Personal Data Protection Act, 2023,
+      improve user experience, and ensure platform security.
+    </p>
+    <a routerLink="/legal/cookies">Learn more</a>
+  </div>
+
+  <div class="actions">
+    <button class="outline" (click)="reject()">Reject</button>
+    <button class="primary" (click)="accept()">Accept</button>
+  </div>
+</div>

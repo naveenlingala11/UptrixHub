@@ -1,0 +1,359 @@
+<!-- ================= PROFILE ROOT ================= -->
+<div class="profile-root" *ngIf="!loading && profile" @fadeUp>
+
+  <!-- =====================================================
+       HERO / IDENTITY
+  ====================================================== -->
+  <section class="identity-card glass">
+
+    <div class="identity-left" (dragover)="$event.preventDefault()" (drop)="onAvatarDrop($event)">
+
+      <img *ngIf="profile.avatar" [src]="profile.avatar" referrerpolicy="no-referrer">
+
+      <div *ngIf="!profile.avatar" class="avatar-fallback">
+        {{ profile.name?.charAt(0) }}
+      </div>
+
+      <span class="edit-avatar">Change Avatar</span>
+    </div>
+
+    <div class="identity-right">
+      <h1>{{ profile.name }}</h1>
+      <p class="email">{{ profile.email }}</p>
+      <p>{{ profile.bio || 'Developer profile on JavaArray' }}</p>
+      <small>javaarray.in/u/{{ profile.id }}</small>
+
+      <div class="identity-tags">
+        <span class="tag primary">{{ profile.subscription }}</span>
+        <span class="tag">{{ completion }}% Profile Strength</span>
+        <span class="tag">{{ profile.analytics?.views || 0 }} Views</span>
+        <span class="tag trust">Trust Score: 82%</span>
+      </div>
+
+      <div class="identity-actions">
+        <a class="outline-btn" [routerLink]="['/u', profile.id]">
+          🌍 View Public Profile
+        </a>
+
+        <button class="ghost-btn">
+          🔗 Share Profile
+        </button>
+
+        <button class="ghost-btn">
+          📄 Download Resume
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       PROFILE HEALTH
+  ====================================================== -->
+  <section class="health-card">
+
+    <div class="health-header">
+      <h3>Profile Health</h3>
+      <strong>{{ completion }}%</strong>
+    </div>
+
+    <div class="health-bar">
+      <div class="fill" [style.width.%]="completion"></div>
+    </div>
+
+    <ul class="health-tips">
+      <li [class.done]="profile.avatar">Profile photo added</li>
+      <li [class.done]="profile.bio">Bio completed</li>
+      <li [class.done]="profile.skills?.length">Skills added</li>
+      <li [class.done]="profile.activity?.length">Recent activity present</li>
+      <li>Endorsements received</li>
+    </ul>
+
+  </section>
+
+  <!-- =====================================================
+       LEARNING INTELLIGENCE
+  ====================================================== -->
+  <section class="card wide intelligence">
+
+    <h3>Learning Intelligence</h3>
+    <p class="card-desc">
+      Insight into your current growth trajectory and learning consistency.
+    </p>
+
+    <div class="intel-grid">
+      <div class="intel-box">
+        <h4>Current Focus</h4>
+        <p>Advanced Java, Spring Boot, System Design</p>
+      </div>
+
+      <div class="intel-box">
+        <h4>Weekly Goal</h4>
+        <p>⏱ 12 hours learning target</p>
+      </div>
+
+      <div class="intel-box">
+        <h4>Consistency</h4>
+        <p>🔥 6 week learning streak</p>
+      </div>
+
+      <div class="intel-box highlight">
+        <h4>Growth Signal</h4>
+        <p>📈 Skill velocity increasing</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       MAIN PROFILE FORM
+  ====================================================== -->
+  <form [formGroup]="profileForm">
+
+    <div class="content-grid">
+
+      <!-- ================= ABOUT ================= -->
+      <section class="card">
+        <h3>About You</h3>
+
+        <p class="card-desc">
+          Visible on your public profile and SEO previews.
+        </p>
+
+        <textarea rows="6" formControlName="bio" placeholder="Who you are, what you build, what you’re learning…">
+        </textarea>
+
+        <button type="button" class="primary-btn" (click)="saveProfile()">
+          Save Bio
+        </button>
+      </section>
+
+      <!-- ================= PERSONAL DETAILS ================= -->
+      <section class="card">
+        <h3>Personal Details</h3>
+
+        <label>Full Name</label>
+        <input formControlName="name">
+
+        <label>Email</label>
+        <input formControlName="email">
+
+        <label>Mobile</label>
+        <input formControlName="mobile">
+
+        <button type="button" class="secondary-btn" (click)="saveProfile()">
+          Save Details
+        </button>
+      </section>
+
+      <!-- ================= SKILLS ================= -->
+      <section class="card wide">
+        <h3>Skills & Proficiency</h3>
+
+        <p class="card-desc">
+          Endorsed skills increase credibility and ranking.
+        </p>
+
+        <div class="skill-row" *ngFor="let s of profile.skills">
+
+          <span class="skill-name">{{ s.name }}</span>
+
+          <div class="bar">
+            <div class="fill" [style.width.%]="s.proficiency"></div>
+          </div>
+
+          <span class="percent">{{ s.proficiency }}%</span>
+        </div>
+
+        <div class="add-skill" [formGroup]="skillForm">
+
+          <input formControlName="name" placeholder="Skill name">
+
+          <input type="number" formControlName="proficiency">
+
+          <button type="button" (click)="addSkill()">
+            Add Skill
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </form>
+
+  <!-- =====================================================
+       ACHIEVEMENTS
+  ====================================================== -->
+  <section class="card wide" *ngIf="profile.badges?.length">
+
+    <h3>Achievements & Badges</h3>
+
+    <div class="achievement-grid">
+      <div class="achievement" *ngFor="let b of profile.badges">
+        <span class="icon">{{ b.icon }}</span>
+        <span>{{ b.name }}</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       ACTIVITY FEED
+  ====================================================== -->
+  <section class="card wide" *ngIf="profile.activity?.length">
+
+    <h3>Recent Activity</h3>
+
+    <ul class="activity-list">
+      <li *ngFor="let a of profile.activity">
+        <span class="dot"></span>
+        {{ a.message }}
+      </li>
+    </ul>
+
+  </section>
+
+  <!-- =====================================================
+       ANALYTICS
+  ====================================================== -->
+  <section class="card wide analytics">
+
+    <h3>Profile Analytics</h3>
+    <p class="card-desc">
+      How users interact with your profile.
+    </p>
+
+    <div class="analytics-grid">
+      <div class="metric">
+        <h4>Total Views</h4>
+        <strong>{{ profile.analytics?.views || 0 }}</strong>
+        <span>Last 30 days</span>
+      </div>
+
+      <div class="metric">
+        <h4>Skill Clicks</h4>
+        <strong>148</strong>
+        <span>Interest generated</span>
+      </div>
+
+      <div class="metric">
+        <h4>Endorsements</h4>
+        <strong>{{ profile.skills?.length * 2 }}</strong>
+        <span>Community trust</span>
+      </div>
+
+      <div class="metric highlight">
+        <h4>Profile Rank</h4>
+        <strong>#12%</strong>
+        <span>Among learners</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       SKILL ENDORSEMENTS
+  ====================================================== -->
+  <section class="card wide">
+
+    <h3>Skill Endorsements</h3>
+
+    <div class="endorsement-list">
+      <div class="endorsement" *ngFor="let s of profile.skills">
+
+        <div class="endorsement-left">
+          <strong>{{ s.name }}</strong>
+          <span>{{ s.proficiency }}%</span>
+        </div>
+
+        <button class="endorse-btn" (click)="endorseSkill(s.id)">
+          👍 Endorse
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       HEATMAP
+  ====================================================== -->
+  <section class="card wide">
+
+    <h3>Learning Activity</h3>
+
+    <div class="heatmap">
+      <div class="cell" *ngFor="let d of heatmap | keyvalue" [class.l1]="d.value > 0" [class.l2]="d.value > 3"
+        [class.l3]="d.value > 6" [title]="d.key + ' : ' + d.value">
+      </div>
+    </div>
+
+    <div class="heatmap-legend">
+      <span>Less</span>
+      <div class="legend l0"></div>
+      <div class="legend l1"></div>
+      <div class="legend l2"></div>
+      <div class="legend l3"></div>
+      <span>More</span>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       SETTINGS
+  ====================================================== -->
+  <section class="card wide settings">
+
+    <h3>Profile Visibility & Settings</h3>
+
+    <div class="settings-grid">
+
+      <div class="setting">
+        <h4>Public Profile</h4>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span></span>
+        </label>
+      </div>
+
+      <div class="setting">
+        <h4>Show Skills</h4>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span></span>
+        </label>
+      </div>
+
+      <div class="setting">
+        <h4>Show Activity</h4>
+        <label class="switch">
+          <input type="checkbox">
+          <span></span>
+        </label>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       FINAL CTA
+  ====================================================== -->
+  <section class="cta-card gradient strong">
+
+    <div>
+      <h2>Build a Public Developer Identity</h2>
+      <p>
+        Your JavaArray profile is your professional learning identity.
+      </p>
+    </div>
+
+    <a class="cta-btn big" [routerLink]="['/u', profile.id]">
+      Visit Public Profile →
+    </a>
+
+  </section>
+
+</div>
+
+<p class="loading" *ngIf="loading">
+  Loading profile…
+</p>

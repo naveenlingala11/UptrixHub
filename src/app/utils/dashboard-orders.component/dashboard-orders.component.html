@@ -1,0 +1,36 @@
+<section class="orders-page">
+
+  <h2>My Orders</h2>
+  <p>Your purchase history & invoices</p>
+
+  <table class="orders-table">
+
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let o of orders">
+        <td>#{{ o.id }}</td>
+        <td>{{ o.createdAt | date }}</td>
+        <td>₹{{ o.total }}</td>
+        <td>
+          <span class="status paid">{{ o.status }}</span>
+        </td>
+        <td>
+          <button (click)="viewInvoice(o.id)">
+            View
+          </button>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</section>

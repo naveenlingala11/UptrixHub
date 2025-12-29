@@ -1,0 +1,170 @@
+<!-- 🔍 SEARCH -->
+<input type="text" class="billing-search" placeholder="Search invoice by ID or amount..." [(ngModel)]="searchText"
+  (input)="applyFilter()" />
+
+<!-- ================= CURRENT INVOICE ================= -->
+<section class="invoice-page" *ngIf="invoice">
+
+  <article class="invoice-card" id="print-invoice">
+
+    <!-- ================= HEADER ================= -->
+    <header class="invoice-header">
+      <div class="brand">
+        <div class="logo">UH</div>
+        <div class="brand-text">
+          <h2>Uptrix Hub</h2>
+          <p>Learn • Practice • Crack Interviews</p>
+        </div>
+      </div>
+
+      <div class="invoice-meta">
+        <span class="badge paid">PAID</span>
+        <div>
+          <strong>Invoice</strong>
+          <p>{{ invoice.invoiceNumber || ('INV-' + invoice.id) }}</p>
+          <small>{{ invoice.generatedAt | date:'mediumDate' }}</small>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= BILL TO ================= -->
+    <section class="invoice-section">
+      <h4>Billed To</h4>
+      <p>User #{{ invoice.userId }}</p>
+    </section>
+
+    <!-- ================= ITEMS TABLE ================= -->
+    <section class="invoice-section">
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Course Purchase</td>
+            <td>1</td>
+            <td>₹{{ invoice.subtotal }}</td>
+            <td>₹{{ invoice.subtotal }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ================= TOTALS ================= -->
+    <section class="invoice-section totals">
+      <div class="row">
+        <span>Subtotal</span>
+        <span>₹{{ invoice.subtotal }}</span>
+      </div>
+
+      <div class="row">
+        <span>GST</span>
+        <span>₹{{ invoice.gst }}</span>
+      </div>
+
+      <div class="row total">
+        <span>Total</span>
+        <span>₹{{ invoice.total }}</span>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="invoice-footer">
+      <div class="signature-block">
+        <div class="signature">Uptrix Hub</div>
+        <small>Authorized Digital Signature</small>
+      </div>
+
+      <div class="qr-block">
+        <qrcode [qrdata]="invoiceUrl" [width]="110" [errorCorrectionLevel]="'M'">
+        </qrcode>
+        <small>Scan to verify invoice</small>
+      </div>
+    </footer>
+
+    <!-- ================= ACTIONS (NO PRINT) ================= -->
+    <div class="invoice-actions no-print">
+      <button class="btn-outline" (click)="previewPdf()">
+        👁 Preview
+      </button>
+
+      <button class="btn-primary" (click)="downloadPdf()">
+        ⬇ Download PDF
+      </button>
+
+      <button class="btn-outline" (click)="resendInvoice()">
+        ✉ Resend Email
+      </button>
+
+      <button class="btn-outline" (click)="goDashboard()">
+        ⬅ Dashboard
+      </button>
+    </div>
+
+  </article>
+</section>
+
+<!-- ================= BILLING HISTORY ================= -->
+<section class="billing-section">
+
+  <div class="billing-header">
+    <h3>Billing History</h3>
+    <button class="btn-outline" (click)="downloadAll()">
+      ⬇ Download All
+    </button>
+  </div>
+
+  <!-- ================= TABS ================= -->
+  <div class="billing-tabs">
+    <button *ngFor="let t of tabs" (click)="changeTab(t.key)" [class.active]="activeTab === t.key">
+      {{ t.label }}
+    </button>
+  </div>
+
+  <!-- ================= LIST ================= -->
+  <div class="billing-list" *ngIf="filteredBills.length; else empty">
+
+    <div class="bill-row" *ngFor="let bill of filteredBills" (click)="bill.orderId && openInvoice(bill.orderId)">
+
+      <div>
+        <strong>#{{ bill.id }}</strong>
+        <small>
+          {{ bill.generatedAt || bill.createdAt | date:'mediumDate' }}
+        </small>
+      </div>
+
+      <span class="amount">₹{{ bill.total }}</span>
+
+      <span class="status" [class.paid]="activeTab !== 'pending'" [class.pending]="activeTab === 'pending'">
+
+        {{ activeTab === 'pending' ? 'PENDING' : 'PAID' }}
+      </span>
+    </div>
+
+  </div>
+
+  <!-- ================= EMPTY STATE ================= -->
+  <ng-template #empty>
+    <p class="empty">No bills found</p>
+  </ng-template>
+
+  <!-- ================= PDF PREVIEW MODAL ================= -->
+  <div class="pdf-modal" *ngIf="previewUrl">
+    <div class="modal-backdrop" (click)="previewUrl=null"></div>
+
+    <div class="modal-body">
+      <iframe [src]="previewUrl" type="application/pdf" frameborder="0">
+      </iframe>
+
+      <button class="close-btn" (click)="closePreview()">✕</button>
+
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,64 @@
+<section class="roadmap-page">
+
+  <!-- HEADER -->
+  <div class="roadmap-header">
+    <h1>Developer Roadmaps</h1>
+    <p>
+      {{ isLoggedIn
+        ? 'Your personalized learning journey'
+        : 'Explore the learning path. Login to track progress.'
+      }}
+    </p>
+  </div>
+
+  <!-- TABS -->
+  <div class="roadmap-tabs">
+    <button [class.active]="activeRoadmap === 'java'" (click)="setRoadmap('java')">
+      Java
+    </button>
+    <button [class.active]="activeRoadmap === 'frontend'" (click)="setRoadmap('frontend')">
+      Frontend
+    </button>
+    <button [class.active]="activeRoadmap === 'devops'" (click)="setRoadmap('devops')">
+      DevOps
+    </button>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline" *ngIf="activeRoadmap === 'java'">
+
+    <div
+      class="timeline-item"
+      *ngFor="let step of javaRoadmap"
+      [ngClass]="{
+        completed: isCompleted(step.id),
+        current: isCurrent(step.id),
+        locked: step.locked && !isProUser
+      }">
+
+      <!-- STATUS ICON -->
+      <div class="status-icon">
+        <i *ngIf="isCompleted(step.id)" class="fas fa-check"></i>
+        <i *ngIf="isCurrent(step.id)" class="fas fa-play"></i>
+        <i *ngIf="step.locked && !isProUser" class="fas fa-lock"></i>
+      </div>
+
+      <!-- CARD -->
+      <a
+        class="timeline-card"
+        [routerLink]="step.locked && !isProUser ? null : '/syllabus/' + step.id">
+
+        <h4>{{ step.title }}</h4>
+        <p>{{ step.desc }}</p>
+
+        <span class="pro-badge" *ngIf="step.locked && !isProUser">
+          PRO
+        </span>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>

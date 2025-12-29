@@ -1,0 +1,54 @@
+<div class="dashboard-home">
+
+  <!-- STATS -->
+  <section class="stats-grid">
+    <div class="stat-card" *ngFor="let s of stats">
+      <i class="fas {{ s.icon }}"></i>
+      <h3>{{ s.value }}</h3>
+      <p>{{ s.label }}</p>
+    </div>
+  </section>
+
+  <!-- MAIN GRID -->
+  <section class="main-grid">
+
+    <!-- LEARNING PROGRESS -->
+    <div class="card">
+      <h4>Learning Progress</h4>
+
+      <div class="progress-item" *ngFor="let lp of learningProgress">
+        <div class="progress-header">
+          <span>{{ lp.topic }}</span>
+          <span>{{ lp.progress }}%</span>
+        </div>
+
+        <div class="progress-bar">
+          <div class="fill" [style.width.%]="lp.progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAVORITES -->
+    <div class="card">
+      <h4>Favorite Topics</h4>
+
+      <div class="chip" *ngFor="let f of favoriteTopics">
+        ⭐ {{ f }}
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="card timeline">
+      <h4>Recent Activity</h4>
+
+      <div class="timeline-item" *ngFor="let t of timeline">
+        <span class="dot"></span>
+        <div>
+          <small>{{ t.time }}</small>
+          <p>{{ t.text }}</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

@@ -1,0 +1,114 @@
+<div class="auth-wrapper">
+  <div class="auth-box shadow-lg">
+
+    <!-- LEFT BRAND -->
+    <div class="auth-left d-none d-md-flex">
+      <div>
+        <h2 class="fw-bold text-gradient">Join JavaArray</h2>
+        <p class="mt-3">
+          Your complete Java & Full Stack learning platform
+        </p>
+
+        <ul class="auth-features mt-4">
+          <li><i class="fas fa-star"></i> Structured Learning Paths</li>
+          <li><i class="fas fa-star"></i> Practice + Theory Combined</li>
+          <li><i class="fas fa-star"></i> Job-oriented Interview Prep</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="auth-right">
+      <h4 class="fw-bold mb-2">Create Your Account 🚀</h4>
+      <p class="text-muted mb-4">
+        Start learning and practicing today
+      </p>
+
+      <!-- SOCIAL REGISTER -->
+      <div class="social-login mb-4">
+
+        <a class="btn btn-outline-primary w-100 mb-2 d-flex align-items-center justify-content-center"
+          [href]="environment.oauthBaseUrl + '/oauth2/authorization/google'">
+          <img src="google.png" width="40" class="me-2">
+          Sign up with Google
+        </a>
+
+        <a class="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center"
+          [href]="environment.oauthBaseUrl + '/oauth2/authorization/github'">
+          <img src="github.gif" width="40" class="me-2">
+          Sign up with GitHub
+        </a>
+
+      </div>
+
+      <!-- OR DIVIDER -->
+      <div class="text-center text-muted mb-3">
+        — OR —
+      </div>
+
+      <!-- ✅ REACTIVE FORM START -->
+      <form [formGroup]="registerForm" (ngSubmit)="submit()">
+
+        <!-- NAME -->
+        <div class="form-group mb-3">
+          <i class="fas fa-user"></i>
+          <input type="text" class="form-control" placeholder="Full Name" formControlName="name" />
+          <small class="text-danger" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
+            Name is required
+          </small>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group mb-3">
+          <i class="fas fa-envelope"></i>
+          <input type="email" class="form-control" placeholder="Email address" formControlName="email" />
+          <small class="text-danger" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+            Valid email is required
+          </small>
+        </div>
+
+        <div class="form-group mb-3">
+          <i class="fas fa-phone"></i>
+          <input type="text" class="form-control" placeholder="Mobile Number" formControlName="mobile" />
+          <small class="text-danger" *ngIf="registerForm.get('mobile')?.touched && registerForm.get('mobile')?.invalid">
+            Enter valid mobile number
+          </small>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="form-group mb-4">
+          <i class="fas fa-lock"></i>
+          <input type="password" class="form-control" placeholder="Password" formControlName="password" />
+          <small class="text-danger"
+            *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+            Password must be at least 6 characters
+          </small>
+        </div>
+
+        <div class="form-group mb-4">
+          <i class="fas fa-lock"></i>
+          <input type="password" class="form-control" placeholder="Confirm Password"
+            formControlName="confirmPassword" />
+          <small class="text-danger"
+            *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched">
+            Passwords do not match
+          </small>
+        </div>
+
+        <!-- SUBMIT -->
+        <button class="btn btn-primary w-100 mb-3" type="submit" [disabled]="registerForm.invalid || loading">
+          {{ loading ? 'Creating Account...' : 'Create Account' }}
+        </button>
+
+        <div class="text-center">
+          <span class="text-muted">Already have an account?</span>
+          <a routerLink="/login" class="fw-semibold ms-1">Login</a>
+        </div>
+
+      </form>
+      <!-- ✅ REACTIVE FORM END -->
+
+    </div>
+
+  </div>
+</div>

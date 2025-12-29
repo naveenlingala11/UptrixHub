@@ -1,1 +1,166 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===========================
+   GLOBAL THEME VARIABLES
+=========================== */
+:root {
+  --blue: #2563eb;
+  --purple: #7c3aed;
+  --blue-soft: #e0ecff;
+  --purple-soft: #f3e8ff;
+  --gradient: linear-gradient(90deg, #2563eb, #7c3aed);
+
+  --text-dark: #0f172a;
+  --text-muted: #475569;
+
+  --radius: 14px;
+  --radius-xl: 22px;
+
+  --shadow-soft: 0 8px 24px rgba(37,99,235,.25);
+  --shadow-strong: 0 20px 50px rgba(124,58,237,.35);
+}
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+.container,
+.navbar,
+.footer,
+.catalog-panel,
+.catalog-grid {
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   RESET
+=========================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Lucida Sans', system-ui, sans-serif;
+  background: #f8fafc;
+  color: var(--text-dark);
+}
+
+/* ===========================
+   MONACO GLOBAL FIXES
+=========================== */
+
+/* IMPORTANT: Monaco glyph margin width */
+.monaco-editor .glyph-margin {
+  width: 22px !important;
+}
+
+/* 🔴 BREAKPOINT DOT (GLOBAL ONLY) */
+.monaco-editor .breakpoint-glyph {
+  width: 10px;
+  height: 10px;
+
+  margin-left: 6px;
+  margin-top: 6px;
+
+  background: #ef4444;
+  border-radius: 50%;
+
+  box-shadow: 0 0 0 2px rgba(239,68,68,.35);
+  animation: breakpoint-pulse 1.4s infinite;
+}
+
+/* pulse animation */
+@keyframes breakpoint-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(239,68,68,.6); }
+  70%  { box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+  100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
+
+/* Execution line highlight */
+.monaco-editor .exec-line {
+  background: rgba(250,204,21,.35) !important;
+  border-left: 4px solid #facc15;
+}
+
+.legal-page {
+  background: #f8fafc;
+  padding: 100px 0;
+}
+
+.legal-container {
+  max-width: 1000px;
+  margin: auto;
+  background: #fff;
+  padding: 80px;
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.08);
+}
+
+.legal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.legal-header img {
+  height: 42px;
+}
+
+.legal-title {
+  font-size: 38px;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.legal-meta {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 40px;
+}
+
+.legal-content h2 {
+  font-size: 26px;
+  margin-top: 50px;
+  margin-bottom: 16px;
+}
+
+.legal-content h3 {
+  font-size: 20px;
+  margin-top: 32px;
+}
+
+.legal-content p {
+  font-size: 15.5px;
+  line-height: 1.9;
+  margin-bottom: 16px;
+  color: #334155;
+}
+
+.legal-content ul {
+  padding-left: 22px;
+}
+
+.legal-content li {
+  margin-bottom: 10px;
+}
+
+.legal-box {
+  background: #eef2ff;
+  border-left: 6px solid #4f46e5;
+  padding: 20px;
+  margin: 30px 0;
+  border-radius: 10px;
+}
+
+.pdf-btn {
+  margin-top: 40px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg,#2563eb,#7c3aed);
+  color: #fff;
+}

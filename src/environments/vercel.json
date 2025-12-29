@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "framework": "angular",
+  "buildCommand": "npm run build -- --configuration production",
+  "outputDirectory": "dist/uptrixhub/browser",
+
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}

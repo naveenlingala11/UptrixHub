@@ -1,0 +1,250 @@
+/* ===============================
+   WRAPPER
+================================ */
+.auth-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #eef2ff, #f8fafc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===============================
+   MAIN AUTH BOX
+================================ */
+.auth-box {
+  width: 900px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  animation: fadeUp 0.6s ease;
+}
+
+/* ===============================
+   LEFT PANEL (ANIMATED)
+================================ */
+.auth-left {
+  width: 45%;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #e5e7eb;
+  padding: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.left-content {
+  max-width: 420px;
+  text-align: left;
+  z-index: 2;
+}
+
+/* ===============================
+   GRADIENT TEXT
+================================ */
+.text-gradient {
+  background: linear-gradient(135deg, #38bdf8, #a78bfa);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===============================
+   FLOATING BADGES
+================================ */
+.floating-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 32px 0;
+}
+
+.badge-card {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+/* Animations */
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+.float.delay-1 { animation-delay: 0.8s; }
+.float.delay-2 { animation-delay: 1.6s; }
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+.heartbeat {
+  animation: heartbeat 1.8s infinite;
+}
+
+/* ===============================
+   CODE CARD
+================================ */
+.code-card {
+  background: #020617;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  overflow: hidden;
+  margin-top: 30px;
+  animation: floatCode 6s ease-in-out infinite;
+}
+
+/* Code Header */
+.code-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dot.red { background: #ef4444; }
+.dot.yellow { background: #facc15; }
+.dot.green { background: #22c55e; }
+
+.file-name {
+  margin-left: auto;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* Code Body */
+.code-body {
+  padding: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  background: radial-gradient(circle at top left, #020617, #000);
+}
+
+/* Syntax Highlight */
+.keyword { color: #38bdf8; }
+.class { color: #a78bfa; }
+.method { color: #22c55e; }
+.type { color: #facc15; }
+.string { color: #f87171; }
+
+/* ===============================
+   RIGHT PANEL
+================================ */
+.auth-right {
+  width: 55%;
+  padding: 50px;
+}
+
+/* Inputs with icons */
+.form-group {
+  position: relative;
+}
+.form-group i {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+.form-group input {
+  padding-left: 42px;
+  height: 48px;
+}
+
+/* ===============================
+   BUTTON FIXES
+================================ */
+.btn-primary {
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  border: none;
+  font-weight: 600;
+}
+
+.btn-outline-primary {
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  font-weight: 500;
+}
+.btn-outline-primary:hover {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn:hover,
+.btn:focus {
+  opacity: 1;
+}
+
+/* ===============================
+   SOCIAL LOGIN
+================================ */
+.social-login img {
+  vertical-align: middle;
+}
+.social-login .btn {
+  height: 48px;
+  font-weight: 500;
+}
+
+/* ===============================
+   ANIMATIONS
+================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.85; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.12); }
+  40% { transform: scale(1); }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes floatCode {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+  100% { transform: translateY(0); }
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .auth-box {
+    width: 95%;
+    flex-direction: column;
+  }
+  .auth-left {
+    display: none;
+  }
+  .auth-right {
+    width: 100%;
+    padding: 40px 25px;
+  }
+}

@@ -1,0 +1,164 @@
+<div class="course-player" *ngIf="chapters && chapters.length">
+
+    <!-- ================= TOP NAV ================= -->
+    <nav class="player-navbar">
+        <button (click)="activeTab='notes'" [class.active]="activeTab==='notes'">
+            Notes
+        </button>
+        <button (click)="activeTab='tasks'" [class.active]="activeTab==='tasks'">
+            Tasks
+        </button>
+        <button (click)="activeTab='quizzes'" [class.active]="activeTab==='quizzes'">
+            Quizzes
+        </button>
+        <button (click)="activeTab='code'" [class.active]="activeTab==='code'">
+            Code
+        </button>
+    </nav>
+
+    <!-- ================= BODY ================= -->
+    <div class="player-body">
+
+        <!-- ========== SIDEBAR ========= -->
+        <aside class="sidebar">
+
+            <div class="chapter" *ngFor="let ch of chapters">
+
+                <div class="chapter-header" (click)="toggleChapter(ch)">
+                    <span>{{ ch.title }}</span>
+                    <span>{{ expandedChapterId === ch.chapterId ? '▾' : '▸' }}</span>
+                </div>
+
+                <div class="sections" *ngIf="expandedChapterId === ch.chapterId">
+                    <div class="section" *ngFor="let sec of ch.sections" (click)="selectSection(ch, sec)"
+                        [class.active]="sec === selectedSection">
+                        {{ sec.heading }}
+                    </div>
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- ========== MAIN CONTENT ========= -->
+        <main class="content" *ngIf="selectedSection">
+
+            <!-- ========== NOTES TAB ========= -->
+            <section *ngIf="activeTab === 'notes'">
+
+                <h2 class="section-title">
+                    {{ selectedSection.heading }}
+                </h2>
+
+                <!-- 🔥 CONTENT BLOCK RENDERER -->
+                <ng-container *ngFor="let block of selectedSection.content">
+
+                    <!-- PARAGRAPH -->
+                    <p *ngIf="block.type === 'paragraph'" class="para">
+                        {{ block.text }}
+                    </p>
+
+                    <!-- HIGHLIGHT -->
+                    <div *ngIf="block.type === 'highlight'" class="highlight-box">
+                        💡 {{ block.text }}
+                    </div>
+
+                    <!-- NOTE -->
+                    <div *ngIf="block.type === 'note'" class="note-box">
+                        📝 {{ block.text }}
+                    </div>
+
+                    <!-- BULLET LIST -->
+                    <ul *ngIf="block.type === 'list'" class="bullet-list">
+                        <li *ngFor="let item of block.items">
+                            {{ item }}
+                        </li>
+                    </ul>
+
+                    <!-- ORDERED LIST -->
+                    <ol *ngIf="block.type === 'ordered-list'" class="ordered-list">
+                        <li *ngFor="let item of block.items">
+                            {{ item }}
+                        </li>
+                    </ol>
+
+                    <!-- ✅ INLINE CODE BLOCK -->
+                    <div *ngIf="block.type === 'code'" class="inline-code-card">
+
+                        <div class="inline-code-header">
+                            <span>{{ block.title }}</span>
+                            <button (click)="openEditor(block)">Open in Editor</button>
+                        </div>
+
+                        <pre>
+                            <code class="language-{{ block.language }}">
+                            {{ block.code.join('\n') }}
+                            </code>
+                        </pre>
+                    </div>
+
+                    <!-- ✅ IMAGE BLOCK -->
+                    <div *ngIf="block.type === 'image'" class="image-card">
+
+                        <img [src]="block.src" alt="Course Image" loading="lazy" />
+
+                        <div class="image-caption">
+                            {{ block.caption }}
+                        </div>
+
+                    </div>
+
+                </ng-container>
+
+                <!-- ========== EXAMPLES ========= -->
+                <div class="example-card" *ngFor="let ex of selectedSection.examples">
+
+                    <div class="example-header">
+                        <span>{{ ex.title }}</span>
+                        <button (click)="openEditor(ex)">Code</button>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ========== TASKS TAB ========= -->
+            <section *ngIf="activeTab === 'tasks'">
+                <p>No tasks added yet.</p>
+            </section>
+
+            <!-- ========== QUIZZES TAB ========= -->
+            <section *ngIf="activeTab === 'quizzes'">
+                <p>No quizzes added yet.</p>
+            </section>
+
+            <!-- ========== CODE TAB ========= -->
+            <section *ngIf="activeTab === 'code'">
+                <p>Select an example to view code.</p>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- ================= PRACTICE EDITOR OVERLAY ================= -->
+<div class="practice-overlay" *ngIf="showEditor">
+
+  <div class="practice-container">
+
+    <button class="close-practice" (click)="closeEditor()">✖</button>
+
+    <app-mini-code-editor
+      [code]="editorCode"
+      language="java">
+    </app-mini-code-editor>
+
+  </div>
+
+</div>
+
+
+    <!-- SAFETY FALLBACK -->
+    <div *ngIf="!chapters || !chapters.length" style="padding:40px;text-align:center">
+        ⚠️ Course data not loaded
+    </div>

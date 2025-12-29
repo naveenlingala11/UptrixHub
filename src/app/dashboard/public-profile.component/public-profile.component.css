@@ -1,0 +1,50 @@
+.public-root {
+  min-height: 100vh;
+  background: #f9fafb;
+  padding: 60px 16px;
+  text-align: center;
+}
+
+.public-hero {
+  max-width: 700px;
+  margin: auto;
+}
+
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  box-shadow: 0 20px 50px rgba(0,0,0,.2);
+}
+
+.bio {
+  margin-top: 12px;
+  color: #475569;
+}
+
+.public-stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin: 40px 0;
+}
+
+.public-stats strong {
+  font-size: 28px;
+  color: #6366f1;
+}
+
+.skill {
+  margin-bottom: 14px;
+}
+
+.bar {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 999px;
+}
+
+.bar .fill {
+  height: 100%;
+  background: linear-gradient(90deg,#6366f1,#8b5cf6);
+}

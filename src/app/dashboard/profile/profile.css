@@ -1,0 +1,477 @@
+/* =====================================================
+   PROFILE ROOT
+===================================================== */
+.profile-root {
+  max-width: 1240px;
+  margin: auto;
+  padding: 48px 20px 120px;
+  animation: fadeUp .6s ease both;
+}
+
+/* =====================================================
+   GLASS MORPHISM
+===================================================== */
+.glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.85),
+    rgba(255,255,255,.6)
+  );
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.4);
+}
+
+/* =====================================================
+   HERO / IDENTITY CARD
+===================================================== */
+.identity-card {
+  display: flex;
+  gap: 36px;
+  padding: 36px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-strong);
+  position: relative;
+  overflow: hidden;
+}
+
+.identity-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      600px circle at top right,
+      rgba(124,58,237,.18),
+      transparent 60%
+    );
+  pointer-events: none;
+}
+
+/* =====================================================
+   AVATAR
+===================================================== */
+.identity-left {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 22px 50px rgba(0,0,0,.3);
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.identity-left:hover {
+  transform: scale(1.07);
+  box-shadow: 0 28px 60px rgba(0,0,0,.4);
+}
+
+.identity-left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-fallback {
+  width: 100%;
+  height: 100%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  font-weight: 900;
+  color: white;
+}
+
+.edit-avatar {
+  position: absolute;
+  inset: auto 0 0 0;
+  background: rgba(0,0,0,.65);
+  color: #fff;
+  font-size: 12px;
+  padding: 10px;
+  text-align: center;
+  letter-spacing: .4px;
+}
+
+/* =====================================================
+   IDENTITY TEXT
+===================================================== */
+.identity-right h1 {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: -0.6px;
+}
+
+.email {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* =====================================================
+   TAGS
+===================================================== */
+.identity-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.tag {
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.tag.primary {
+  background: var(--gradient);
+  color: white;
+}
+
+/* =====================================================
+   ACTION BUTTONS
+===================================================== */
+.identity-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.outline-btn {
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--blue);
+  background: white;
+  font-weight: 700;
+  transition: all .3s ease;
+}
+
+.outline-btn:hover {
+  background: var(--blue-soft);
+  transform: translateY(-2px);
+}
+
+.ghost-btn {
+  background: transparent;
+  border: none;
+  font-weight: 700;
+  color: var(--blue);
+  cursor: pointer;
+}
+
+/* =====================================================
+   PROFILE HEALTH
+===================================================== */
+.health-card {
+  margin-top: 30px;
+  padding: 26px;
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow-soft);
+}
+
+.health-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.health-bar {
+  height: 14px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.health-bar .fill {
+  height: 100%;
+  background: var(--gradient);
+  animation: grow 1.2s ease;
+}
+
+.health-tips {
+  list-style: none;
+  padding: 0;
+  margin-top: 16px;
+}
+
+.health-tips li {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.health-tips li.done {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+/* =====================================================
+   GRID LAYOUT
+===================================================== */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+/* =====================================================
+   CARD
+===================================================== */
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-strong);
+}
+
+.card.wide {
+  grid-column: span 2;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+/* =====================================================
+   INPUTS
+===================================================== */
+input,
+textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid #e5e7eb;
+  margin-bottom: 12px;
+  font-family: inherit;
+  transition: border .25s ease, box-shadow .25s ease;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.25);
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+.primary-btn {
+  background: var(--gradient);
+  color: white;
+  padding: 14px 22px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 800;
+  transition: transform .3s ease;
+}
+
+.primary-btn:hover {
+  transform: scale(1.05);
+}
+
+.secondary-btn {
+  background: var(--blue-soft);
+  color: var(--blue);
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 700;
+}
+
+/* =====================================================
+   SKILLS
+===================================================== */
+.skill-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 60px;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.bar {
+  height: 12px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar .fill {
+  height: 100%;
+  background: var(--gradient);
+}
+
+/* =====================================================
+   HEATMAP
+===================================================== */
+.heatmap {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.cell {
+  width: 100%;
+  padding-bottom: 100%;
+  background: #e5e7eb;
+  border-radius: 4px;
+  transition: transform .2s ease;
+}
+
+.cell.l1 { background: #c7d2fe; }
+.cell.l2 { background: #818cf8; }
+.cell.l3 { background: #4f46e5; }
+
+.cell:hover {
+  transform: scale(1.3);
+}
+
+/* =====================================================
+   ENDORSEMENTS
+===================================================== */
+.endorsement {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg,var(--blue-soft),var(--purple-soft));
+  margin-bottom: 12px;
+}
+
+.endorse-btn {
+  background: white;
+  border-radius: 999px;
+  border: none;
+  padding: 8px 16px;
+  font-weight: 700;
+}
+
+/* =====================================================
+   ACHIEVEMENTS
+===================================================== */
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(170px,1fr));
+  gap: 20px;
+}
+
+.achievement {
+  padding: 22px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg,var(--blue-soft),var(--purple-soft));
+  font-weight: 700;
+  text-align: center;
+  transition: transform .35s ease;
+}
+
+.achievement:hover {
+  transform: scale(1.08);
+}
+
+/* =====================================================
+   ACTIVITY
+===================================================== */
+.activity-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.activity-list .dot {
+  width: 10px;
+  height: 10px;
+  background: var(--blue);
+  border-radius: 50%;
+}
+
+/* =====================================================
+   CTA
+===================================================== */
+.cta-card {
+  margin-top: 50px;
+  padding: 42px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cta-card.gradient {
+  background: var(--gradient);
+  color: white;
+}
+
+.cta-btn.big {
+  background: white;
+  color: var(--blue);
+  padding: 18px 34px;
+  border-radius: 999px;
+  font-weight: 900;
+  transition: transform .3s ease;
+}
+
+.cta-btn.big:hover {
+  transform: scale(1.1);
+}
+
+/* =====================================================
+   LOADING
+===================================================== */
+.loading {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+@keyframes grow {
+  from { width: 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media (max-width: 900px) {
+  .identity-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card.wide {
+    grid-column: span 1;
+  }
+}

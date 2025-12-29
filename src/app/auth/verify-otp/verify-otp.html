@@ -1,0 +1,59 @@
+<div class="auth-wrapper">
+  <div class="auth-box shadow">
+
+    <h4 class="fw-bold mb-2">Verify OTP 🔐</h4>
+    <p class="text-muted mb-4">
+      Enter the 6-digit code sent to your email
+    </p>
+
+    <!-- OTP INPUT -->
+    <div class="otp-box" (paste)="handlePaste($event)">
+      <input *ngFor="let d of otp; let i = index" maxlength="1" [value]="otp[i]"
+        (input)="otp[i] = $event.target.value; moveNext($event, i)">
+    </div>
+
+    <!-- ERROR -->
+    <p class="text-danger mt-2" *ngIf="error">
+      ❌ {{ error }}
+    </p>
+
+    <!-- VERIFY BUTTON -->
+    <button class="btn btn-primary w-100 mt-3" [disabled]="loading" (click)="verify()">
+      {{ loading ? 'Verifying...' : 'Verify OTP' }}
+    </button>
+
+    <!-- RESEND -->
+    <div class="text-center mt-3">
+      <p *ngIf="!canResend">
+        Resend OTP in {{ counter }}s
+      </p>
+
+      <a *ngIf="canResend" (click)="resendOtp()" style="cursor:pointer">
+        Resend OTP
+      </a>
+    </div>
+
+    <!-- SOCIAL LOGIN -->
+    <div class="social-login mt-4">
+      <a class="btn btn-outline-primary w-100 mb-2" [href]="environment.oauthBaseUrl + '/oauth2/authorization/google'">
+        🔵 Continue with Google
+      </a>
+
+      <a class="btn btn-outline-dark w-100" [href]="environment.oauthBaseUrl + '/oauth2/authorization/github'">
+        ⚫ Continue with GitHub
+      </a>
+
+    </div>
+
+    <!-- ACCOUNT LINK INFO -->
+    <p class="text-muted small mt-3 text-center">
+      Social login will auto-link with your mobile/email account
+    </p>
+
+    <!-- SUCCESS -->
+    <p class="text-success mt-3" *ngIf="success">
+      ✅ Verification successful. Redirecting...
+    </p>
+
+  </div>
+</div>

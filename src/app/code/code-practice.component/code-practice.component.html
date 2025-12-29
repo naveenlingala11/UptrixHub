@@ -1,0 +1,192 @@
+<section class="practice">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="brand">
+            <h2>JavaArray Playground</h2>
+            <p class="subtitle">Code • Debug • Learn like a Pro..! </p>
+            <!-- <button class="back-btn" (click)="goHome()" title="Go Home">
+  <svg viewBox="0 0 24 24" class="back-icon">
+    <path d="M15 18l-6-6 6-6" />
+  </svg>
+</button> -->
+            <button class="back-btn" (click)="goHome()" title="Go Home">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+
+        </div>
+
+        <div class="actions">
+            <button (click)="shareCode()">🔗 Share</button>
+            <button (click)="toggleTheme()">🌙 Theme</button>
+            <button class="run" [disabled]="isRunning" (click)="run(false)">▶ Run</button>
+            <button class="debug" [disabled]="isRunning" (click)="startDebugSession()">🐞 Debug</button>
+        </div>
+    </header>
+
+    <!-- FILE TABS -->
+    <div class="tabs">
+        <div *ngFor="let f of files; let i = index" class="tab" draggable="true" (dragstart)="onDragStart(i)"
+            (dragover)="onDragOver($event)" (drop)="onDrop(i)" [class.active]="i === activeFileIndex"
+            (click)="switchFile(i)">
+            {{ f.name }}
+            <span *ngIf="f.dirty" class="dot">●</span>
+
+            <span class="close" (click)="closeTab(i, $event)">✕</span>
+        </div>
+
+        <!-- TAB PREVIEW -->
+        <div class="tab-preview" *ngIf="previewFile" [style.top.px]="previewY" [style.left.px]="previewX">
+            <strong>{{ previewFile.name }}</strong>
+            <pre>{{ previewContent }}</pre>
+        </div>
+
+        <div class="tab add" (click)="addFile()">＋</div>
+    </div>
+
+    <!-- DEBUG BAR -->
+    <div class="debug-bar" *ngIf="debugSession">
+        <div class="debug-actions">
+            <button (click)="step()">⏭ Step</button>
+            <button (click)="stop()">⏹ Stop</button>
+        </div>
+
+        <div class="debug-info">
+            <span>File: {{ files[activeFileIndex]?.name }}</span>
+            <span *ngIf="debugState">Line: {{ debugState.line }}</span>
+        </div>
+    </div>
+
+    <!-- WORKSPACE -->
+    <div class="workspace">
+        <div class="project-tree" [class.closed]="!projectTreeOpen">
+
+            <div class="tree-header">
+                <h4>📁 Project</h4>
+
+                <button class="tree-toggle" (click)="toggleProjectTree()" title="Toggle Project Tree">
+                    {{ projectTreeOpen ? '⮜' : '⮞' }}
+                </button>
+            </div>
+
+            <ul>
+                <li *ngFor="let f of files; let i = index" [class.active]="i === activeFileIndex"
+                    (click)="switchFile(i)">
+                    {{ f.name }}
+                    <span *ngIf="f.dirty">●</span>
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- EDITOR -->
+        <div class="editor-wrapper">
+            <div class="editor-header">
+                📄 {{ currentClass }}.java
+                <span class="editor-hint">Red dots = breakpoints</span>
+            </div>
+
+            <div class="editor-box">
+                <div #editor class="editor"></div>
+            </div>
+        </div>
+
+        <div #resizer class="resizer"></div>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <!-- PROGRAM INPUT -->
+            <div class="panel">
+                <h4>📥 Program Input</h4>
+
+                <!-- ✅ input-row wrapper added -->
+                <div class="input-row">
+                    <textarea [(ngModel)]="stdin"></textarea>
+
+                    <!-- ✅ enter button added -->
+                    <button class="enter-btn" [disabled]="stdinSent" title="Send Input" (click)="submitInput()">
+                        ⏎
+                    </button>
+                </div>
+            </div>
+
+            <!-- DEBUG STATE -->
+            <div class="panel" *ngIf="debugState">
+                <h4>🐞 Debug State</h4>
+                <p>Line: {{ debugState.line }}</p>
+                <p>Source: {{ debugState.source }}</p>
+
+                <h5>🧠 Variables</h5>
+                <ul class="mono">
+                    <li *ngFor="let v of debugState.locals | keyvalue">
+                        {{ v.key }} = {{ v.value }}
+                    </li>
+                </ul>
+            </div>
+
+            <!-- WATCH VARIABLES -->
+            <div class="panel">
+                <h4>👁 Watch Variables</h4>
+
+                <!-- ✅ input-row wrapper added -->
+                <div class="input-row">
+                    <input placeholder="variable name" #watchInput
+                        (keyup.enter)="addWatch(watchInput.value); watchInput.value='';" />
+
+                    <button class="enter-btn" title="Add Watch"
+                        (click)="addWatch(watchInput.value); watchInput.value='';">
+                        ⏎
+                    </button>
+                </div>
+
+                <ul class="mono">
+                    <li *ngFor="let w of debugState?.watches | keyvalue">
+                        {{ w.key }} = {{ w.value }}
+                    </li>
+                </ul>
+            </div>
+
+            <!-- EXPRESSION EVALUATOR -->
+            <div class="panel">
+                <h4>🧮 Expression Evaluator</h4>
+
+                <!-- ✅ input-row wrapper added -->
+                <div class="input-row">
+                    <input placeholder="e.g. i, sum" #exprInput (keyup.enter)="evaluateExpression(exprInput.value)" />
+
+                    <button class="enter-btn" title="Evaluate" (click)="evaluateExpression(exprInput.value)">
+                        ⏎
+                    </button>
+                </div>
+
+                <div class="eval-result" *ngIf="evalResult">
+                    {{ evalResult }}
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <!-- CALL STACK -->
+    <div class="panel stack-panel" *ngIf="debugState">
+        <h4>🧵 Call Stack</h4>
+        <ul class="mono">
+            <li *ngFor="let frame of debugState.stack">{{ frame }}</li>
+        </ul>
+    </div>
+
+    <!-- LOGS -->
+    <div class="panel terminal">
+        <h4>📜 Execution Logs</h4>
+        <div class="status">
+            <span *ngIf="compileSuccess === true" class="ok">✔ Compiled</span>
+            <span *ngIf="compileSuccess === false" class="fail">✖ Compile Error</span>
+            <span *ngIf="executeSuccess === true" class="ok">✔ Executed</span>
+            <span *ngIf="executeSuccess === false" class="fail">✖ Runtime Error</span>
+            <span *ngIf="executionTime">⚡ {{ executionTime }} ms</span>
+        </div>
+        <pre class="logs">{{ logs.join('\n') }}</pre>
+    </div>
+
+</section>

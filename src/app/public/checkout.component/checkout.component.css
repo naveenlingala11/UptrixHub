@@ -1,0 +1,414 @@
+/* ================= BASE ================= */
+.checkout-page {
+    background: #f8fafc;
+    padding: 100px 0;
+    min-height: 100vh;
+}
+
+.checkout-header {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.checkout-header h1 {
+    font-size: 44px;
+    font-weight: 900;
+    color: #0f172a;
+}
+
+.checkout-header p {
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* ================= LAYOUT ================= */
+.checkout-layout {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 50px;
+}
+
+/* ================= CARDS ================= */
+.checkout-card {
+    background: #fff;
+    padding: 28px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
+    margin-bottom: 26px;
+}
+
+.checkout-card h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 16px;
+}
+
+/* ================= USER INFO ================= */
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info small {
+    display: block;
+    color: #64748b;
+}
+
+.verified {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+/* ================= COUPON ================= */
+.coupon-box {
+    display: flex;
+    gap: 10px;
+}
+
+.coupon-box input {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.coupon-box button {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.coupon-msg {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.coupon-msg.success {
+    color: #16a34a;
+}
+
+.coupon-msg.error {
+    color: #dc2626;
+}
+
+/* ================= OFFERS ================= */
+.checkout-card.highlight {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: #fff;
+}
+
+.checkout-card.highlight h3 {
+    color: #fff;
+}
+
+.offers {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.offers li {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* ================= SUMMARY ================= */
+.checkout-summary {
+    position: sticky;
+    top: 120px;
+    background: #fff;
+    padding: 32px;
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(124, 58, 237, .35);
+}
+
+.checkout-summary h3 {
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+.checkout-summary ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.checkout-summary li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.price-line {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+    font-size: 14px;
+}
+
+.price-line.discount {
+    color: #16a34a;
+}
+
+.total {
+    font-size: 26px;
+    font-weight: 900;
+    margin: 26px 0;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 18px;
+}
+
+/* ================= PAY BUTTON ================= */
+.pay-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    border: none;
+    background: linear-gradient(135deg, #2563eb, #7c3aed, #9333ea);
+    color: #fff;
+    font-weight: 900;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 25px 60px rgba(124, 58, 237, .4);
+    transition: transform .3s ease;
+}
+
+.pay-btn:hover {
+    transform: translateY(-3px);
+}
+
+/* ================= TRUST ================= */
+.trust {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+    .checkout-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .checkout-summary {
+        position: relative;
+        top: 0;
+    }
+}
+
+/* ================= BILL MODAL ================= */
+.bill-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.bill-modal {
+    background: #fff;
+    width: 520px;
+    max-width: 92%;
+    border-radius: 22px;
+    padding: 30px;
+    box-shadow: 0 40px 120px rgba(0, 0, 0, .35);
+    animation: scaleIn .25s ease;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.bill-modal h2 {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 16px;
+}
+
+.bill-section {
+    margin-bottom: 18px;
+}
+
+.bill-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.bill-section li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.bill-summary div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.bill-summary .discount {
+    color: #16a34a;
+}
+
+.bill-summary .total {
+    font-size: 20px;
+    font-weight: 900;
+    margin-top: 10px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 12px;
+}
+
+.bill-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.bill-actions button {
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+}
+
+.bill-actions .cancel {
+    background: #e5e7eb;
+}
+
+.bill-actions .confirm {
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    color: #fff;
+}.checkout-page {
+  padding: 80px 20px;
+  background: #f8fafc;
+}
+
+.checkout-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.coupon-row {
+  display: flex;
+  gap: 10px;
+}
+
+.coupon-row input {
+  flex: 1;
+  padding: 12px;
+}
+
+.coupon-row button {
+  padding: 12px 20px;
+}
+
+.success { color: green; }
+.error { color: red; }
+
+.checkout-summary {
+  background: #020617;
+  color: #fff;
+  padding: 26px;
+  border-radius: 20px;
+  position: sticky;
+  top: 100px;
+}
+
+.checkout-summary ul {
+  list-style: none;
+  padding: 0;
+}
+
+.checkout-summary li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.total {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 20px 0;
+}
+
+.pay-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(90deg,#2563eb,#7c3aed);
+  color: #fff;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  display: grid;
+  place-items: center;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+}
+
+.invoice {
+  max-width: 600px;
+  margin: 60px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+}

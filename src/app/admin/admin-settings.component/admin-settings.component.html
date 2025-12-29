@@ -1,0 +1,22 @@
+<section class="admin-settings">
+
+  <h2>Brand Settings</h2>
+
+  <div class="logo-upload-card">
+    <h4>Company Logo</h4>
+
+    <div class="logo-preview">
+      <img *ngIf="logoUrl; else placeholder" [src]="logoUrl" />
+      <ng-template #placeholder>
+        <div class="logo-placeholder">JA</div>
+      </ng-template>
+    </div>
+
+    <input type="file" accept="image/*" (change)="onLogoUpload($event)" />
+
+    <p class="hint">
+      Recommended: PNG / SVG · 200×200
+    </p>
+  </div>
+
+</section>

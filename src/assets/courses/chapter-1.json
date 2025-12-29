@@ -1,0 +1,170 @@
+{
+  "courseId": "core-java",
+  "title": "Core Java",
+  "priceType": "FREE",
+  "chapters": [
+    {
+      "chapterId": "chapter-1",
+      "title": "Introduction to Java Programming",
+      "sections": [
+        {
+          "sectionId": "1.1",
+          "heading": "What is Java?",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Java is a high-level, class-based, object-oriented programming language."
+            },
+            {
+              "type": "paragraph",
+              "text": "It is designed to have as few implementation dependencies as possible."
+            },
+            {
+              "type": "highlight",
+              "text": "Java applications are typically compiled to bytecode that can run on any Java Virtual Machine (JVM)."
+            },
+            {
+              "type": "note",
+              "text": "This makes Java platform-independent."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Simple Java Program",
+              "code": [
+                "class Main {",
+                "  public static void main(String[] args) {",
+                "    System.out.println(\"Hello JavaArray 🚀\");",
+                "  }",
+                "}"
+              ]
+            }
+          ]
+        },
+        {
+          "sectionId": "1.2",
+          "heading": "History of Java",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Java was developed by James Gosling and his team at Sun Microsystems in 1995."
+            },
+            {
+              "type": "paragraph",
+              "text": "Originally, Java was designed for interactive television, but it was too advanced for the digital cable television industry."
+            },
+            {
+              "type": "note",
+              "text": "Later, Java was redesigned for web applications and became very popular."
+            }
+          ]
+        },
+        {
+          "sectionId": "1.3",
+          "heading": "Features of Java",
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                "Simple – Easy to learn and use.",
+                "Object-Oriented – Everything is based on objects and classes.",
+                "Platform Independent – Java programs can run on any OS.",
+                "Secure – Provides a secure execution environment.",
+                "Robust – Strong memory management and exception handling.",
+                "Multithreaded – Supports concurrent execution.",
+                "High Performance – Uses Just-In-Time (JIT) compiler."
+              ]
+            }
+          ]
+        },
+        {
+          "sectionId": "1.4",
+          "heading": "Java Virtual Machine (JVM)",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "JVM is an abstract machine that enables a computer to run Java programs."
+            },
+            {
+              "type": "paragraph",
+              "text": "It converts Java bytecode into machine code."
+            },
+            {
+              "type": "highlight",
+              "text": "JVM provides memory management, garbage collection, and security."
+            }
+          ]
+        },
+        {
+          "sectionId": "1.5",
+          "heading": "Java Development Kit (JDK)",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "JDK is a software development kit required to develop Java applications."
+            },
+            {
+              "type": "note",
+              "text": "It includes the Java compiler (javac), JRE, and development tools."
+            },
+            {
+              "type": "paragraph",
+              "text": "Without JDK, you cannot compile Java programs."
+            }
+          ]
+        },
+        {
+          "sectionId": "1.6",
+          "heading": "Java Runtime Environment (JRE)",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "JRE provides libraries and JVM to run Java programs."
+            },
+            {
+              "type": "note",
+              "text": "It does not contain development tools like compiler."
+            },
+            {
+              "type": "paragraph",
+              "text": "End users only need JRE to run Java applications."
+            }
+          ]
+        },
+        {
+          "sectionId": "1.7",
+          "heading": "Difference between JDK, JRE, and JVM",
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                "JVM runs the Java bytecode.",
+                "JRE contains JVM and libraries.",
+                "JDK contains JRE along with development tools."
+              ]
+            },
+            {
+              "type": "highlight",
+              "text": "In simple terms: JDK > JRE > JVM."
+            }
+          ]
+        },
+        {
+          "sectionId": "1.8",
+          "heading": "First Java Program Execution Flow",
+          "content": [
+            {
+              "type": "ordered-list",
+              "items": [
+                "Java source code is written in a .java file.",
+                "The compiler converts source code into bytecode (.class file).",
+                "The JVM loads the bytecode and executes it.",
+                "Output is produced on the console."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

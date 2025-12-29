@@ -1,0 +1,63 @@
+<section class="cart-page">
+
+  <h1>Your Cart</h1>
+
+  <div class="cart-layout">
+
+    <!-- LEFT -->
+    <div class="cart-items">
+
+      <div *ngIf="!items.length" class="empty">
+        🛒 Cart is empty
+      </div>
+
+      <div class="cart-item" *ngFor="let c of items">
+        <div>
+          <h4>{{ c.title }}</h4>
+          <small>{{ c.courseId }}</small>
+        </div>
+
+        <div class="right">
+          <span class="price">₹{{ c.price }}</span>
+          <button (click)="remove(c.courseId)">✕</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <aside class="summary">
+
+      <h3>Order Summary</h3>
+
+      <div class="row">
+        <span>Subtotal</span>
+        <span>₹{{ subtotal }}</span>
+      </div>
+
+      <div class="row">
+        <span>GST (18%)</span>
+        <span>₹{{ gst }}</span>
+      </div>
+
+      <div class="row total">
+        <span>Total</span>
+        <span>₹{{ total }}</span>
+      </div>
+
+      <button
+        class="checkout"
+        [disabled]="!items.length"
+        (click)="checkout()">
+        Proceed to Checkout →
+      </button>
+
+      <p class="note">
+        Secure payment • Lifetime access
+      </p>
+
+    </aside>
+
+  </div>
+
+</section>

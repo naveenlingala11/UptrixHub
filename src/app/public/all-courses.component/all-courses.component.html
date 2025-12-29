@@ -1,0 +1,88 @@
+<section class="courses-page">
+
+    <!-- HEADER -->
+    <header class="courses-header">
+        <h1>📚 All Courses</h1>
+        <p>Master Java, Backend, Frontend, DevOps & crack interviews</p>
+
+    </header>
+
+    <!-- SEARCH -->
+    <div class="course-search">
+        <input type="text" placeholder="Search courses..." [(ngModel)]="searchText" />
+    </div>
+
+    <!-- CATEGORY TABS -->
+    <div class="category-tabs">
+        <button *ngFor="let cat of categories" (click)="selectedCategory = cat"
+            [class.active]="selectedCategory === cat">
+            {{ cat }}
+        </button>
+        <!-- FILTER -->
+        <div class="price-filter">
+            <button class="filter-btn" (click)="showPriceFilter = !showPriceFilter">
+                <i class="fas fa-filter"></i>
+            </button>
+
+            <div class="filter-dropdown" *ngIf="showPriceFilter">
+                <div (click)="priceFilter='ALL'; showPriceFilter=false">All</div>
+                <div (click)="priceFilter='FREE'; showPriceFilter=false">FREE</div>
+                <div (click)="priceFilter='PRO'; showPriceFilter=false">PRO</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SKELETON LOADER -->
+    <div class="courses-grid" *ngIf="loading">
+        <div class="course-card skeleton" *ngFor="let i of [1,2,3,4]"></div>
+    </div>
+
+    <!-- COURSES GRID -->
+    <div class="courses-grid" *ngIf="!loading">
+
+        <div class="course-card" *ngFor="let c of filteredCourses" [class.locked]="c.locked">
+
+            <div class="card-top">
+                <span class="category">{{ c.category }}</span>
+                <span class="level" [ngClass]="getLevelColor(c.level)">
+                    {{ c.level }}
+                </span>
+            </div>
+
+            <h3>{{ c.title }}</h3>
+            <p>{{ c.description }}</p>
+
+            <!-- PRICING -->
+            <div class="price-tag" [class.pro]="c.priceType === 'PRO'">
+                {{ c.priceType === 'FREE' ? 'FREE' : '₹' + c.price }}
+            </div>
+
+            <div class="card-footer">
+                <!-- View Course should ALWAYS be visible -->
+                <!-- FREE or UNLOCKED -->
+                <button *ngIf="c.priceType === 'FREE' || c.unlocked" [routerLink]="['/courses', c.id]">
+                    ▶ {{ c.unlocked ? 'Continue Learning' : 'Start Learning' }}
+                </button>
+
+                <!-- PRO LOCKED -->
+                <button *ngIf="c.priceType === 'PRO' && !c.unlocked" class="locked-btn" (click)="buyCourse(c)">
+                    🔓 Buy Now
+                </button>
+
+                <!-- Show PRO label only for locked courses -->
+                <div *ngIf="c.locked" class="lock-overlay">
+                    🔒 PRO
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="!loading && filteredCourses.length === 0" class="empty-state">
+        😕 No courses found
+    </div>
+    <div *ngIf="errorMessage" class="empty-state">
+        {{ errorMessage }}
+    </div>
+
+</section>

@@ -1,0 +1,81 @@
+<section class="pricing-page">
+
+  <div class="pricing-hero">
+    <h1>Choose Your Learning Path</h1>
+    <p>Select individual courses or save more with bundles</p>
+  </div>
+
+  <div class="pricing-layout">
+
+    <!-- LEFT -->
+    <div class="pricing-left">
+      <h2>Individual Courses</h2>
+
+      <div class="course-list">
+        <div
+          class="course-item"
+          *ngFor="let c of courses"
+          [class.selected]="selectedCourseIds.includes(c.courseId)"
+          (click)="toggleCourse(c)"
+        >
+          <div>
+            <h4>{{ c.title }}</h4>
+            <small>{{ c.courseId }}</small>
+          </div>
+          <div class="price">₹{{ c.discountPrice || c.price }}</div>
+        </div>
+      </div>
+
+      <h2 class="mt">Bundles</h2>
+
+      <div class="bundle-grid">
+        <div
+          class="bundle-card"
+          *ngFor="let b of bundles"
+          [class.highlight]="b.highlight"
+        >
+          <h3>{{ b.title }}</h3>
+          <div class="bundle-price">₹{{ b.discountedPrice }}</div>
+
+          <ul>
+            <li *ngFor="let i of b.courseIds">
+              {{ i }}
+            </li>
+          </ul>
+
+          <button (click)="proceedBundle(b)">
+            Choose Bundle →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <aside class="pricing-summary">
+      <h3>Summary</h3>
+
+      <ul>
+        <li *ngFor="let id of selectedCourseIds">
+          {{ id }}
+        </li>
+        <li *ngIf="!selectedCourseIds.length" class="empty">
+          No courses selected
+        </li>
+      </ul>
+
+      <button
+        class="proceed"
+        [disabled]="!selectedCourseIds.length"
+        (click)="proceedCustom()"
+      >
+        Proceed →
+      </button>
+
+      <p class="note">
+        Secure payment • Lifetime access
+      </p>
+    </aside>
+
+  </div>
+
+</section>
