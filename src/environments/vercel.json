@@ -2,9 +2,8 @@
   "version": 2,
   "framework": "angular",
   "buildCommand": "npm run build -- --configuration production",
-  "outputDirectory": "dist/uptrixhub/browser",
-
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+  "outputDirectory": "dist/JavaArray/browser",
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
