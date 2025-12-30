@@ -1,5 +1,7 @@
-// environment.prod.ts (PROD)
+// environment.prod.ts
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://backend.uptrixhub.online' // backend later
+  apiUrl: 'https://backend.uptrixhub.online/api',
+  wsUrl: 'wss://backend.uptrixhub.online',
+  oauthBaseUrl: 'https://backend.uptrixhub.online'
 };
