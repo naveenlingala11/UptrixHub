@@ -10,7 +10,7 @@ declare const monaco: any;
 @Component({
   selector: 'app-course-player',
   standalone: true,
-  imports: [CommonModule,FormsModule,MiniCodeEditorComponent],
+  imports: [CommonModule, FormsModule, MiniCodeEditorComponent],
   templateUrl: './course-player.component.html',
   styleUrl: './course-player.component.css'
 })
@@ -31,11 +31,16 @@ export class CoursePlayerComponent implements OnInit {
   editorInstance: any;
 
   ngOnInit() {
-    this.chapters = this.courseData?.chapters || [];
+    if (!this.courseData) return;
 
-    if (this.chapters.length) {
+    this.chapters = this.courseData.chapters ?? [];
+
+    if (this.chapters.length > 0) {
       this.expandedChapterId = this.chapters[0].chapterId;
-      this.selectedSection = this.chapters[0].sections[0];
+
+      if (this.chapters[0].sections?.length) {
+        this.selectedSection = this.chapters[0].sections[0];
+      }
     }
   }
 

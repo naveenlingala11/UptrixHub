@@ -26,7 +26,7 @@
       <ng-container *ngIf="!(isLoggedIn$ | async)">
 
         <!-- ================= CATALOG ================= -->
-        <li class="nav-item catalog" tabindex="0" (click)="toggleCatalog($event)" (keydown)="handleKeydown($event)">
+        <li class="nav-item catalog" tabindex="0" (click)="toggleCatalog($event)" (keydown)="handleKeydown($event)" (click)="closeMobileMenu()">
           <span class="nav-link">
             Catalog <span class="caret">▾</span>
           </span>
@@ -69,7 +69,7 @@
 
         <!-- ================= INTERVIEW PREP ================= -->
         <li class="nav-item">
-          <a routerLink="/interview-prep">Interview Prep</a>
+          <a routerLink="/interview-prep" (click)="closeMobileMenu()">Interview Prep</a>
           <div class="dropdown">
             <div class="dropdown-section">
               <h6>Preparation</h6>
@@ -82,7 +82,7 @@
 
         <!-- ================= COURSES ================= -->
         <li class="nav-item">
-          <a routerLink="/courses">Courses</a>
+          <a routerLink="/courses" (click)="closeMobileMenu()" >Courses</a>
           <div class="dropdown">
             <div class="dropdown-section">
               <h6>Java Track</h6>
@@ -100,7 +100,7 @@
 
         <!-- ================= ROADMAPS ================= -->
         <li class="nav-item">
-          <a routerLink="/roadmaps">Roadmaps</a>
+          <a routerLink="/roadmaps" (click)="closeMobileMenu()">Roadmaps</a>
           <div class="dropdown">
             <div class="dropdown-section">
               <a routerLink="/roadmaps/java">Java Developer</a>
@@ -112,7 +112,7 @@
 
         <!-- ================= PRICING ================= -->
         <li class="nav-item">
-          <a routerLink="/pricing">Pricing</a>
+          <a routerLink="/pricing" (click)="closeMobileMenu()">Pricing</a>
           <div class="dropdown">
             <div class="dropdown-section">
               <a routerLink="/pricing">Free vs PRO</a>
@@ -123,7 +123,7 @@
 
         <!-- ================= FAQ ================= -->
         <li class="nav-item">
-          <a routerLink="/faq">FAQ</a>
+          <a routerLink="/faq" (click)="closeMobileMenu()">FAQ</a>
           <div class="dropdown">
             <div class="dropdown-section">
               <a routerLink="/faq#general">General</a>
@@ -135,7 +135,7 @@
 
         <!-- ================= CONTACT ================= -->
         <li class="nav-item">
-          <a routerLink="/support/contact">Contact</a>
+          <a routerLink="/support/contact" (click)="closeMobileMenu()">Contact</a>
         </li>
 
       </ng-container>
@@ -144,42 +144,42 @@
       <ng-container *ngIf="isLoggedIn$ | async">
 
         <li class="nav-item">
-          <a routerLink="/dashboard/home" routerLinkActive="active">Dashboard</a>
+          <a routerLink="/dashboard/home" routerLinkActive="active" (click)="closeMobileMenu()">Dashboard</a>
         </li>
 
         <li class="nav-item">
-          <a routerLink="/courses">My Courses</a>
+          <a routerLink="/courses" (click)="closeMobileMenu()">My Courses</a>
           <div class="dropdown">
             <div class="dropdown-section">
-              <a routerLink="/dashboard/home">Continue Learning</a>
-              <a routerLink="/courses">All Courses</a>
+              <a routerLink="/dashboard/home"(click)="closeMobileMenu()">Continue Learning</a>
+              <a routerLink="/courses"(click)="closeMobileMenu()">All Courses</a>
             </div>
           </div>
         </li>
 
         <li class="nav-item">
-          <a routerLink="/practice/code">Practice</a>
+          <a routerLink="/practice/code"(click)="closeMobileMenu()">Practice</a>
           <div class="dropdown">
             <div class="dropdown-section">
-              <a routerLink="/practice/java">Java Problems</a>
-              <a routerLink="/practice/dsa">DSA</a>
+              <a routerLink="/practice/java"(click)="closeMobileMenu()">Java Problems</a>
+              <a routerLink="/practice/dsa"(click)="closeMobileMenu()">DSA</a>
             </div>
           </div>
         </li>
 
         <li class="nav-item pro">
-          <a routerLink="/pro">Interviews Guide</a>
+          <a routerLink="/pro"(click)="closeMobileMenu()">Interviews Guide</a>
           <div class="dropdown">
             <div class="dropdown-section">
-              <a routerLink="/pro/interviews">Advanced Interviews</a>
-              <a routerLink="/pro/analytics">Progress Analytics</a>
+              <a routerLink="/pro/interviews"(click)="closeMobileMenu()">Advanced Interviews</a>
+              <a routerLink="/pro/analytics"(click)="closeMobileMenu()">Progress Analytics</a>
             </div>
           </div>
         </li>
 
         <!-- ================= CART ================= -->
         <li class="nav-item cart">
-          <a routerLink="/cart" class="cart-link">
+          <a routerLink="/cart" class="cart-link" (click)="closeMobileMenu()">
             🛒 Cart
             <span class="cart-badge" *ngIf="cartCount > 0">
               {{ cartCount }}
@@ -196,7 +196,7 @@
 
       <ng-container *ngIf="!(isLoggedIn$ | async); else loggedIn">
         <a routerLink="/login" class="btn outline">Login</a>
-        <a routerLink="/register" class="btn primary">Register</a>
+        <a routerLink="/register" class="btn primary" (click)="closeMobileMenu()">Register</a>
       </ng-container>
 
       <ng-template #loggedIn>

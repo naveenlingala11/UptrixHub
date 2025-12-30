@@ -6,13 +6,14 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {
+  NavigationStart,
   Router,
   RouterLink,
   RouterOutlet,
 } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthStateService } from '../../core/services/auth-state.service';
-import { Observable, Subscription } from 'rxjs';
+import { filter, Observable, Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../public/cart/cart.service';
 
@@ -43,7 +44,7 @@ export class Layout implements OnInit, OnDestroy {
   mobileOpen = false;
 
   cartCount = 0;
-  private cartSub!: Subscription;
+  private subs = new Subscription();
 
   userName = '';
   userAvatar: string | null = null;
@@ -86,17 +87,42 @@ export class Layout implements OnInit, OnDestroy {
     }
   }
 
-  /* ========== MOBILE ========== */
+  /* ================= MOBILE MENU ================= */
 
   toggleMobile() {
-    this.mobileOpen = !this.mobileOpen;
+    this.mobileOpen ? this.closeMobileMenu() : this.openMobileMenu();
   }
 
-  /* close on outside click */
-  @HostListener('document:click')
-  onOutsideClick() {
-    this.closeDropdown();
+  openMobileMenu() {
+    this.mobileOpen = true;
+    document.body.classList.add('menu-open');
+  }
+
+  closeMobileMenu() {
     this.mobileOpen = false;
+    this.isCatalogOpen = false;
+    document.body.classList.remove('menu-open');
+  }
+
+  /* ================= ESC KEY ================= */
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    this.closeMobileMenu();
+  }
+
+  /* ================= OUTSIDE CLICK ================= */
+  @HostListener('document:click', ['$event'])
+  onOutsideClick(event: MouseEvent) {
+    if (!this.mobileOpen) return;
+
+    const target = event.target as HTMLElement;
+
+    if (
+      !target.closest('.nav-links') &&
+      !target.closest('.hamburger')
+    ) {
+      this.closeMobileMenu();
+    }
   }
 
   logout() {
@@ -241,21 +267,34 @@ export class Layout implements OnInit, OnDestroy {
     this.isCatalogOpen = false;
   }
   ngOnInit() {
-    // EXISTING CODE
-    this.cartSub = this.cartService.cartCount$.subscribe(
-      count => this.cartCount = count
+    /* Cart */
+    this.subs.add(
+      this.cartService.cartCount$.subscribe(
+        count => (this.cartCount = count)
+      )
     );
 
-    // DASHBOARD USER
+    /* User */
+    this.subs.add(
+      this.authState.user$.subscribe(user => {
+        if (user) {
+          this.userName = user.name ?? '';
+          this.userAvatar = user.avatar ?? null;
+        }
+      })
+    );
 
-    this.authState.user$.subscribe(user => {
-      if (user) {
-        this.userName = user.name ?? '';
-        this.userAvatar = user.avatar ?? null;
-      }
-    });
+    /* 🔥 CLOSE MENU ON ROUTE CHANGE */
+    this.subs.add(
+      this.router.events
+        .pipe(filter(e => e instanceof NavigationStart))
+        .subscribe(() => this.closeMobileMenu())
+    );
   }
 
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
 
   get initials(): string {
     return this.userName
@@ -265,7 +304,4 @@ export class Layout implements OnInit, OnDestroy {
       .toUpperCase();
   }
 
-  ngOnDestroy() {
-    this.cartSub?.unsubscribe();
-  }
 }

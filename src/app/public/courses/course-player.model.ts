@@ -13,15 +13,39 @@ export interface Chapter {
 export interface Section {
   sectionId: string;
   heading: string;
-  content: string[];   // paragraphs (verbatim)
-  examples?: {
-    title: string;
-    code: string[];
-  }[];
+  content: ContentBlock[];   // ✅ FIXED
+  examples?: ExampleBlock[];
   tasks?: string[];
-  quiz?: {
-    question: string;
-    options: string[];
-    answer: string;
-  }[];
+  quiz?: QuizBlock[];
+}
+
+export interface ContentBlock {
+  type:
+    | 'paragraph'
+    | 'highlight'
+    | 'note'
+    | 'list'
+    | 'ordered-list'
+    | 'code'
+    | 'image';
+
+  text?: string;
+  items?: string[];
+  title?: string;
+  code?: string[];
+  language?: string;
+  src?: string;
+  caption?: string;
+}
+
+export interface ExampleBlock {
+  title: string;
+  code: string[];
+  language?: string;
+}
+
+export interface QuizBlock {
+  question: string;
+  options: string[];
+  answer: string;
 }

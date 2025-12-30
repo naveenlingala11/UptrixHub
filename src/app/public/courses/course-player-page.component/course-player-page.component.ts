@@ -28,14 +28,26 @@ export class CoursePlayerPageComponent implements OnInit {
     private route: ActivatedRoute,
     private api: CourseApiService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('id')!;
 
     this.api.getCourseContent(courseId).subscribe({
-      next: data => this.course = data,
-      error: () => this.error = true
+      next: data => {
+        console.log('COURSE DATA', data); // 🔍 DEBUG (remove later)
+        this.course = data;
+        this.error = false;
+      },
+      error: err => {
+        if (err?.status === 403) {
+          this.error = true;
+          return;
+        }
+        console.error('Course load failed:', err);
+        this.router.navigate(['/courses']);
+      }
     });
   }
+
 }
