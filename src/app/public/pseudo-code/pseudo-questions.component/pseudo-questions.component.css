@@ -1,0 +1,54 @@
+.preview-wrapper {
+  max-width: 900px;
+  margin: 80px auto;
+  text-align: center;
+}
+
+.preview-wrapper h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.desc {
+  margin-top: 14px;
+  color: #6b7280;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.stats div {
+  background: #f8fafc;
+  padding: 20px 26px;
+  border-radius: 16px;
+  min-width: 160px;
+}
+
+.stats strong {
+  display: block;
+  font-size: 1.4rem;
+}
+
+.stats span {
+  color: #6b7280;
+  font-size: .9rem;
+}
+
+.start-btn {
+  padding: 16px 40px;
+  border-radius: 40px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg,#2563eb,#7c3aed);
+  color: white;
+  cursor: pointer;
+}
+
+.start-btn:hover {
+  opacity: .95;
+}

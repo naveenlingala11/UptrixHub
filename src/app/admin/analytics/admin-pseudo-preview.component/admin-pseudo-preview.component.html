@@ -1,0 +1,60 @@
+<div class="admin-header">
+  <h2>🧠 Pseudo Questions – {{ skill | titlecase }}</h2>
+  <p>Admin preview of uploaded questions with answers & explanations</p>
+</div>
+
+<div *ngIf="loading" class="loading">
+  Loading questions…
+</div>
+
+<div *ngFor="let q of questions; let i = index" class="q-card">
+
+  <div class="q-top">
+    <span class="badge level">{{ q.difficulty }}</span>
+    <span class="badge" [ngClass]="q.accessLevel">
+      {{ q.accessLevel }}
+    </span>
+    <span>#{{ i + 1 }}</span>
+  </div>
+
+  <pre class="code">
+{{ q.question }}
+  </pre>
+
+  <div class="opts">
+    <div [class.correct]="q.correctOption === 'A'">
+      A. {{ q.optionA }}
+    </div>
+    <div [class.correct]="q.correctOption === 'B'">
+      B. {{ q.optionB }}
+    </div>
+    <div [class.correct]="q.correctOption === 'C'">
+      C. {{ q.optionC }}
+    </div>
+    <div [class.correct]="q.correctOption === 'D'">
+      D. {{ q.optionD }}
+    </div>
+  </div>
+
+  <!-- EXPLANATION -->
+  <div class="exp">
+    <strong>Explanation</strong>
+
+    <p class="summary">
+      {{ q.explanationSummary || q.explanation }}
+    </p>
+
+    <ul *ngIf="q.explanationSteps?.length">
+      <li *ngFor="let s of q.explanationSteps">
+        {{ s }}
+      </li>
+    </ul>
+
+    <div class="concepts" *ngIf="q.explanationConcepts?.length">
+      <span *ngFor="let c of q.explanationConcepts">
+        {{ c }}
+      </span>
+    </div>
+  </div>
+
+</div>

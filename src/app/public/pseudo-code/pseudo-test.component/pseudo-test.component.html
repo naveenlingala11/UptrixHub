@@ -1,0 +1,117 @@
+<!-- ================= HEADER ================= -->
+<header class="exam-header">
+  <div class="left">
+    <h2>{{ skill | titlecase }} – Practice Test</h2>
+    <p class="sub">Sharpen logic with real interview-style questions</p>
+  </div>
+
+  <div class="right">
+    <div class="timer" [class.warn]="remainingSeconds <= 120">
+      ⏳ {{ minutes }} : {{ seconds }}
+    </div>
+  </div>
+</header>
+
+<!-- ================= META ================= -->
+<section class="exam-meta">
+  <div class="meta-card">
+    <span>Total Questions</span>
+    <strong>{{ questions.length }}</strong>
+  </div>
+
+  <div class="meta-card">
+    <span>Current</span>
+    <strong>{{ currentIndex + 1 }}</strong>
+  </div>
+
+  <div class="meta-card">
+    <span>Mode</span>
+    <strong>Practice</strong>
+  </div>
+</section>
+
+<!-- ================= PALETTE ================= -->
+<section class="palette">
+  <button *ngFor="let q of questions; let i = index"
+    (click)="goTo(i)"
+    [class.active]="i === currentIndex"
+    [class.answered]="answers[q.id]">
+    {{ i + 1 }}
+  </button>
+</section>
+
+<!-- ================= QUESTION ================= -->
+<section class="question-card" *ngIf="questions.length">
+
+  <div class="question-header">
+    Question {{ currentIndex + 1 }}
+  </div>
+
+  <pre class="code-block">
+{{ questions[currentIndex].question }}
+  </pre>
+
+  <div class="options">
+    <label *ngFor="let opt of ['A','B','C','D']"
+      [class.correct]="showResult && opt === questions[currentIndex].correctOption"
+      [class.wrong]="showResult &&
+        answers[questions[currentIndex].id] === opt &&
+        opt !== questions[currentIndex].correctOption"
+      [class.selected]="answers[questions[currentIndex].id] === opt">
+
+      <input type="radio"
+        [disabled]="showResult"
+        [name]="'q'+questions[currentIndex].id"
+        (change)="select(opt)" />
+
+      <span class="opt-key">{{ opt }}</span>
+      <span class="opt-text">
+        {{ questions[currentIndex]['option' + opt] }}
+      </span>
+    </label>
+  </div>
+
+  <!-- ================= EXPLANATION ================= -->
+  <div class="explanation" *ngIf="showResult">
+    <h4>
+      📘 Explanation
+      <span class="badge"
+        [class.ok]="resultMap[questions[currentIndex].id]"
+        [class.no]="!resultMap[questions[currentIndex].id]">
+        {{ resultMap[questions[currentIndex].id] ? 'Correct' : 'Wrong' }}
+      </span>
+    </h4>
+
+    <p class="summary">
+      {{ questions[currentIndex].explanationSummary || questions[currentIndex].explanation }}
+    </p>
+
+    <ul class="steps" *ngIf="questions[currentIndex].explanationSteps?.length">
+      <li *ngFor="let step of questions[currentIndex].explanationSteps">
+        {{ step }}
+      </li>
+    </ul>
+
+    <div class="concepts" *ngIf="questions[currentIndex].explanationConcepts?.length">
+      <span *ngFor="let c of questions[currentIndex].explanationConcepts">
+        {{ c }}
+      </span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================= CONTROLS ================= -->
+<footer class="exam-controls">
+  <button class="nav-btn" (click)="prev()" [disabled]="currentIndex === 0">
+    ← Previous
+  </button>
+
+  <button class="nav-btn" (click)="next()" [disabled]="currentIndex === questions.length - 1">
+    Next →
+  </button>
+
+  <button class="submit-btn" (click)="submit()">
+    Submit Practice
+  </button>
+</footer>

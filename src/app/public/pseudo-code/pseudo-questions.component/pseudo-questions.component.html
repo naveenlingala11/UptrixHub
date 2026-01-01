@@ -1,0 +1,35 @@
+<section class="preview-wrapper" *ngIf="!loading">
+
+  <h1>{{ skill | titlecase }} – Pseudo Code Practice</h1>
+
+  <p class="desc">
+    Test your logical thinking and execution flow using real interview-level
+    pseudo code questions.
+  </p>
+
+  <div class="stats">
+    <div>
+      <strong>{{ questionsCount }}</strong>
+      <span>Total Questions</span>
+    </div>
+
+    <div>
+      <strong>⏱ 30 min</strong>
+      <span>Timed Test</span>
+    </div>
+
+    <div>
+      <strong>🛡 Proctored</strong>
+      <span>Anti-Cheat</span>
+    </div>
+  </div>
+
+  <button class="start-btn" (click)="startTest()">
+    Start Test →
+  </button>
+
+</section>
+
+<div class="loading" *ngIf="loading">
+  Loading questions…
+</div>

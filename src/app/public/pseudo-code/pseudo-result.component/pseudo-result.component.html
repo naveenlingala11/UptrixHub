@@ -1,0 +1,33 @@
+<section class="result-summary">
+  <h1>Test Result</h1>
+
+  <div class="stats">
+    <div><strong>{{ summary.totalQuestions }}</strong><span>Total</span></div>
+    <div class="correct"><strong>{{ summary.correct }}</strong><span>Correct</span></div>
+    <div class="wrong"><strong>{{ summary.wrong }}</strong><span>Wrong</span></div>
+    <div><strong>{{ summary.score }}</strong><span>Score</span></div>
+  </div>
+
+  <div class="accuracy">
+    Accuracy: {{ accuracy() }}%
+  </div>
+</section>
+
+<section class="review" *ngFor="let q of questions; let i=index">
+  <h3>Q{{ i+1 }}</h3>
+  <pre>{{ q.question }}</pre>
+
+  <p>Your Answer: <strong>{{ answers[q.id] || 'Not Answered' }}</strong></p>
+
+  <p class="result"
+     [class.correct]="explanations[q.id]?.correct"
+     [class.wrong]="!explanations[q.id]?.correct">
+    {{ explanations[q.id]?.correct ? 'Correct ✅' : 'Wrong ❌' }}
+  </p>
+
+  <div class="explanation">
+    {{ explanations[q.id]?.explanation }}
+  </div>
+</section>
+
+<button class="back-btn" (click)="backToHome()">Back to Skills</button>

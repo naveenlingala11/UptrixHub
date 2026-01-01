@@ -96,6 +96,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.loadUsers();
     this.loadStats();
     this.connectWebSocket();
+    this.loadPseudoSkills();
   }
 
   ngAfterViewInit(): void {
@@ -574,4 +575,60 @@ export class AdminComponent implements OnInit, AfterViewInit {
   playSound() {
     new Audio('/assets/sounds/notify.mp3').play();
   }
+
+  /* ================= PSEUDO QUESTION UPLOAD ================= */
+  questionFile!: File;
+  questionSkill = '';
+  uploadResult: any = null;
+  skills: any[] = [];
+
+  onQuestionFile(event: Event) {
+    this.questionFile = (event.target as HTMLInputElement).files![0];
+  }
+
+  loadPseudoSkills() {
+    this.http
+      .get<any[]>(`${environment.apiUrl}/admin/pseudo/skills`)
+      .subscribe({
+        next: (res) => {
+          this.skills = res;
+        },
+        error: (err) => {
+          console.error('Failed to load pseudo skills', err);
+        }
+      });
+  }
+
+  uploadQuestions() {
+
+    if (!this.questionSkill || !this.questionSkill.trim()) {
+      alert('Please enter skill slug (e.g. core-java)');
+      return;
+    }
+
+    if (!this.questionFile) {
+      alert('Please select a file');
+      return;
+    }
+
+    const form = new FormData();
+    form.append('file', this.questionFile);
+    form.append('skill', this.questionSkill.trim());
+
+    this.http.post(
+      `${environment.apiUrl}/admin/pseudo/questions/upload`,
+      form
+    ).subscribe({
+      next: (res) => {
+        this.uploadResult = res;
+        alert('Questions uploaded successfully');
+      },
+      error: (err) => {
+        console.error(err);
+        alert(err.error?.error || 'Upload failed');
+      }
+    });
+  }
+
+
 }

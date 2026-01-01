@@ -41,6 +41,10 @@ import { ContactComponent } from './public/support/contact.component/contact.com
 import { FaqComponent } from './public/support/faq.component/faq.component';
 import { FeedbackComponent } from './public/support/feedback.component/feedback.component';
 import { HelpComponent } from './public/support/help.component/help.component';
+import { PseudoCodeComponent } from './public/pseudo-code/pseudo-code.component/pseudo-code.component';
+import { PseudoQuestionsComponent } from './public/pseudo-code/pseudo-questions.component/pseudo-questions.component';
+import { PseudoTestComponent } from './public/pseudo-code/pseudo-test.component/pseudo-test.component';
+import { AdminPseudoPreviewComponent } from './admin/analytics/admin-pseudo-preview.component/admin-pseudo-preview.component';
 
 export const routes: Routes = [
 
@@ -56,6 +60,29 @@ export const routes: Routes = [
       { path: 'reset-password', component: ResetPassword },
       { path: 'oauth-success', component: OAuthSuccess },
       { path: 'roadmaps', component: Roadmap },
+
+      /* 🧠 PSEUDO CODE PRACTICE ✅ MOVE HERE */
+      {
+        path: 'pseudo-code',
+        children: [
+          {
+            path: '',
+            component: PseudoCodeComponent
+          },
+          {
+            path: ':skill',
+            component: PseudoQuestionsComponent
+          },
+          {
+            path: ':skill/test',
+            component: PseudoTestComponent,
+            canActivate: [authGuard]
+          }
+        ]
+      },
+      {
+        path: 'admin/pseudo/preview/:skill', component: AdminPseudoPreviewComponent, canActivate: [authGuard, adminGuard]
+      },
 
       //profile
       {

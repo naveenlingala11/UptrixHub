@@ -1,0 +1,27 @@
+<section class="pseudo-hero">
+  <h1>Pseudo Code Practice</h1>
+  <p>
+    Improve logical thinking, execution flow & interview confidence
+    with timed pseudo-code challenges.
+  </p>
+</section>
+
+<section class="skills-section">
+  <div class="skills-grid">
+
+    <div class="skill-card" *ngFor="let s of skills">
+      <div class="card-top">
+        <span class="level">Logic</span>
+        <span class="count">🧠 20+ Qs</span>
+      </div>
+
+      <h3>{{ s.title }}</h3>
+      <p>{{ s.description || 'Practice real interview-level pseudo code questions.' }}</p>
+
+      <button class="practice-btn" (click)="start(s.slug)">
+        Start Practice <span>→</span>
+      </button>
+    </div>
+
+  </div>
+</section>

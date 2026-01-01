@@ -21,12 +21,17 @@
 
     <!-- ================= CENTER : NAV LINKS ================= -->
     <ul class="nav-links" [class.open]="mobileOpen">
+      <li class="nav-item">
+        <a routerLink="/pseudo-code" (click)="closeMobileMenu()">
+          Pseudo Code
+        </a>
+      </li>
 
       <!-- ================= BEFORE LOGIN ================= -->
       <ng-container *ngIf="!(isLoggedIn$ | async)">
 
         <!-- ================= CATALOG ================= -->
-        <li class="nav-item catalog" tabindex="0" (click)="toggleCatalog($event)" (keydown)="handleKeydown($event)" (click)="closeMobileMenu()">
+        <li class="nav-item catalog" tabindex="0" (click)="toggleCatalog($event)" (keydown)="handleKeydown($event)">
           <span class="nav-link">
             Catalog <span class="caret">▾</span>
           </span>
@@ -82,7 +87,7 @@
 
         <!-- ================= COURSES ================= -->
         <li class="nav-item">
-          <a routerLink="/courses" (click)="closeMobileMenu()" >Courses</a>
+          <a routerLink="/courses" (click)="closeMobileMenu()">Courses</a>
           <div class="dropdown">
             <div class="dropdown-section">
               <h6>Java Track</h6>
@@ -151,28 +156,28 @@
           <a routerLink="/courses" (click)="closeMobileMenu()">My Courses</a>
           <div class="dropdown">
             <div class="dropdown-section">
-              <a routerLink="/dashboard/home"(click)="closeMobileMenu()">Continue Learning</a>
-              <a routerLink="/courses"(click)="closeMobileMenu()">All Courses</a>
+              <a routerLink="/dashboard/home" (click)="closeMobileMenu()">Continue Learning</a>
+              <a routerLink="/courses" (click)="closeMobileMenu()">All Courses</a>
             </div>
           </div>
         </li>
 
         <li class="nav-item">
-          <a routerLink="/practice/code"(click)="closeMobileMenu()">Practice</a>
+          <a routerLink="/practice/code" (click)="closeMobileMenu()">Practice</a>
           <div class="dropdown">
             <div class="dropdown-section">
-              <a routerLink="/practice/java"(click)="closeMobileMenu()">Java Problems</a>
-              <a routerLink="/practice/dsa"(click)="closeMobileMenu()">DSA</a>
+              <a routerLink="/practice/java" (click)="closeMobileMenu()">Java Problems</a>
+              <a routerLink="/practice/dsa" (click)="closeMobileMenu()">DSA</a>
             </div>
           </div>
         </li>
 
         <li class="nav-item pro">
-          <a routerLink="/pro"(click)="closeMobileMenu()">Interviews Guide</a>
+          <a routerLink="/pro" (click)="closeMobileMenu()">Interviews Guide</a>
           <div class="dropdown">
             <div class="dropdown-section">
-              <a routerLink="/pro/interviews"(click)="closeMobileMenu()">Advanced Interviews</a>
-              <a routerLink="/pro/analytics"(click)="closeMobileMenu()">Progress Analytics</a>
+              <a routerLink="/pro/interviews" (click)="closeMobileMenu()">Advanced Interviews</a>
+              <a routerLink="/pro/analytics" (click)="closeMobileMenu()">Progress Analytics</a>
             </div>
           </div>
         </li>
@@ -222,18 +227,13 @@
   </div>
 </nav>
 
-<div class="dashboard" *ngIf="isLoggedIn$ | async; else publicLayout">
-  <main class="content">
-    <router-outlet></router-outlet>
-  </main>
-</div>
-
 <!-- ================= PAGE CONTENT ================= -->
-<ng-template #publicLayout>
-  <main class="page-container">
-    <router-outlet></router-outlet>
-  </main>
-</ng-template>
+<main class="page-container" [class.dashboard-layout]="isLoggedIn$ | async">
+
+  <router-outlet></router-outlet>
+
+</main>
+
 
 <!-- =========================
      FOOTER

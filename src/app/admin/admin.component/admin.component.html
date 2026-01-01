@@ -316,6 +316,36 @@
 
         </section>
 
+        <!-- ================= PSEUDO QUESTION UPLOAD ================= -->
+        <div class="card">
+            <h3>🧠 Pseudo Code Question Upload</h3>
+
+            <select [(ngModel)]="questionSkill">
+                <option value="">Select skill</option>
+                <option *ngFor="let s of skills" [value]="s.slug">
+                    {{ s.title }} ({{ s.slug }})
+                </option>
+            </select>
+
+            <input type="file" accept=".csv,.json" (change)="onQuestionFile($event)">
+
+            <button class="btn primary" (click)="uploadQuestions()">
+                Upload Questions
+            </button>
+
+            <div *ngIf="uploadResult" class="upload-summary">
+                <p>Total: {{ uploadResult.total }}</p>
+                <p>Success: {{ uploadResult.success }}</p>
+                <p>Failed: {{ uploadResult.failed }}</p>
+
+                <ul *ngIf="uploadResult.errors?.length">
+                    <li *ngFor="let e of uploadResult.errors">
+                        ⚠ {{ e }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
         <!-- ================= RESET PASSWORD MODAL ================= -->
         <div class="modal-backdrop" *ngIf="resetUser">
             <div class="modal">

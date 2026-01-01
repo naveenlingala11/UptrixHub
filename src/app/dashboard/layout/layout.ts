@@ -113,17 +113,29 @@ export class Layout implements OnInit, OnDestroy {
   /* ================= OUTSIDE CLICK ================= */
   @HostListener('document:click', ['$event'])
   onOutsideClick(event: MouseEvent) {
-    if (!this.mobileOpen) return;
-
     const target = event.target as HTMLElement;
 
+    /* ===== MOBILE MENU CLOSE ===== */
+    if (this.mobileOpen) {
+      if (
+        !target.closest('.nav-links') &&
+        !target.closest('.hamburger')
+      ) {
+        this.closeMobileMenu();
+        return;
+      }
+    }
+
+    /* ===== CATALOG CLOSE ===== */
     if (
-      !target.closest('.nav-links') &&
-      !target.closest('.hamburger')
+      this.isCatalogOpen &&
+      !target.closest('.catalog-panel') &&
+      !target.closest('.catalog')
     ) {
-      this.closeMobileMenu();
+      this.isCatalogOpen = false;
     }
   }
+
 
   logout() {
     this.authState.logout();

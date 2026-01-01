@@ -1,0 +1,74 @@
+.pseudo-hero {
+  max-width: 900px;
+  margin: 70px auto 40px;
+  text-align: center;
+}
+
+.pseudo-hero h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg,#2563eb,#7c3aed);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.pseudo-hero p {
+  color: #6b7280;
+  margin-top: 12px;
+  font-size: 1.1rem;
+}
+
+.skills-section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+  gap: 28px;
+}
+
+.skill-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 26px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.1);
+  transition: .35s;
+}
+
+.skill-card:hover {
+  transform: translateY(-10px);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.level {
+  font-size: .75rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-weight: 600;
+}
+
+.count {
+  font-size: .75rem;
+  color: #64748b;
+}
+
+.practice-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg,#2563eb,#7c3aed);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
