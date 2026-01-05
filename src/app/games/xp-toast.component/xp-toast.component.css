@@ -1,0 +1,31 @@
+.xp-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: linear-gradient(135deg,#2563eb,#7c3aed);
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 800;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  animation: slideUp .4s ease;
+  z-index: 9999;
+}
+
+.xp-toast span {
+  display: block;
+  font-size: .8rem;
+  font-weight: 600;
+  opacity: .9;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,189 @@
+<!-- ================= HERO SECTION ================= -->
+<section class="hero-ref">
+  <div class="hero-container">
+
+    <!-- LEFT -->
+    <div class="hero-left">
+
+      <h1 class="hero-title">
+        Crack <span class="muted">Java Interviews</span><br />
+        With <span class="gradient-text">Real Interview Questions</span><br />
+        in <span class="bold">30 Days</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Ace Java & Backend interview rounds using structured learning kits
+        built from real questions asked in top tech companies.
+      </p>
+
+      <div class="hero-badges">
+        <span class="pill green">● 10,000+ Learners</span>
+        <span class="pill blue">✓ Lifetime Access</span>
+        <span class="pill purple">✓ Regular Updates</span>
+      </div>
+
+      <div class="hero-actions">
+        <a routerLink="/register" class="btn-primary">
+          Explore Java Kits →
+        </a>
+        <a routerLink="/roadmaps" class="btn-outline">
+          Why Choose Us
+        </a>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="hero-right">
+      <div class="hero-visual-bg">
+
+        <div class="code-card">
+          <div class="code-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+
+          <pre class="code-content">
+<code [innerHTML]="heroCodeSnippet"></code>
+          </pre>
+        </div>
+
+        <div class="tech-tags">
+          <span>JAVA</span>
+          <span>SPRING</span>
+          <span>DSA</span>
+        </div>
+
+        <div class="mini-stats">
+          <div class="stat-box">
+            <h3>{{ publicStats?.learners }}+</h3>
+            <p>Learners</p>
+          </div>
+          <div class="stat-box">
+            <h3>{{ publicStats?.successRate }}%</h3>
+            <p>Success Rate</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= CHOOSE INTERVIEW KIT ================= -->
+<section class="kit-section">
+  <div class="container">
+
+    <div class="kit-top-badge">
+      🔥 LIMITED TIME: <strong>90% OFF</strong>
+    </div>
+
+    <h2 class="kit-title">
+      Choose Your <span class="gradient-text">Interview Kit</span>
+    </h2>
+
+    <p class="kit-subtitle">
+      Premium Java & Backend preparation kits trusted by thousands of learners
+    </p>
+
+    <div class="kit-grid">
+
+      <div class="kit-card yellow">
+        <div class="kit-icon">JAVA</div>
+        <span class="kit-tag">Foundation</span>
+        <h3>Core Java Interview Kit</h3>
+        <div class="kit-enroll">👥 8.5k+ enrolled</div>
+        <span class="discount">⚡ 90% OFF</span>
+        <div class="price">₹149 <span>₹1499</span></div>
+        <a routerLink="/kits/core-java" class="kit-btn yellow">Get Access →</a>
+      </div>
+
+      <div class="kit-card blue">
+        <div class="kit-icon">SPRING</div>
+        <span class="kit-tag">Backend</span>
+        <h3>Spring Boot Interview Kit</h3>
+        <div class="kit-enroll">👥 11.3k+ enrolled</div>
+        <span class="discount">⚡ 90% OFF</span>
+        <div class="price">₹199 <span>₹1999</span></div>
+        <a routerLink="/kits/spring-boot" class="kit-btn blue">Get Access →</a>
+      </div>
+
+      <div class="kit-card gradient featured">
+        <div class="bestseller">⭐ BESTSELLER</div>
+        <div class="kit-icon">&lt;/&gt;</div>
+        <span class="kit-tag">All-in-One</span>
+        <h3>Java Full Stack Interview Kit</h3>
+        <div class="kit-enroll">👥 15.9k+ enrolled</div>
+        <span class="discount">⚡ 90% OFF</span>
+        <div class="price">₹299 <span>₹2999</span></div>
+        <a routerLink="/kits/fullstack-java" class="kit-btn gradient">
+          Get Access →
+        </a>
+      </div>
+
+      <div class="kit-card green">
+        <div class="kit-icon">MS</div>
+        <span class="kit-tag">Advanced</span>
+        <h3>Microservices Interview Kit</h3>
+        <div class="kit-enroll">👥 6.5k+ enrolled</div>
+        <span class="discount">⚡ 90% OFF</span>
+        <div class="price">₹299 <span>₹2999</span></div>
+        <a routerLink="/kits/microservices" class="kit-btn green">
+          Get Access →
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq-section">
+  <div class="container">
+
+    <span class="faq-badge">FAQ</span>
+    <h2 class="faq-title">Common Questions</h2>
+    <p class="faq-subtitle">Everything you need to know</p>
+
+    <div class="faq-list">
+
+      <div class="faq-item"
+           *ngFor="let f of faqs; let i = index"
+           [class.active]="activeFaq === i">
+
+        <!-- QUESTION -->
+        <div class="faq-question"
+             (click)="i > 1 ? null : toggleFaq(i)">
+          <span class="faq-icon">❓</span>
+          {{ f.q }}
+          <span *ngIf="i > 1">🔒</span>
+          <span class="arrow">{{ activeFaq === i ? '▲' : '▼' }}</span>
+        </div>
+
+        <!-- ANSWER -->
+        <div class="faq-answer"
+             *ngIf="activeFaq === i && i <= 1">
+          {{ f.a }}
+        </div>
+
+        <!-- LOCKED -->
+        <div class="faq-answer locked"
+             *ngIf="activeFaq === i && i > 1">
+          🔒 Please login to unlock this answer
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= STICKY CTA ================= -->
+<div class="sticky-cta" *ngIf="showStickyCTA">
+  <span>🔥 Crack Java Interviews Faster</span>
+  <button (click)="buyNow()">Buy Complete Java Kit →</button>
+</div>

@@ -243,7 +243,13 @@ export class Layout implements OnInit, OnDestroy {
   toggleCatalog(e: Event) {
     e.stopPropagation();
     this.isCatalogOpen = !this.isCatalogOpen;
+
+    document.body.classList.toggle(
+      'catalog-open',
+      this.isCatalogOpen
+    );
   }
+
 
   selectCategory(key: string) {
     this.activeCategory = key;

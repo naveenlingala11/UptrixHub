@@ -1,0 +1,362 @@
+<ng-container *ngIf="isLoggedIn">
+
+    <section class="after-login-section">
+        <div class="container">
+
+            <!-- HEADER -->
+            <div class="after-header">
+                <div>
+                    <h2>Welcome back, {{ user?.name }} 👋</h2>
+                    <p>Continue your Java interview preparation journey</p>
+                </div>
+                <a routerLink="/dashboard" class="btn-primary">Go to Dashboard →</a>
+            </div>
+
+            <!-- CONTINUE LEARNING -->
+            <div class="continue-card" *ngIf="continueLearning">
+                <h3>Continue Learning</h3>
+
+                <p>
+                    You were last practicing
+                    <strong>{{ continueLearning.topic }}</strong>
+                    in <strong>{{ continueLearning.kit }}</strong>
+                </p>
+
+                <a [routerLink]="continueLearning.route" class="btn-primary">
+                    Resume Now →
+                </a>
+
+                <span class="continue-badge">
+                    🔥 {{ continueLearning.streak }}-day streak
+                </span>
+            </div>
+
+            <!-- STATS -->
+            <div class="after-stats">
+                <div class="after-stat">
+                    <strong>{{ dashboard?.activeKits }}</strong>
+                    <span>Active Kits</span>
+                </div>
+                <div class="after-stat">
+                    <strong>{{ dashboard?.overallProgress }}%</strong>
+                    <span>Overall Progress</span>
+                </div>
+                <div class="after-stat">
+                    <strong>{{ dashboard?.questionsSolved }}</strong>
+                    <span>Questions Solved</span>
+                </div>
+                <div class="after-stat">
+                    <strong>{{ dashboard?.streakDays }}</strong>
+                    <span>Days Streak 🔥</span>
+                </div>
+            </div>
+
+            <h3 class="after-section-title">Your Progress</h3>
+
+            <div class="xp-card">
+
+                <div class="xp-left">
+                    <h4>Level {{ dashboard?.level || 3 }}</h4>
+                    <p>{{ dashboard?.xp || 1250 }} XP</p>
+
+                    <div class="xp-bar">
+                        <span [style.width.%]="dashboard?.xpPercent || 62"></span>
+                    </div>
+
+                    <small>
+                        {{ dashboard?.xpToNext || 750 }} XP to next level
+                    </small>
+                </div>
+
+                <div class="xp-right">
+                    <div class="xp-ring">
+                        {{ dashboard?.xpPercent || 62 }}%
+                    </div>
+                </div>
+
+            </div>
+
+            <h3 class="after-section-title">Achievements</h3>
+
+            <div class="badge-grid">
+
+                <div class="badge-card unlocked">
+                    🏅
+                    <h4>Java Basics Master</h4>
+                    <small>Completed Core Java</small>
+                </div>
+
+                <div class="badge-card unlocked">
+                    🔥
+                    <h4>7 Day Streak</h4>
+                    <small>Practiced 7 days in a row</small>
+                </div>
+
+                <div class="badge-card locked">
+                    🧠
+                    <h4>Bug Hunter</h4>
+                    <small>Play Bug Hunter game</small>
+                </div>
+
+                <div class="badge-card locked">
+                    🎯
+                    <h4>Interview Ready</h4>
+                    <small>Score 80% in mock</small>
+                </div>
+
+            </div>
+
+            <!-- MY KITS -->
+
+            <h3 class="after-section-title">My Interview Kits</h3>
+
+            <div class="after-kits">
+                <div class="after-kit-card" *ngFor="let kit of myKits" [class.locked]="!kit.purchased"
+                    [class.active]="kit.active">
+
+                    <h4>{{ kit.title }}</h4>
+
+                    <p *ngIf="kit.purchased">
+                        Progress: {{ kit.progress }}%
+                    </p>
+
+                    <div class="progress-bar" *ngIf="kit.purchased">
+                        <span [style.width.%]="kit.progress"></span>
+                    </div>
+
+                    <a [routerLink]="kit.route" class="after-btn">
+                        {{ kit.purchased ? 'Resume →' : 'Unlock →' }}
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- LEARNING PATH -->
+            <h3 class="after-section-title">Recommended For You</h3>
+            <div class="path-grid">
+                <div class="path-card" *ngFor="let item of learningPath"
+                    [class.recommended]="item.status === 'recommended'">
+                    <h4>{{ item.title }}</h4>
+                    <p>{{ item.description }}</p>
+                    <div class="progress-bar">
+                        <span [style.width.%]="item.progress"></span>
+                    </div>
+                    <a [routerLink]="item.route" class="path-btn">
+                        {{ item.action }} →
+                    </a>
+                </div>
+            </div>
+
+            <h3 class="after-section-title">Interview Readiness Roadmap</h3>
+
+            <div class="roadmap-grid">
+
+                <div class="roadmap-card completed">
+                    <h4>Core Java</h4>
+                    <p>Collections, OOP, Multithreading</p>
+                    <span>Completed</span>
+                </div>
+
+                <div class="roadmap-card active">
+                    <h4>Spring Boot</h4>
+                    <p>REST APIs, JPA, Security</p>
+                    <span>In Progress</span>
+                </div>
+
+                <div class="roadmap-card">
+                    <h4>System Design</h4>
+                    <p>Scalability, Databases</p>
+                    <span>Locked</span>
+                </div>
+
+            </div>
+
+            <!-- HEATMAP -->
+            <h3 class="after-section-title">Learning Activity</h3>
+            <div class="heatmap-grid">
+                <div class="heat-cell" *ngFor="let day of activityDays" [ngClass]="getHeatClass(day.count)">
+                </div>
+            </div>
+
+            <!-- RESUME -->
+            <h3 class="after-section-title">Resume Strength Analyzer</h3>
+
+            <div class="resume-pro-card" *ngIf="resumeDetail">
+
+                <!-- LEFT -->
+                <div class="resume-left">
+
+                    <div class="resume-ring">
+                        {{ resumeDetail.score }}%
+                        <small>{{ resumeDetail.label }}</small>
+                    </div>
+
+                    <small class="uploaded-time" *ngIf="resumeDetail.lastUploadedAt">
+                        Last updated:
+                        {{ resumeDetail.lastUploadedAt | date:'medium' }}
+                    </small>
+
+                    <input type="file" accept="application/pdf" (change)="onResumeSelect($event)" />
+
+                    <button class="resume-btn" (click)="uploadResume()">
+                        Upload New Resume
+                    </button>
+
+                    <a routerLink="/resume-checker" class="resume-link">
+                        Analyze with Job Description →
+                    </a>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="resume-right">
+
+                    <div class="resume-block">
+                        <h4>🔥 Key Skills Detected</h4>
+                        <span class="chip good" *ngFor="let s of resumeDetail.skills">
+                            {{ s }}
+                        </span>
+                    </div>
+
+                    <div class="resume-block">
+                        <h4>💼 Experience Highlights</h4>
+                        <ul>
+                            <li *ngFor="let e of resumeDetail.experienceHighlights">
+                                {{ e }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="resume-block">
+                        <h4>🛠 Tools & Technologies</h4>
+                        <span class="chip neutral" *ngFor="let t of resumeDetail.tools">
+                            {{ t }}
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- SALARY -->
+            <h3 class="after-section-title">Salary Insight</h3>
+            <div class="salary-card">
+                <strong>{{ salaryInsight?.currentCTC }} → {{ salaryInsight?.expectedCTC }} LPA</strong>
+            </div>
+
+            <h3 class="after-section-title">Top Companies Preparation</h3>
+
+            <div class="company-grid">
+
+                <div class="company-card" *ngFor="let c of companies" [class.locked]="c.locked"
+                    (click)="openCompany(c)">
+
+                    <h4>{{ c.name }}</h4>
+                    <span class="tag">{{ c.tag }}</span>
+
+                    <p>{{ c.questions }} Interview Questions</p>
+
+                    <small>Focus: {{ c.focus.join(', ') }}</small>
+                </div>
+
+            </div>
+
+            <!-- ================= MOCK INTERVIEWS ================= -->
+            <h3 class="after-section-title">Mock Interviews</h3>
+
+            <div class="mock-home-card">
+
+                <!-- LEFT -->
+                <div class="mock-home-left">
+                    <h4>🎯 Practice Real Interviews</h4>
+                    <p>
+                        Schedule 1-on-1 mock interviews with experienced engineers.
+                        Get real feedback, confidence & interview readiness.
+                    </p>
+
+                    <ul class="mock-points">
+                        <li>✔ Live audio/video interview</li>
+                        <li>✔ Real interview questions</li>
+                        <li>✔ Detailed feedback & score</li>
+                        <li>✔ Zoom / Google Meet</li>
+                    </ul>
+
+                    <a routerLink="/mock-interview" class="mock-cta">
+                        Request Mock Interview →
+                    </a>
+                </div>
+
+                <!-- RIGHT -->
+                <div class="mock-home-right" *ngIf="mockInterview">
+                    <div class="mock-mini-ring" [class]="getReadinessClass(mockInterview.score)">
+                        {{ mockInterview.score }}%
+                    </div>
+
+                    <small>Interview Readiness</small>
+
+                    <p class="mini-text">
+                        {{ mockInterview.attempted }} / {{ mockInterview.total }} mocks completed
+                    </p>
+                </div>
+
+                <div class="mock-upcoming" *ngIf="mockInterview">
+
+                    <h3 class="after-section-title">Mock Interview Status</h3>
+
+                    <div class="mock-status-card">
+
+                        <div>
+                            <h4>Next Mock Interview</h4>
+                            <p *ngIf="mockInterview.upcoming">
+                                Scheduled on <strong>{{ mockInterview.upcoming | date:'medium' }}</strong>
+                            </p>
+                            <p *ngIf="!mockInterview.upcoming">
+                                No upcoming interviews scheduled
+                            </p>
+                        </div>
+
+                        <a routerLink="/mock-interview" class="mock-cta">
+                            Manage Mock Interviews →
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+            <h3 class="after-section-title">Daily Interview Tasks</h3>
+
+            <div class="daily-grid">
+                <div class="daily-card" *ngFor="let task of dailyPractice">
+                    <h4>{{ task.title }}</h4>
+                    <p>{{ task.description }}</p>
+
+                    <a [routerLink]="task.route" class="daily-btn">
+                        Start Now →
+                    </a>
+                </div>
+            </div>
+
+            <h3 class="after-section-title">Logic Games</h3>
+
+            <div class="games-card">
+
+                <div>
+                    <h4>Sharpen Your Developer Mindset</h4>
+                    <p>
+                        Play interview-style logic & debugging games.
+                        Earn XP & unlock badges.
+                    </p>
+                </div>
+                <a routerLink="/games" class="nav-link">
+                    🎮 Games
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+</ng-container>

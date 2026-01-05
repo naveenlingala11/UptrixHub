@@ -1,0 +1,89 @@
+<section class="checker-container">
+
+  <h1>📄 Resume ATS Checker</h1>
+  <p class="subtitle">
+    Analyze your resume against real job descriptions (ATS-style)
+  </p>
+
+  <!-- INPUT CARD -->
+  <div class="input-card">
+
+    <label>Target Role</label>
+    <input [(ngModel)]="targetRole">
+
+    <label>Job Description</label>
+    <textarea
+      placeholder="Paste job description here"
+      [(ngModel)]="jobDescription"></textarea>
+
+    <label>Upload Resume (PDF)</label>
+    <input type="file" accept="application/pdf" (change)="onFileSelect($event)">
+
+    <button (click)="analyze()">
+      {{ loading ? 'Analyzing...' : 'Analyze Resume' }}
+    </button>
+
+  </div>
+
+  <!-- RESULTS -->
+  <div *ngIf="matchResult" class="result-grid">
+
+    <!-- SCORE -->
+    <div class="score-card">
+      <h3>Job Match</h3>
+      <div class="score {{ scoreColor(matchResult.matchScore) }}">
+        {{ matchResult.matchScore }}%
+      </div>
+      <small>ATS Compatibility</small>
+    </div>
+
+    <!-- MATCHED SKILLS -->
+    <div class="details-card">
+      <h4>Matched Skills</h4>
+      <span class="chip good"
+            *ngFor="let s of matchResult.matchedSkills">
+        {{ s }}
+      </span>
+    </div>
+
+    <!-- MISSING SKILLS -->
+    <div class="details-card">
+      <h4>Missing Skills</h4>
+      <span class="chip bad"
+            *ngFor="let s of matchResult.missingSkills">
+        {{ s }}
+      </span>
+    </div>
+
+    <!-- RESUME IMPROVEMENT -->
+    <div class="details-card">
+      <h4>Resume Improvement Suggestions</h4>
+      <ul class="suggestions">
+        <li *ngFor="let s of matchResult.suggestions">
+          ✨ {{ s }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- MOCK INTERVIEW -->
+    <div class="details-card">
+      <h4>Mock Interview Topics</h4>
+      <ul>
+        <li *ngFor="let t of matchResult.mockInterviewTopics">
+          🎯 {{ t }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- IMPROVEMENT HISTORY -->
+    <div class="details-card" *ngIf="comparison">
+      <h4>Resume Progress</h4>
+      <p>
+        {{ comparison.oldScore }}% → {{ comparison.newScore }}%
+        <strong>(+{{ comparison.improvement }}%)</strong>
+      </p>
+    </div>
+
+  </div>
+
+</section>

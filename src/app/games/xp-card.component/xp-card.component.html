@@ -1,0 +1,21 @@
+<div class="xp-card">
+
+  <div class="level-circle">
+    <span>Lv {{ level }}</span>
+  </div>
+
+  <div class="xp-info">
+    <h4>{{ totalXp }} XP</h4>
+
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="progressPercent"></div>
+    </div>
+
+    <small>{{ 100 - (totalXp % 100) }} XP to next level</small>
+  </div>
+
+  <div class="streak">
+    🔥 {{ streak }}
+  </div>
+
+</div>

@@ -1,0 +1,21 @@
+<section class="public-leaderboard">
+  <h2>🏆 Top Bug Hunters</h2>
+  <p class="subtitle">
+    Best performers across the platform
+  </p>
+
+  <div class="card" *ngFor="let u of rows; let i = index">
+    <div class="rank">
+      {{ i + 1 }} {{ medal(i) }}
+    </div>
+
+    <div class="info">
+      <h4>{{ u.name }}</h4>
+      <span>{{ u.accuracy | number:'1.0-1' }}% accuracy</span>
+    </div>
+
+    <div class="xp">
+      ⚡ {{ u.totalXp }} XP
+    </div>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+.xp-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #fff;
+  padding: 18px 22px;
+  border-radius: 18px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.1);
+}
+
+.level-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#2563eb,#7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+}
+
+.xp-info {
+  flex: 1;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg,#2563eb,#7c3aed);
+}
+
+.streak {
+  font-size: 20px;
+  font-weight: 700;
+}

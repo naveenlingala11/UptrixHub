@@ -30,6 +30,8 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/prismjs/themes/prism-tomorrow.css",
+              "node_modules/flatpickr/dist/flatpickr.min.css",
+              "node_modules/flatpickr/dist/themes/material_blue.css",
               "src/styles.css"
             ]
           },

@@ -1,0 +1,31 @@
+<section class="achievements-page">
+
+  <h1>🏅 Achievements</h1>
+  <p class="sub">
+    Unlock badges by improving logic & consistency
+  </p>
+
+  <div class="achievements-grid">
+
+    <div
+      class="achievement-card"
+      *ngFor="let a of achievements"
+      [class.locked]="!a.unlocked">
+
+      <img [src]="a.icon" />
+
+      <h4>{{ a.title }}</h4>
+      <p>{{ a.description }}</p>
+
+      <span *ngIf="a.unlocked" class="unlocked">
+        ✅ Unlocked
+      </span>
+
+      <span *ngIf="!a.unlocked" class="locked-text">
+        🔒 Locked
+      </span>
+
+    </div>
+
+  </div>
+</section>

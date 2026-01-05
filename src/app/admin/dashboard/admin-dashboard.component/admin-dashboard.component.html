@@ -1,0 +1,41 @@
+<section class="admin-root">
+
+    <!-- HEADER -->
+    <header class="admin-header">
+        <h1>🛠 Admin Dashboard</h1>
+        <p>Manage platform content, users & games</p>
+    </header>
+
+    <!-- QUICK STATS (OPTIONAL – STATIC FOR NOW) -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h4>Total Users</h4>
+            <span>👤</span>
+        </div>
+        <div class="stat-card">
+            <h4>Active Games</h4>
+            <span>🎮</span>
+        </div>
+        <div class="stat-card">
+            <h4>Achievements</h4>
+            <span>🏆</span>
+        </div>
+        <div class="stat-card">
+            <h4>XP Rules</h4>
+            <span>⚙</span>
+        </div>
+    </div>
+
+    <!-- MAIN CARDS -->
+    <div class="admin-grid">
+        <a class="admin-card" *ngFor="let c of cards" [routerLink]="c.route">
+
+            <div class="icon">{{ c.icon }}</div>
+            <h3>{{ c.title }}</h3>
+            <p>{{ c.desc }}</p>
+            <span class="go">Open →</span>
+
+        </a>
+    </div>
+
+</section>

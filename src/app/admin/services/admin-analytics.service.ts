@@ -1,22 +1,75 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
-export class AdminAnalyticsService {
+/* ===================== MODELS ===================== */
 
-  private base = '/api/admin/analytics';
+export interface BugCategoryAnalytics {
+  bugCategory: string;
+  totalAttempts: number;
+  wrongAttempts: number;
+  wrongPercentage: number;
+}
 
-  constructor(private http: HttpClient) {}
+export interface BugQuestionAccuracy {
+  questionId: number;
+  title: string;
+  bugCategory: string;
+  totalAttempts: number;
+  correctAttempts: number;
+  accuracy: number;
+}
 
-  skillAnalytics() {
-    return this.http.get<any[]>(`${this.base}/skills`);
+export interface BugHunterLeaderboardRow {
+  userId: number;
+  name: string;
+  totalAttempts: number;
+  correctAttempts: number;
+  accuracy: number;
+  totalXp: number;
+}
+
+export interface PublicLeaderboardRow {
+  userId: number;
+  name: string;
+  totalAttempts: number;
+  correctAttempts: number;
+  accuracy: number;
+  totalXp: number;
+}
+/* ===================== SERVICE ===================== */
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BugHunterAnalyticsService {
+
+  private api = environment.apiUrl;
+
+  constructor(private http: HttpClient) { }
+
+  getCategoryAnalytics(): Observable<BugCategoryAnalytics[]> {
+    return this.http.get<BugCategoryAnalytics[]>(
+      `${this.api}/admin/bug-hunter/analytics/categories`
+    );
   }
 
-  subscriptionAnalytics() {
-    return this.http.get<any[]>(`${this.base}/subscriptions`);
+  getQuestionAccuracy(): Observable<BugQuestionAccuracy[]> {
+    return this.http.get<BugQuestionAccuracy[]>(
+      `${this.api}/admin/bug-hunter/analytics/questions/accuracy`
+    );
   }
 
-  difficultyAnalytics() {
-    return this.http.get<any[]>(`${this.base}/difficulty`);
+  getLeaderboard() {
+    return this.http.get<BugHunterLeaderboardRow[]>(
+      `${this.api}/admin/bug-hunter/analytics/leaderboard`
+    );
+  }
+
+  getPublicLeaderboard() {
+    return this.http.get<PublicLeaderboardRow[]>(
+      `${this.api}/bug-hunter/public/leaderboard`
+    );
   }
 }

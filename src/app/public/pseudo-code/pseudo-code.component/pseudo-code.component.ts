@@ -10,7 +10,6 @@ import { PseudoService } from '../pseudo.service';
   templateUrl: './pseudo-code.component.html',
   styleUrls: ['./pseudo-code.component.css']
 })
-
 export class PseudoCodeComponent {
 
   skills: any[] = [];
@@ -18,7 +17,7 @@ export class PseudoCodeComponent {
   constructor(
     private pseudo: PseudoService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.pseudo.getSkills().subscribe(res => this.skills = res);
@@ -26,5 +25,9 @@ export class PseudoCodeComponent {
 
   start(skill: string) {
     this.router.navigate(['/pseudo-code', skill, 'test']);
+  }
+
+  goToGames() {
+    this.router.navigate(['/games']);
   }
 }

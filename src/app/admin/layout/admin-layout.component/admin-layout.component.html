@@ -1,0 +1,41 @@
+<div class="admin-shell">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+
+    <h3 class="brand">
+      🛠 Admin
+      <i class="fas fa-home home-icon" title="Go to Admin Dashboard" (click)="goHome()">
+      </i>
+    </h3>
+
+    <nav>
+      <a routerLink="/admin" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/admin/users" routerLinkActive="active">Users</a>
+      <a routerLink="/admin/analytics" routerLinkActive="active">Analytics</a>
+      <a routerLink="/admin/achievements" routerLinkActive="active">Achievements</a>
+      <a routerLink="/admin/xp-rules" routerLinkActive="active">XP Rules</a>
+
+      <h4>Games</h4>
+      <a routerLink="/admin/games/bug-hunter" routerLinkActive="active">
+        Bug Hunter
+      </a>
+      <a routerLink="/admin/games/bug-hunter/bulk" routerLinkActive="active">
+        Bulk Upload
+      </a>
+      <a routerLink="/leaderboard">Leaderboard 🏆</a>
+    </nav>
+
+    <!-- FOOTER -->
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+
+  </aside>
+
+  <!-- ================= CONTENT ================= -->
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

@@ -1,63 +1,40 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { Chart } from 'chart.js/auto';
-import { AdminAnalyticsService } from '../../services/admin-analytics.service';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { BugCategoryAnalytics, BugQuestionAccuracy, BugHunterAnalyticsService } from '../../services/admin-analytics.service';
+
 
 @Component({
-  selector: 'app-admin-analytics',
   standalone: true,
-  templateUrl: './admin-analytics.component.html',
-  styleUrl: './admin-analytics.component.css'
+  imports: [CommonModule, FormsModule],
+  selector: 'app-admin-analytics',
+  templateUrl: './admin-analytics.component.html'
 })
-export class AdminAnalyticsComponent implements AfterViewInit {
+export class AdminAnalyticsComponent implements OnInit {
 
-  constructor(private analytics: AdminAnalyticsService) {}
+  analytics: BugCategoryAnalytics[] = [];
+  heatmap: BugQuestionAccuracy[] = [];
 
-  ngAfterViewInit() {
-    this.loadSkillChart();
-    this.loadSubscriptionChart();
-    this.loadDifficultyChart();
+  constructor(
+    private service: BugHunterAnalyticsService
+  ) {}
+
+  ngOnInit(): void {
+
+    this.service.getCategoryAnalytics()
+      .subscribe((res: BugCategoryAnalytics[]) => {
+        this.analytics = res;
+      });
+
+    this.service.getQuestionAccuracy()
+      .subscribe((res: BugQuestionAccuracy[]) => {
+        this.heatmap = res;
+      });
   }
 
-  loadSkillChart() {
-    this.analytics.skillAnalytics().subscribe(data => {
-      new Chart('skillChart', {
-        type: 'bar',
-        data: {
-          labels: data.map(d => d.skill),
-          datasets: [{
-            label: 'Average Score',
-            data: data.map(d => d.averageScore),
-          }]
-        }
-      });
-    });
-  }
-
-  loadSubscriptionChart() {
-    this.analytics.subscriptionAnalytics().subscribe(data => {
-      new Chart('subscriptionChart', {
-        type: 'doughnut',
-        data: {
-          labels: data.map(d => d.subscription),
-          datasets: [{
-            data: data.map(d => d.attempts),
-          }]
-        }
-      });
-    });
-  }
-
-  loadDifficultyChart() {
-    this.analytics.difficultyAnalytics().subscribe(data => {
-      new Chart('difficultyChart', {
-        type: 'pie',
-        data: {
-          labels: data.map(d => d.difficulty),
-          datasets: [{
-            data: data.map(d => d.count),
-          }]
-        }
-      });
-    });
+  color(acc: number): string {
+    if (acc < 40) return 'heat-red';
+    if (acc < 70) return 'heat-orange';
+    return 'heat-green';
   }
 }

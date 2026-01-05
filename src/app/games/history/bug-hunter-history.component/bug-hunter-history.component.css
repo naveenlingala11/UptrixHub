@@ -1,0 +1,70 @@
+.history-wrapper {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.history-header h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.accuracy {
+  background: linear-gradient(135deg,#22c55e,#3b82f6);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0f172a;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.history-table th,
+.history-table td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #1e293b;
+  color: #e5e7eb;
+}
+
+.history-table th {
+  background: #020617;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.badge.correct {
+  background: #22c55e;
+  color: #022c22;
+}
+
+.badge.wrong {
+  background: #ef4444;
+  color: #fff;
+}
+
+.xp {
+  font-weight: 800;
+  color: #a78bfa;
+}

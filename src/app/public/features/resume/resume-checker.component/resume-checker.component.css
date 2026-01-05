@@ -1,0 +1,88 @@
+.checker-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+.input-card,
+.score-card,
+.details-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.08);
+}
+
+.input-card {
+  margin-bottom: 30px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+textarea {
+  height: 140px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#2563eb,#7c3aed);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap: 20px;
+}
+
+.score {
+  font-size: 46px;
+  font-weight: 700;
+}
+
+.score.good { color: #16a34a; }
+.score.mid { color: #f59e0b; }
+.score.bad { color: #dc2626; }
+
+.chip {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  margin: 4px;
+  font-size: 12px;
+}
+
+.chip.good {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.chip.bad {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.suggestions {
+  padding-left: 18px;
+}
+
+.suggestions li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}

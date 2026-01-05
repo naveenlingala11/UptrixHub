@@ -1,0 +1,76 @@
+.admin-shell {
+  display: flex;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background: #0f172a;
+  color: #e5e7eb;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .brand {
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 24px;
+}
+
+.sidebar nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar a {
+  padding: 12px 14px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #c7d2fe;
+  font-weight: 600;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+  background: linear-gradient(135deg,#2563eb,#7c3aed);
+  color: white;
+}
+
+.sidebar h4 {
+  margin-top: 24px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+/* FOOTER */
+.sidebar-footer {
+  margin-top: auto;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #fee2e2;
+  color: #dc2626;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #fecaca;
+}
+
+/* CONTENT */
+.content {
+  flex: 1;
+  padding: 32px;
+}

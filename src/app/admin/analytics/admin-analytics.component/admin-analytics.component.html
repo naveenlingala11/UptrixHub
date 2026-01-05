@@ -1,18 +1,49 @@
-<h2 class="title">📊 Admin Analytics</h2>
+<h2>🐞 Bug Hunter – Most Wrong Bug Categories</h2>
 
-<div class="grid">
-  <div class="card">
-    <h3>Skill-wise Average Score</h3>
-    <canvas id="skillChart"></canvas>
-  </div>
+<table class="analytics-table">
+  <thead>
+    <tr>
+      <th>Bug Category</th>
+      <th>Total Attempts</th>
+      <th>Wrong Attempts</th>
+      <th>Wrong %</th>
+    </tr>
+  </thead>
 
-  <div class="card">
-    <h3>PRO vs FREE Attempts</h3>
-    <canvas id="subscriptionChart"></canvas>
-  </div>
+  <tbody>
+    <tr *ngFor="let a of analytics">
+      <td>{{ a.bugCategory }}</td>
+      <td>{{ a.totalAttempts }}</td>
+      <td>{{ a.wrongAttempts }}</td>
+      <td>
+        <span [class.danger]="a.wrongPercentage > 50">
+          {{ a.wrongPercentage | number:'1.0-1' }}%
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <div class="card">
-    <h3>Difficulty Distribution</h3>
-    <canvas id="difficultyChart"></canvas>
-  </div>
-</div>
+<h2>🔥 Bug Hunter – Question Accuracy Heatmap</h2>
+
+<table class="heatmap">
+  <thead>
+    <tr>
+      <th>Question</th>
+      <th>Bug Category</th>
+      <th>Attempts</th>
+      <th>Correct</th>
+      <th>Accuracy</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let q of heatmap" [class]="color(q.accuracy)">
+      <td>{{ q.title }}</td>
+      <td>{{ q.bugCategory }}</td>
+      <td>{{ q.totalAttempts }}</td>
+      <td>{{ q.correctAttempts }}</td>
+      <td>{{ q.accuracy | number:'1.0-1' }}%</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,165 @@
+<section class="admin-wrapper">
+
+  <!-- ================= HEADER ================= -->
+  <header class="admin-header">
+    <div>
+      <h1>🐞 Bug Hunter – Admin</h1>
+      <p>Manage questions, XP, difficulty & publishing</p>
+    </div>
+
+    <button class="btn primary" (click)="editing = {
+      title: '',
+      language: 'JAVA',
+      difficulty: 'EASY',
+      code: '',
+      bugType: '',
+      reason: '',
+      fix: '',
+      xp: 10,
+      active: true,
+      published: false
+    }">
+      ➕ Add Question
+    </button>
+  </header>
+
+  <!-- ================= FILTERS ================= -->
+  <div class="filters">
+    <select [(ngModel)]="filterDifficulty">
+      <option value="">All Difficulty</option>
+      <option>EASY</option>
+      <option>MEDIUM</option>
+      <option>HARD</option>
+    </select>
+
+    <select [(ngModel)]="filterLanguage">
+      <option value="">All Languages</option>
+      <option>JAVA</option>
+      <option>SPRING</option>
+    </select>
+
+    <select [(ngModel)]="filterActive">
+      <option value="">All Status</option>
+      <option value="true">Active</option>
+      <option value="false">Inactive</option>
+    </select>
+  </div>
+
+  <!-- ================= CONTENT ================= -->
+  <div class="admin-content">
+
+    <!-- ================= QUESTION LIST ================= -->
+    <div class="question-list">
+
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Lang</th>
+            <th>Difficulty</th>
+            <th>XP</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let q of filteredQuestions">
+            <td>{{ q.title }}</td>
+            <td>{{ q.language }}</td>
+
+            <td>
+              <span class="badge diff {{ q.difficulty }}">
+                {{ q.difficulty }}
+              </span>
+            </td>
+
+            <td>{{ q.xp }}</td>
+
+            <td>
+              <span class="badge" [class.active]="q.active" [class.inactive]="!q.active">
+                {{ q.active ? 'ACTIVE' : 'INACTIVE' }}
+              </span>
+            </td>
+
+            <td>
+              <span class="pill draft" *ngIf="!q.published">DRAFT</span>
+              <span class="pill live" *ngIf="q.published && q.active">LIVE</span>
+              <span class="pill off" *ngIf="!q.active">DISABLED</span>
+            </td>
+
+            <td class="actions">
+              <button title="Edit" (click)="edit(q)">✏️</button>
+
+              <button title="Publish" (click)="publish(q)" *ngIf="!q.published">
+                🚀
+              </button>
+
+              <button title="Disable" (click)="toggle(q)">
+                🛑
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <!-- ================= EDITOR ================= -->
+    <div class="editor" *ngIf="editing">
+
+      <h3>{{ editing.id ? 'Edit Question' : 'New Question' }}</h3>
+
+      <input [(ngModel)]="editing.title" placeholder="Title" />
+
+      <div class="row">
+        <select [(ngModel)]="editing.language">
+          <option>JAVA</option>
+          <option>SPRING</option>
+        </select>
+
+        <select [(ngModel)]="editing.difficulty">
+          <option>EASY</option>
+          <option>MEDIUM</option>
+          <option>HARD</option>
+        </select>
+
+        <input type="number" [(ngModel)]="editing.xp" placeholder="XP" />
+      </div>
+
+      <textarea [(ngModel)]="editing.code" placeholder="Buggy Code"></textarea>
+
+      <input [(ngModel)]="editing.bugType" placeholder="Bug Type" />
+
+      <textarea [(ngModel)]="editing.reason" placeholder="Why is this wrong?"></textarea>
+
+      <textarea [(ngModel)]="editing.fix" placeholder="Correct Fix"></textarea>
+
+      <div class="editor-actions">
+        <button class="btn primary" (click)="save()">💾 Save</button>
+        <button class="btn ghost" (click)="editing = null">Cancel</button>
+      </div>
+
+      <!-- ================= PREVIEW ================= -->
+      <div class="preview">
+        <h4>👁 Preview</h4>
+        <pre>{{ editing.code }}</pre>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= FUTURE FEATURES ================= -->
+  <section class="future">
+    <h3>🚀 Coming Soon</h3>
+    <ul>
+      <li>Level based question locking</li>
+      <li>XP multipliers</li>
+      <li>Success rate analytics</li>
+      <li>AI-generated bug questions</li>
+      <li>Preview as user (sandbox)</li>
+    </ul>
+  </section>
+
+</section>

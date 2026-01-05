@@ -2,11 +2,14 @@ import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
 import { AuthStateService } from './core/services/auth-state.service';
+import { PreviewBannerComponent } from "./admin/preview/preview-banner.component/preview-banner.component";
+import { XpToastComponent } from "./games/xp-toast.component/xp-toast.component";
+import { AchievementPopupComponent } from "./games/achievements/achievement-popup.component/achievement-popup.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, PreviewBannerComponent, XpToastComponent, AchievementPopupComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

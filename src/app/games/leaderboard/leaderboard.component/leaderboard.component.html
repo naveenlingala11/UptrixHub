@@ -1,0 +1,16 @@
+<section class="leaderboard">
+
+  <h2>🏆 Top Learners</h2>
+
+  <div class="leader-card" *ngFor="let p of players; let i = index">
+    <span class="rank">#{{ i + 1 }}</span>
+
+    <div class="info">
+      <strong>User {{ p.userId }}</strong>
+      <small>Level {{ p.level }}</small>
+    </div>
+
+    <span class="xp">{{ p.totalXp }} XP</span>
+  </div>
+
+</section>

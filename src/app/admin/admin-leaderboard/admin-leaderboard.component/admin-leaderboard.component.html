@@ -1,0 +1,26 @@
+<h2>🏆 Bug Hunter Leaderboard</h2>
+
+<table class="leaderboard">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>User</th>
+      <th>Attempts</th>
+      <th>Correct</th>
+      <th>Accuracy</th>
+      <th>XP</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let u of leaderboard; let i = index">
+      <td>{{ i + 1 }} {{ medal(i) }}</td>
+      <td>{{ u.name }}</td>
+      <td>{{ u.totalAttempts }}</td>
+      <td>{{ u.correctAttempts }}</td>
+      <td>{{ u.accuracy | number:'1.0-1' }}%</td>
+      <td class="xp">{{ u.totalXp }}</td>
+    </tr>
+  </tbody>
+</table>
+<h2>📅 Recent Bug Hunter Players</h2>

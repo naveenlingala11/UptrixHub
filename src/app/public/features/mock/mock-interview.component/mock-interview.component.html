@@ -1,0 +1,105 @@
+<section class="mock-container">
+
+    <!-- HERO -->
+    <div class="mock-hero">
+        <h1>Mock Interviews</h1>
+        <p>Practice real interviews with experienced engineers.</p>
+    </div>
+
+    <!-- REQUEST -->
+    <div class="mock-card request">
+
+        <h2>Request Mock Interview</h2>
+        <p class="hint">Select role, platform and preferred time slots</p>
+
+        <label>Target Role</label>
+        <input [(ngModel)]="role" placeholder="Java Backend Developer" />
+
+        <label>Interview Platform</label>
+        <select [(ngModel)]="platform">
+            <option value="ZOOM">Zoom</option>
+            <option value="GOOGLE_MEET">Google Meet</option>
+        </select>
+
+        <label class="field-label">Preferred Time Slots</label>
+        <p class="field-desc">Choose 2–3 flexible slots</p>
+
+        <div class="calendar-wrapper">
+            <i class="bx bx-calendar calendar-icon"></i>
+            <input #calendar class="calendar-input" placeholder="Select date & time" readonly />
+        </div>
+
+        <small class="muted">
+            {{ slots.length }}/3 slots selected
+        </small>
+
+        <label class="field-label">Your Timezone</label>
+        <select [(ngModel)]="timezone">
+            <option value="Asia/Kolkata">India (IST)</option>
+            <option value="UTC">UTC</option>
+            <option value="America/New_York">US (EST)</option>
+            <option value="Europe/London">UK (GMT)</option>
+        </select>
+
+        <div class="slot-preview" *ngIf="slots.length">
+            <div class="slot-chip" *ngFor="let s of slots; let i = index">
+                <i class="bx bx-time-five"></i>
+                {{ s | date:'MMM d, h:mm a' }}
+                <button class="remove-slot" (click)="removeSlot(i)">×</button>
+            </div>
+        </div>
+
+        <button class="submit-btn" [disabled]="submitting || !isPro" (click)="submitRequest()">
+            {{ submitting ? 'Submitting...' : 'Request Interview →' }}
+        </button>
+
+    </div>
+
+    <!-- REQUESTS -->
+    <div class="mock-card">
+        <h3>Your Requests</h3>
+
+        <div *ngIf="requests.length === 0" class="empty">No requests yet</div>
+
+        <div class="status-card" *ngFor="let r of requests">
+            <div class="row">
+                <strong>{{ r.role }}</strong>
+                <span class="status" [class]="getStatusClass(r.status)">
+                    {{ r.status }}
+                </span>
+            </div>
+            <small>{{ r.platform }} • {{ r.createdAt | date:'mediumDate' }}</small>
+        </div>
+    </div>
+
+    <!-- SESSIONS -->
+    <div class="mock-card">
+        <h3>Interview Sessions</h3>
+
+        <div *ngIf="sessions.length === 0" class="empty">
+            No interviews scheduled
+        </div>
+
+        <div class="session-card" *ngFor="let s of sessions">
+
+            <div class="session-header">
+                <strong>{{ s.role }}</strong>
+                <span class="status" [class]="getStatusClass(s.status)">
+                    {{ s.status }}
+                </span>
+            </div>
+
+            <div *ngIf="s.status === 'UPCOMING'">
+                <p class="countdown">Starts in {{ getCountdown(s.scheduledAt) }}</p>
+                <a class="join-btn" [href]="s.meetingLink" target="_blank">Join Interview →</a>
+            </div>
+
+            <div *ngIf="s.status === 'COMPLETED'" class="completed">
+                <div class="score-ring">{{ s.score }}%</div>
+                <p class="review">{{ s.review }}</p>
+            </div>
+
+        </div>
+    </div>
+
+</section>

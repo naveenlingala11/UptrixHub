@@ -1,0 +1,108 @@
+<!-- ================= HERO ================= -->
+<section class="games-hero">
+  <h1>🎮 Logic Games</h1>
+  <p>
+    Not just quizzes.
+    Real-world developer mindset building games.
+  </p>
+</section>
+
+<!-- ================= FEATURED GAME ================= -->
+<section class="featured-game">
+
+  <div class="featured-card">
+
+    <div class="badge">FEATURED</div>
+
+    <h2>🐞 Bug Hunter Pro</h2>
+
+    <p class="tagline">
+      Think like a real developer.
+      Identify bugs, understand root cause, and fix them.
+    </p>
+
+    <ul class="features">
+      <li>✔ 25 real-world bug challenges</li>
+      <li>✔ Java / Backend focused</li>
+      <li>✔ XP, checkpoints & badges</li>
+      <li>✔ Interview-level difficulty</li>
+    </ul>
+
+    <div class="actions">
+      <button class="btn primary" (click)="startBugHunter()">
+        Play Now →
+      </button>
+      <button class="btn outline">
+        How it Works
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= XP + STREAK ================= -->
+<section class="stats-section">
+  <app-xp-card [totalXp]="userXp.totalXp" [level]="userXp.level" [streak]="userXp.currentStreak">
+  </app-xp-card>
+
+  <app-streak-widget [streak]="userXp.currentStreak">
+  </app-streak-widget>
+</section>
+
+<!-- ================= ACHIEVEMENTS ================= -->
+<section class="achievements-strip">
+
+  <h3>🏅 Your Achievements</h3>
+
+  <div class="badges">
+    <img *ngFor="let b of achievements" [src]="b.icon" [title]="b.title" [class.locked]="!b.unlocked" />
+  </div>
+
+  <div class="done" *ngIf="currentIndex === questions.length">
+
+    <h2>🎉 Session Completed</h2>
+
+    <p>Correct Answers: <strong>{{ correctCount }}</strong></p>
+
+    <p>
+      XP Earned:
+      <strong>{{ correctCount * question.xp }}</strong>
+    </p>
+
+    <button class="next-btn" (click)="loadSession()">
+      🔁 Play Again
+    </button>
+
+  </div>
+
+</section>
+
+<!-- ================= UPCOMING ================= -->
+<section class="upcoming-games">
+
+  <h2>🚧 More Games Coming Soon</h2>
+
+  <div class="games-grid">
+
+    <div class="game-tile locked">
+      <h3>⚙ Output Predictor</h3>
+      <p>Predict output of tricky Java code</p>
+      <span class="lock">🔒 Locked</span>
+    </div>
+
+    <div class="game-tile locked">
+      <h3>🧩 API Design Puzzle</h3>
+      <p>Design REST APIs the right way</p>
+      <span class="lock">🔒 Locked</span>
+    </div>
+
+    <div class="game-tile locked">
+      <h3>⏱ Time Complexity Battle</h3>
+      <p>Choose the most efficient solution</p>
+      <span class="lock">🔒 Locked</span>
+    </div>
+
+  </div>
+
+</section>

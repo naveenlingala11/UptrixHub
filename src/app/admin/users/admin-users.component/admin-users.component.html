@@ -1,0 +1,22 @@
+<h2>👥 Users</h2>
+
+<table class="admin-table">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Actions</th>
+  </tr>
+
+  <tr *ngFor="let u of users">
+    <td>{{ u.name }}</td>
+    <td>{{ u.email }}</td>
+    <td>{{ u.role }}</td>
+    <td>
+      <button class="btn preview"
+              (click)="previewAsUser(u.id)">
+        👀 Preview
+      </button>
+    </td>
+  </tr>
+</table>

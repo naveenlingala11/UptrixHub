@@ -1,11 +1,48 @@
+<!-- ================= HERO ================= -->
 <section class="pseudo-hero">
   <h1>Pseudo Code Practice</h1>
   <p>
     Improve logical thinking, execution flow & interview confidence
-    with timed pseudo-code challenges.
+    with structured practice and games.
   </p>
 </section>
 
+<!-- ================= PLAY GAMES ================= -->
+<section class="games-section">
+  <div class="game-card" (click)="goToGames()">
+    <div class="game-content">
+      <h2>🎮 Play Games</h2>
+      <p>
+        Debug real code, hunt bugs, predict outputs  
+        and build real developer mindset.
+      </p>
+      <span class="game-cta">Start Playing →</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRACTICE TYPES ================= -->
+<section class="practice-types">
+  <h2 class="section-title">Practice</h2>
+
+  <div class="type-grid">
+
+    <!-- MCQs -->
+    <div class="type-card active">
+      <h3>📝 MCQs</h3>
+      <p>Multiple choice logic & output based questions</p>
+    </div>
+
+    <!-- PSEUDO CODE -->
+    <div class="type-card">
+      <h3>⚙️ Pseudo Code</h3>
+      <p>Execution flow & logical thinking practice</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
 <section class="skills-section">
   <div class="skills-grid">
 
@@ -16,7 +53,7 @@
       </div>
 
       <h3>{{ s.title }}</h3>
-      <p>{{ s.description || 'Practice real interview-level pseudo code questions.' }}</p>
+      <p>{{ s.description || 'Practice real interview-level questions.' }}</p>
 
       <button class="practice-btn" (click)="start(s.slug)">
         Start Practice <span>→</span>
@@ -25,3 +62,5 @@
 
   </div>
 </section>
+<!-- ================= FOOTER SPACER ================= -->
+<div class="footer-spacer"></div>

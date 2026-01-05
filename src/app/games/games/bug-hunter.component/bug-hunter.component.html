@@ -1,0 +1,82 @@
+<section class="bug-hunter" *ngIf="question">
+
+  <header class="game-header">
+    <h1>🐞 Bug Hunter Pro</h1>
+    <div class="meta">
+      <span>{{ currentIndex + 1 }}/{{ totalQuestions }}</span>
+      <span>{{ correctCount }} Correct</span>
+    </div>
+  </header>
+
+  <div class="session-bar">
+    <span>🎯 Accuracy {{ accuracy }}%</span>
+    <span>🧠 {{ question.difficulty }}</span>
+  </div>
+
+  <div class="game-progress">
+    <div class="fill" [style.width.%]="progressPercent"></div>
+  </div>
+
+  <div class="code-card">
+    <pre class="code">{{ showResult ? highlightedCode : question.code }}</pre>
+  </div>
+
+  <div class="question">❓ What type of bug exists?</div>
+
+  <button *ngIf="!showHint && !showResult" class="hint-btn" (click)="revealHint()">
+    💡 Reveal Hint
+  </button>
+
+  <div class="hint" *ngIf="showHint">{{ hint }}</div>
+
+  <div class="options">
+    <button *ngFor="let o of options" (click)="select(o)" [disabled]="showResult"
+      [class.correct]="showResult && o === question.bugType"
+      [class.wrong]="showResult && selected === o && o !== question.bugType">
+      {{ o }}
+    </button>
+  </div>
+
+  <div class="result" *ngIf="showResult">
+
+    <h3 [class.success]="isCorrect" [class.error]="!isCorrect">
+      {{ isCorrect ? '✅ Correct!' : '❌ Wrong Answer' }}
+    </h3>
+
+    <p *ngIf="wrongExplanation">❌ {{ wrongExplanation }}</p>
+
+    <p><strong>✔ Bug:</strong> {{ question.bugType }}</p>
+    <p><strong>🧠 Why:</strong> {{ question.reason }}</p>
+    <p><strong>🛠 Fix:</strong> {{ question.fix }}</p>
+
+    <div class="ai-box" *ngIf="aiLoading">🤖 AI analyzing...</div>
+
+    <div class="ai-box" *ngIf="aiExplanation">
+      <h4>🤖 AI Explanation</h4>
+      <pre>{{ aiExplanation }}</pre>
+
+      <h4>🎯 Interview Follow-up</h4>
+      <p>How would you prevent this in production?</p>
+    </div>
+
+    <button class="next-btn" (click)="next()">Next Bug →</button>
+
+  </div>
+
+</section>
+<!-- 🎉 CONFETTI OVERLAY -->
+<!-- 🎉 GLOBAL CONFETTI OVERLAY -->
+<div class="confetti-overlay" *ngIf="confetti">
+  <div class="confetti">🎉</div>
+  <div class="confetti">🎊</div>
+  <div class="confetti">✨</div>
+  <div class="confetti">🔥</div>
+
+  <div class="hurray">
+    🎉 HURRAY!<br />
+    Bug Fixed Successfully!
+  </div>
+</div>
+<ng-template #loading>
+  <div class="loading">⏳ Loading Bug...</div>
+</ng-template>

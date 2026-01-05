@@ -1,0 +1,68 @@
+<section class="bulk-root">
+
+  <h1>🐞 Bug Hunter – Bulk Upload</h1>
+  <p class="subtitle">Upload multiple challenges using JSON</p>
+
+  <!-- FILE UPLOAD -->
+  <input type="file" accept=".json" (change)="onFile($event)" />
+
+  <!-- JSON EDITOR -->
+  <textarea
+    [(ngModel)]="jsonText"
+    placeholder="Paste JSON array of BugHunter questions here">
+  </textarea>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+
+    <!-- PREVIEW / DRY RUN -->
+    <button
+      (click)="preview()"
+      [disabled]="loading">
+      🔍 Dry Run (Validate)
+    </button>
+
+    <!-- PUBLISH -->
+    <button
+      class="primary"
+      (click)="publish()"
+      [disabled]="loading">
+      🚀 Publish
+    </button>
+
+  </div>
+
+  <!-- REPORT SUMMARY -->
+  <div *ngIf="report" class="report">
+
+    <h3 *ngIf="report.valid" class="ok">
+      ✅ Validation Passed
+    </h3>
+
+    <div *ngIf="report.saved !== undefined">
+      <p><strong>Saved:</strong> {{ report.saved }}</p>
+    </div>
+
+    <p class="ok" *ngIf="report.published === true">
+      🚀 Published Successfully
+    </p>
+
+    <p *ngIf="report.published === false">
+      📝 Saved as Draft
+    </p>
+
+    <!-- VALIDATION ERRORS -->
+    <ul *ngIf="report.errors?.length">
+      <li *ngFor="let e of report.errors">
+        ❌ {{ e }}
+      </li>
+    </ul>
+
+  </div>
+
+  <!-- GLOBAL ERROR -->
+  <div class="error" *ngIf="error">
+    {{ error }}
+  </div>
+
+</section>

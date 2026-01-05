@@ -1,0 +1,47 @@
+<section class="history-wrapper">
+
+  <header class="history-header">
+    <h2>📊 Bug Hunter History</h2>
+    <span class="accuracy">🎯 Accuracy: {{ accuracy }}%</span>
+  </header>
+
+  <table class="history-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Bug Category</th>
+        <th>Selected</th>
+        <th>Status</th>
+        <th>XP</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let h of history; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ h.bugCategory }}</td>
+        <td>{{ h.selectedAnswer }}</td>
+
+        <td>
+          <span
+            class="badge"
+            [class.correct]="h.correct"
+            [class.wrong]="!h.correct"
+          >
+            {{ h.correct ? 'Correct' : 'Wrong' }}
+          </span>
+        </td>
+
+        <td class="xp">
+          {{ h.earnedXp > 0 ? '+' + h.earnedXp : 0 }}
+        </td>
+
+        <td>
+          {{ h.attemptedAt | date:'short' }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</section>
