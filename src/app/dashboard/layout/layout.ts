@@ -284,15 +284,17 @@ export class Layout implements OnInit, OnDestroy {
   closeCatalog() {
     this.isCatalogOpen = false;
   }
+  
+  /* ================= LIFECYCLE ================= */
+
   ngOnInit() {
-    /* Cart */
+
     this.subs.add(
       this.cartService.cartCount$.subscribe(
         count => (this.cartCount = count)
       )
     );
 
-    /* User */
     this.subs.add(
       this.authState.user$.subscribe(user => {
         if (user) {
@@ -302,11 +304,14 @@ export class Layout implements OnInit, OnDestroy {
       })
     );
 
-    /* 🔥 CLOSE MENU ON ROUTE CHANGE */
+    /* ✅ CLOSE DROPDOWN ON ROUTE CHANGE */
     this.subs.add(
       this.router.events
         .pipe(filter(e => e instanceof NavigationStart))
-        .subscribe(() => this.closeMobileMenu())
+        .subscribe(() => {
+          this.closeDropdown();
+          this.closeMobileMenu();
+        })
     );
   }
 
@@ -321,5 +326,5 @@ export class Layout implements OnInit, OnDestroy {
       .join('')
       .toUpperCase();
   }
-
+  
 }

@@ -1,0 +1,37 @@
+<h3>📚 Roadmap Versions</h3>
+
+<div class="selectors">
+  <select [(ngModel)]="selectedA">
+    <option *ngFor="let v of versions" [ngValue]="v">
+      v{{ v.version }} {{ v.published ? '(LIVE)' : '' }}
+    </option>
+  </select>
+
+  <select [(ngModel)]="selectedB">
+    <option *ngFor="let v of versions" [ngValue]="v">
+      v{{ v.version }} {{ v.published ? '(LIVE)' : '' }}
+    </option>
+  </select>
+</div>
+
+<div *ngIf="selectedA && selectedB">
+
+  <div *ngFor="let lvl of parse(selectedA.roadmapJson).levels">
+
+    <h4>{{ lvl.level }}</h4>
+
+    <div *ngIf="getDiff(lvl) as d">
+
+      <p class="added" *ngIf="d.added.length">
+        ➕ Added: {{ d.added.join(', ') }}
+      </p>
+
+      <p class="removed" *ngIf="d.removed.length">
+        ➖ Removed: {{ d.removed.join(', ') }}
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

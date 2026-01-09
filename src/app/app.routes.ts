@@ -11,7 +11,7 @@ import { Register } from './auth/register/register';
 import { VerifyEmail } from './auth/verify-email/verify-email';
 import { ResetPassword } from './auth/reset-password/reset-password';
 import { OAuthSuccess } from './auth/oauth-success/oauth-success/oauth-success';
-import { Roadmap } from './public/roadmap/roadmap';
+import { RoadmapComponent } from './public/roadmap/roadmap';
 
 /* ===== COURSES ===== */
 import { AllCoursesComponent } from './public/all-courses.component/all-courses.component';
@@ -72,6 +72,11 @@ import { UserHomeComponent } from './public/home/user-home.component/user-home.c
 import { HomeShellComponent } from './public/home/home-shell.component/home-shell.component';
 import { MockInterviewComponent } from './public/features/mock/mock-interview.component/mock-interview.component';
 import { ResumeCheckerComponent } from './public/features/resume/resume-checker.component/resume-checker.component';
+import { DailyChallengeComponent } from './public/features/daily-challenge.component/daily-challenge.component';
+import { AdminDailyChallengeComponent } from './public/features/admin/admin-daily-challenge.component/admin-daily-challenge.component';
+import { RoadmapLandingComponent } from './public/roadmap/roadmap-landing.component/roadmap-landing.component';
+import { AdminRoadmapComponent } from './admin/admin/admin-roadmap.component/admin-roadmap.component';
+import { TicTacToeComponent } from './games/games/tic-tac-toe.component/tic-tac-toe.component';
 
 export const routes: Routes = [
 
@@ -87,8 +92,8 @@ export const routes: Routes = [
       { path: 'verify-email', component: VerifyEmail },
       { path: 'reset-password', component: ResetPassword },
       { path: 'oauth-success', component: OAuthSuccess },
-
-      { path: 'roadmaps', component: Roadmap },
+      { path: 'roadmap', component: RoadmapLandingComponent },
+      { path: 'roadmap/:id', component: RoadmapComponent },
 
       /* 🧠 PSEUDO CODE */
       {
@@ -117,6 +122,8 @@ export const routes: Routes = [
       /* 🎮 GAMES */
       { path: 'games', component: GamesComponent },
       { path: 'games/bug-hunter', component: BugHunterComponent },
+      { path: 'games/tic-tac-toe', component: TicTacToeComponent },
+
       /* ================= PUBLIC LEADERBOARD ================= */
       {
         path: 'leaderboard', component: PublicLeaderboardComponent
@@ -198,13 +205,16 @@ export const routes: Routes = [
       { path: 'achievements', component: AchievementsComponent },
       { path: 'xp-rules', component: AdminXpRulesComponent },
       { path: 'games/bug-hunter', component: AdminBugHunterComponent },
-      { path: 'games/bug-hunter/bulk', component: AdminBugHunterBulkComponent }
+      { path: 'games/bug-hunter/bulk', component: AdminBugHunterBulkComponent },
+      { path: 'daily-challenge', component: AdminDailyChallengeComponent },
+      { path: 'roadmaps', component: AdminRoadmapComponent },
     ]
   },
 
   // FEATURES MOCK INTERVIEW
   { path: 'mock-interview', component: MockInterviewComponent },
   { path: 'resume-checker', component: ResumeCheckerComponent },
+  { path: 'daily-challenge', component: DailyChallengeComponent },
 
   /* ================= FALLBACK ================= */
   { path: '**', redirectTo: '' }

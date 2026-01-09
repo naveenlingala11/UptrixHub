@@ -1,0 +1,15 @@
+.selectors {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.added {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.removed {
+  color: #dc2626;
+  font-weight: 600;
+}

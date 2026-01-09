@@ -1,0 +1,76 @@
+<section class="admin-page">
+
+  <h1>🛠 Upload Daily Challenge</h1>
+  <p class="sub">
+    Upload a JSON file or paste JSON below. Preview before publishing.
+  </p>
+
+  <!-- ================= EDITOR CARD ================= -->
+  <div class="card">
+
+    <h3>📄 Challenge JSON</h3>
+
+    <!-- FILE UPLOAD -->
+    <input
+      type="file"
+      accept=".json"
+      (change)="onFile($event)"
+    />
+
+    <p class="muted">OR paste JSON</p>
+
+    <!-- TEXTAREA -->
+    <textarea
+      [(ngModel)]="jsonText"
+      placeholder="Paste challenge JSON here">
+    </textarea>
+
+    <div class="actions">
+      <button class="btn secondary" (click)="preview()">👁 Preview</button>
+      <button
+        class="btn primary"
+        [disabled]="loading"
+        (click)="upload()">
+        🚀 Save Challenge
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ================= ERROR / SUCCESS ================= -->
+  <div class="alert error" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="alert success" *ngIf="success">
+    {{ success }}
+  </div>
+
+  <!-- ================= PREVIEW ================= -->
+  <div class="card preview" *ngIf="parsed">
+
+    <h3>🔍 Preview (User View)</h3>
+
+    <h2>{{ parsed.title }}</h2>
+
+    <div class="meta">
+      <span *ngFor="let t of parsed.tags">{{ t }}</span>
+    </div>
+
+    <p *ngFor="let p of parsed.problem">
+      {{ p }}
+    </p>
+
+    <h4>Starter Code</h4>
+    <pre>{{ parsed.starterCode }}</pre>
+
+    <h4>Test Cases ({{ parsed.tests?.length }})</h4>
+    <ul>
+      <li *ngFor="let t of parsed.tests; let i = index">
+        {{ i + 1 }}️⃣ Expected → <code>{{ t.expectedOutput }}</code>
+      </li>
+    </ul>
+
+  </div>
+
+</section>

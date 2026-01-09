@@ -1,0 +1,28 @@
+<section class="courses-page">
+
+  <h1>🧭 Course Roadmaps</h1>
+  <p>Step-by-step learning paths for every technology</p>
+
+  <input
+    placeholder="Search roadmap"
+    [(ngModel)]="searchText" />
+
+  <div class="courses-grid">
+
+    <div class="course-card"
+         *ngFor="let c of filteredCourses"
+         (click)="open(c)">
+
+      <h3>{{ c.title }}</h3>
+      <p>{{ c.description }}</p>
+      <button>View Roadmap</button>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="!loading && filteredCourses.length === 0" class="empty-state">
+    😕 No roadmaps found
+  </div>
+
+</section>

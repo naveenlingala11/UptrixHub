@@ -1,0 +1,87 @@
+<section class="game-container">
+
+  <!-- 🎮 GAME PANEL -->
+  <div class="game-panel" [ngClass]="panelThemeClass">
+
+    <!-- TITLE -->
+    <div class="title">
+      <span class="x">❌</span>
+      <h1>Tic Tac Toe</h1>
+      <span class="o">⭕</span>
+    </div>
+
+    <!-- MODE + CONTROLS -->
+    <div class="controls">
+      <select [(ngModel)]="mode">
+        <option value="BOT">🤖 Vs Bot</option>
+        <option value="PVP">👥 Player vs Player</option>
+        <option value="ONLINE">🌐 Online</option>
+      </select>
+
+      <input
+        *ngIf="mode === 'ONLINE'"
+        [(ngModel)]="roomId"
+        placeholder="Room ID"
+      />
+
+      <button *ngIf="mode === 'ONLINE'" (click)="startOnline()">🔗 Join</button>
+
+      <select *ngIf="mode === 'BOT'" [(ngModel)]="difficulty">
+        <option value="EASY">🙂 Easy</option>
+        <option value="HARD">🤖 Hard</option>
+      </select>
+
+      <button *ngIf="mode !== 'ONLINE'" (click)="showHint()">💡 Hint</button>
+    </div>
+
+    <!-- ONLINE MATCH -->
+    <div class="controls" *ngIf="mode === 'ONLINE'">
+      <button (click)="startRandomMatch()" [disabled]="matchStatus === 'WAITING'">
+        🎯 Play Online
+      </button>
+
+      <span *ngIf="matchStatus === 'WAITING'">
+        ⏳ Finding opponent...
+      </span>
+    </div>
+
+    <!-- THEME + SOUND -->
+    <div class="controls">
+      <select [(ngModel)]="selectedTheme" (change)="applyTheme(selectedTheme)">
+        <option *ngFor="let t of themes" [value]="t.id">
+          {{ t.label }}
+        </option>
+      </select>
+
+      <button class="sound-toggle" (click)="toggleSound()">
+        {{ soundEnabled ? '🔊 Sound On' : '🔇 Sound Off' }}
+      </button>
+    </div>
+
+    <!-- STATUS -->
+    <p *ngIf="!winner">
+      Turn: <strong>{{ currentPlayer }}</strong>
+    </p>
+
+    <h2 *ngIf="winner && winner !== 'DRAW'">
+      🎉 {{ winner }} Wins
+    </h2>
+    <h2 *ngIf="winner === 'DRAW'">🤝 Draw</h2>
+
+    <!-- BOARD -->
+    <div class="board">
+      <div
+        class="cell"
+        *ngFor="let c of board; let i = index"
+        [class.win]="winningLine?.includes(i)"
+        [class.hint]="i === hintIndex"
+        (click)="mode === 'ONLINE' ? playOnline(i) : play(i)"
+      >
+        {{ c }}
+      </div>
+    </div>
+
+    <button class="reset" (click)="reset()">🔁 Restart</button>
+
+  </div>
+</section>

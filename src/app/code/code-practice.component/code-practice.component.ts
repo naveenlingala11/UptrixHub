@@ -9,6 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { CodeRunService } from '../code-run.service';
 
 declare const monaco: any;
 
@@ -92,6 +93,8 @@ export class CodePracticeComponent implements AfterViewInit {
   breakpoints = new Map<string, Set<number>>();
   breakpointDecorations: string[] = [];
   breakpointConditions = new Map<number, string>();
+
+  constructor(private codeRun: CodeRunService) { }
 
   /* ================= INIT ================= */
   ngAfterViewInit() {
@@ -252,23 +255,30 @@ export class CodePracticeComponent implements AfterViewInit {
   }
 
   /* ================= BREAKPOINTS ================= */
-  async toggleBreakpoint(line: number) {
+  toggleBreakpoint(line: number) {
 
     if (!this.debugStarted) {
-      console.warn('⛔ Debug not started, auto-starting...');
-      await this.startDebugSession();
+      this.startDebugSession();
     }
 
-    const res = await fetch(
-      `${environment.apiUrl}/debug/breakpoint/add` +
-      `?className=${this.currentClass}&line=${line}`,
-      { method: 'POST' }
-    );
+    this.codeRun.addBreakpoint(this.currentClass, line)
+      .subscribe({
+        next: () => {
+          const file = this.files[this.activeFileIndex].name;
 
-    if (!res.ok) {
-      console.error('❌ Breakpoint add failed');
-      return;
-    }
+          if (!this.breakpoints.has(file)) {
+            this.breakpoints.set(file, new Set<number>());
+          }
+
+          this.breakpoints.get(file)!.add(line);
+          this.renderBreakpoints();
+
+          console.log(`🔴 Breakpoint added at ${this.currentClass}:${line}`);
+        },
+        error: () => {
+          console.error('❌ Breakpoint add failed');
+        }
+      });
 
     // 🔴 UPDATE LOCAL STATE
     const file = this.files[this.activeFileIndex].name;
@@ -285,24 +295,33 @@ export class CodePracticeComponent implements AfterViewInit {
     console.log(`🔴 Breakpoint added at ${this.currentClass}:${line}`);
   }
 
-  async addConditionalBreakpoint(line: number, condition: string) {
+  addConditionalBreakpoint(line: number, condition: string) {
 
     if (!this.debugStarted) {
-      await this.startDebugSession();
+      this.startDebugSession();
     }
 
-    const res = await fetch(
-      `${environment.apiUrl}/debug/breakpoint/conditional` +
-      `?className=${this.currentClass}` +
-      `&line=${line}` +
-      `&condition=${encodeURIComponent(condition)}`,
-      { method: 'POST' }
-    );
+    this.codeRun
+      .addConditionalBreakpoint(this.currentClass, line, condition)
+      .subscribe({
+        next: () => {
+          const file = this.files[this.activeFileIndex].name;
 
-    if (!res.ok) {
-      console.error('❌ Conditional breakpoint failed');
-      return;
-    }
+          if (!this.breakpoints.has(file)) {
+            this.breakpoints.set(file, new Set<number>());
+          }
+
+          this.breakpoints.get(file)!.add(line);
+          this.breakpointConditions.set(line, condition);
+          this.renderBreakpoints();
+
+          console.log(`🟡 Conditional breakpoint added at ${line}`);
+        },
+        error: () => {
+          console.error('❌ Conditional breakpoint failed');
+        }
+      });
+    // 🔴 UPDATE LOCAL STATE
 
     const file = this.files[this.activeFileIndex].name;
 
@@ -356,18 +375,12 @@ export class CodePracticeComponent implements AfterViewInit {
     this.logs.push('⏳ Compiling...');
     this.logs.push(debug ? '🐞 Debug mode enabled' : '▶ Running program');
 
-    fetch(`${environment.apiUrl}/code/java`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        code: this.files.map(f => f.content).join('\n\n'),
-        input: this.stdin,
-        javaVersion: this.javaVersion,
-        debug
-      })
-    })
-      .then(res => res.json())
-      .then(res => {
+    this.codeRun.runJava({
+      code: this.files.map(f => f.content).join('\n\n'),
+      input: this.stdin,
+      javaVersion: this.javaVersion
+    }).subscribe({
+      next: res => {
         if (res.error) {
           this.compileSuccess = false;
           this.executeSuccess = false;
@@ -379,50 +392,46 @@ export class CodePracticeComponent implements AfterViewInit {
           this.logs.push(res.output || '⚠ No output');
         }
         this.executionTime = Math.round(performance.now() - start);
-      })
-      .finally(() => (this.isRunning = false));
+      },
+      error: () => {
+        this.logs.push('❌ Server error');
+      },
+      complete: () => {
+        this.isRunning = false;
+      }
+    });
 
     this.files.forEach(f => f.dirty = false);
   }
 
   /* ================= DEBUG ================= */
   async startDebugSession() {
-    console.log('🐞 Starting debug session...');
-
-    const res = await fetch(
-      `${environment.apiUrl}/debug/start` +
-      `?mainClass=${this.currentClass}&classPath=.`,
-      { method: 'POST' }
-    );
-
-    if (!res.ok) {
-      const text = await res.text();
-      console.error('❌ Debug start failed:', text);
-      throw new Error('Failed to start debug session');
-    }
-
-    this.debugStarted = true;
-    this.debugSession = true;
-
-    console.log('✅ Debug session started');
+    this.codeRun.startDebug(this.currentClass).subscribe({
+      next: () => {
+        this.debugStarted = true;
+        this.debugSession = true;
+        console.log('✅ Debug session started');
+      },
+      error: err => {
+        console.error('❌ Debug start failed', err);
+      }
+    });
   }
 
   step() {
-    fetch(`${environment.apiUrl}/debug/step`, { method: 'POST' })
-      .then(res => res.json())
-      .then(state => {
-        if (!state) return;
+    this.codeRun.stepDebug().subscribe(state => {
+      if (!state) return;
 
-        this.debugTimeline.push(state);
-        this.timelineIndex = this.debugTimeline.length - 1;
+      this.debugTimeline.push(state);
+      this.timelineIndex = this.debugTimeline.length - 1;
 
-        this.debugState = state;
-        this.highlightExecutionLine(state.line);
-      });
+      this.debugState = state;
+      this.highlightExecutionLine(state.line);
+    });
   }
 
   stop() {
-    fetch(`${environment.apiUrl}/debug/stop`, { method: 'POST' });
+    this.codeRun.stopDebug().subscribe();
 
     this.debugStarted = false;
     this.debugSession = false;

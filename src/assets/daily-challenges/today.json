@@ -1,0 +1,23 @@
+{
+  "date": "2026-01-06",
+  "title": "HashMap vs ConcurrentHashMap",
+  "difficulty": "Medium",
+  "time": "15–20 mins",
+  "tags": ["Java Core", "Concurrency", "Interview Favorite"],
+
+  "problem": [
+    "Explain the difference between HashMap and ConcurrentHashMap.",
+    "When would you use each one in a real production system?"
+  ],
+
+  "starterCode": "import java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    // Explain using comments\n    System.out.println(\"DONE\");\n  }\n}",
+
+  "tests": [
+    {
+      "input": "",
+      "expectedOutput": "DONE"
+    }
+  ],
+
+  "xpReward": 50
+}

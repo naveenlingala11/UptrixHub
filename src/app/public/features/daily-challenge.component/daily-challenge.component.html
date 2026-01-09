@@ -1,0 +1,51 @@
+<section class="challenge-page" *ngIf="challenge; else loading">
+
+    <!-- HEADER -->
+    <header class="challenge-header">
+        <span class="tag">{{ challenge.tags[0] }}</span>
+        <span class="difficulty">{{ challenge.difficulty }}</span>
+
+        <h1>{{ challenge.title }}</h1>
+
+        <p class="meta">
+            ⏱ {{ challenge.time }} • 🎯 Interview Level
+        </p>
+    </header>
+
+    <!-- QUESTION -->
+    <div class="challenge-question-card">
+        <h3>Problem Statement</h3>
+
+        <p *ngFor="let p of challenge.problem">{{ p }}</p>
+    </div>
+
+    <!-- EDITOR -->
+    <section class="editor-section">
+        <h2>✍️ Write Your Code</h2>
+
+        <app-code-practice [initialFiles]="challengeFiles"></app-code-practice>
+
+        <button class="btn primary" (click)="submit()" [disabled]="locked || submitting">
+            🚀 Submit Solution
+        </button>
+    </section>
+
+    <!-- SUCCESS -->
+    <div class="win-banner" *ngIf="solved && !locked">
+        🎉 Challenge Completed! Excellent work!
+    </div>
+
+    <!-- LOCKED -->
+    <div *ngIf="locked" class="lock-banner">
+        🔒 Today’s challenge completed
+        <br />
+        🎉 XP Earned: {{ xp }}
+    </div>
+
+</section>
+
+<ng-template #loading>
+    <p style="text-align:center;margin-top:200px">
+        Loading daily challenge...
+    </p>
+</ng-template>

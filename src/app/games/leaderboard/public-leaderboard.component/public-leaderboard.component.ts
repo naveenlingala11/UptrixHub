@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PublicLeaderboardRow, BugHunterAnalyticsService } from '../../../admin/services/admin-analytics.service';
+import { AnalyticsService, PublicLeaderboardRow } from '../../../admin/services/admin-analytics.service';
 
 @Component({
   standalone: true,
@@ -13,7 +13,7 @@ export class PublicLeaderboardComponent implements OnInit {
 
   rows: PublicLeaderboardRow[] = [];
 
-  constructor(private service: BugHunterAnalyticsService) {}
+  constructor(private service: AnalyticsService) {}
 
   ngOnInit() {
     this.service.getPublicLeaderboard()

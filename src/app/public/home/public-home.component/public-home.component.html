@@ -1,189 +1,638 @@
-<!-- ================= HERO SECTION ================= -->
-<section class="hero-ref">
-  <div class="hero-container">
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div class="hero-container">
+        <h1 *ngIf="userName">
+            Welcome back, {{ userName }} 👋<br />
+            Continue your <span class="gradient">Interview Preparation</span>
+        </h1>
 
-    <!-- LEFT -->
-    <div class="hero-left">
+        <div class="hero-left">
+            <span class="eyebrow">🚀 Trusted by 15,000+ Developers Across India</span>
 
-      <h1 class="hero-title">
-        Crack <span class="muted">Java Interviews</span><br />
-        With <span class="gradient-text">Real Interview Questions</span><br />
-        in <span class="bold">30 Days</span>
-      </h1>
+            <h1 *ngIf="!(isLoggedIn$ | async)">
+                Crack <span>Java Interviews</span><br />
+                With <span class="gradient">Real Interview Questions</span><br />
+                in Just 30 Days
+            </h1>
 
-      <p class="hero-subtitle">
-        Ace Java & Backend interview rounds using structured learning kits
-        built from real questions asked in top tech companies.
-      </p>
+            <h1 *ngIf="isLoggedIn$ | async">
+                Welcome Back 👋<br />
+                Continue Your <span class="gradient">Interview Preparation</span>
+            </h1>
 
-      <div class="hero-badges">
-        <span class="pill green">● 10,000+ Learners</span>
-        <span class="pill blue">✓ Lifetime Access</span>
-        <span class="pill purple">✓ Regular Updates</span>
-      </div>
+            <p *ngIf="isLoggedIn$ | async" class="hero-desc">
+                You are already on the right path. Continue practicing interview questions
+                and move one step closer to cracking your next opportunity.
+            </p>
 
-      <div class="hero-actions">
-        <a routerLink="/register" class="btn-primary">
-          Explore Java Kits →
-        </a>
-        <a routerLink="/roadmaps" class="btn-outline">
-          Why Choose Us
-        </a>
-      </div>
+            <p class="hero-desc">
+                JavaArray is a premium interview preparation platform built specifically
+                for Java and Backend developers who want to crack real-world technical
+                interviews with confidence.
+                <br /><br />
+                Instead of overwhelming you with endless tutorials, JavaArray focuses
+                on what interviewers actually test — how you think, how you explain
+                concepts, and how you solve problems under pressure.
+                <br /><br />
+                Whether you are a student preparing for your first job, a working
+                professional aiming for better opportunities, or someone switching
+                careers into backend development, JavaArray gives you a structured,
+                interview-first roadmap that saves time and delivers results.
+            </p>
 
+            <div class="actions">
+                <a [routerLink]="(isLoggedIn$ | async) ? '/dashboard' : '/register'" class="btn-primary">
+                    {{ (isLoggedIn$ | async) ? 'Go to Dashboard →' : 'Start Free →' }}
+                </a>
+
+                <a routerLink="/roadmaps" class="btn-outline">
+                    View Learning Roadmap
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <!-- ANIMATED CODE CARD -->
+            <div class="code-card float-code">
+
+                <div class="code-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="file-name">Main.java</span>
+                </div>
+
+                <pre class="code-body">
+                    <span class="keyword">public</span> <span class="keyword">class</span> <span class="class">JavaArray</span> &#123;
+
+                    <span class="keyword">public static void</span> <span class="method">main</span>(String[] args) &#123;
+                        <span class="type">System</span>.out.<span class="method">println</span>(
+                        <span class="string">"Crack Interviews 🚀"</span>
+                        );
+                    &#125;
+
+                    &#125;
+                </pre>
+            </div>
+        </div>
     </div>
-
-    <!-- RIGHT -->
-    <div class="hero-right">
-      <div class="hero-visual-bg">
-
-        <div class="code-card">
-          <div class="code-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-          </div>
-
-          <pre class="code-content">
-<code [innerHTML]="heroCodeSnippet"></code>
-          </pre>
-        </div>
-
-        <div class="tech-tags">
-          <span>JAVA</span>
-          <span>SPRING</span>
-          <span>DSA</span>
-        </div>
-
-        <div class="mini-stats">
-          <div class="stat-box">
-            <h3>{{ publicStats?.learners }}+</h3>
-            <p>Learners</p>
-          </div>
-          <div class="stat-box">
-            <h3>{{ publicStats?.successRate }}%</h3>
-            <p>Success Rate</p>
-          </div>
-        </div>
-
-      </div>
+    <!-- Floating Advertising Boards -->
+    <div class="floating-ads">
+        <div class="ad-card purple">⚡ Faster Interview Preparation</div>
+        <div class="ad-card blue">🎯 Interview-Focused Content</div>
+        <div class="ad-card green">🚀 Career-Driven Learning</div>
     </div>
-
-  </div>
 </section>
 
-<!-- ================= CHOOSE INTERVIEW KIT ================= -->
-<section class="kit-section">
-  <div class="container">
-
-    <div class="kit-top-badge">
-      🔥 LIMITED TIME: <strong>90% OFF</strong>
+<!-- ================= STATS ================= -->
+<section class="stats">
+    <div>
+        <h3>{{ counters.learners | number }}+</h3>
+        <p>Learners Trust JavaArray</p>
     </div>
+    <div>
+        <h3>{{ counters.questions }}+</h3>
+        <p>Real Interview Questions</p>
+    </div>
+    <div>
+        <h3>{{ counters.success }}%</h3>
+        <p>Interview Success Rate</p>
+    </div>
+</section>
+<!-- ================= TRUSTED COMPANIES ================= -->
+<section class="company-strip">
 
-    <h2 class="kit-title">
-      Choose Your <span class="gradient-text">Interview Kit</span>
-    </h2>
-
-    <p class="kit-subtitle">
-      Premium Java & Backend preparation kits trusted by thousands of learners
+    <p class="company-strip-title">
+        Concepts aligned with interviews at companies like
     </p>
 
-    <div class="kit-grid">
+    <div class="logo-marquee">
+        <div class="logo-track">
 
-      <div class="kit-card yellow">
-        <div class="kit-icon">JAVA</div>
-        <span class="kit-tag">Foundation</span>
-        <h3>Core Java Interview Kit</h3>
-        <div class="kit-enroll">👥 8.5k+ enrolled</div>
-        <span class="discount">⚡ 90% OFF</span>
-        <div class="price">₹149 <span>₹1499</span></div>
-        <a routerLink="/kits/core-java" class="kit-btn yellow">Get Access →</a>
-      </div>
+            <!-- FIRST SET -->
+            <img src="assets/logos/flipkart.svg" alt="Flipkart" />
+            <img src="assets/logos/wipro-1.svg" alt="Wipro" />
+            <img src="assets/logos/ibm.svg" alt="IBM" />
+            <img src="assets/logos/tata-consultancy-services-1.svg" alt="TCS" />
+            <img src="assets/logos/tech-mahindra-new-logo.svg" alt="Tech Mahindra" />
+            <img src="assets/logos/pwc.svg" alt="PwC" />
+            <img src="assets/logos/ey.svg" alt="EY" />
+            <img src="assets/logos/genpact-logo-1.svg" alt="Genpact" />
+            <img src="assets/logos/salesforce-2.svg" alt="Salesforce" />
+            <img src="assets/logos/accenture-6.svg" alt="Accenture" />
+            <img src="assets/logos/amazon-2-logo-svgrepo-com.svg" alt="Amazon" />
+            <img src="assets/logos/cgi-logo.svg" alt="CGI" />
+            <img src="assets/logos/cognizant-1.svg" alt="Cognizant" />
+            <img src="assets/logos/deloitte-2.svg" alt="Deloitte" />
+            <img src="assets/logos/infosys-3.svg" alt="Infosys" />
+            <img src="assets/logos/kpmg-1.svg" alt="KPMG" />
+            <img src="assets/logos/max-3.svg" alt="MAX" />
+            <img src="assets/logos/meta-3.svg" alt="META" />
+            <img src="assets/logos/microsoft-6.svg" alt="MICROSOFT" />
+            <img src="assets/logos/myntra-1.svg" alt="Myntra" />
+            <img src="assets/logos/zoho-1.svg" alt="ZOHO" />
+            <!-- DUPLICATE SET (for seamless loop) -->
+            <img src="assets/logos/flipkart.svg" alt="Flipkart" />
+            <img src="assets/logos/wipro-1.svg" alt="Wipro" />
+            <img src="assets/logos/ibm.svg" alt="IBM" />
+            <img src="assets/logos/tata-consultancy-services-1.svg" alt="TCS" />
+            <img src="assets/logos/tech-mahindra-new-logo.svg" alt="Tech Mahindra" />
+            <img src="assets/logos/pwc.svg" alt="PwC" />
+            <img src="assets/logos/ey.svg" alt="EY" />
+            <img src="assets/logos/genpact-logo-1.svg" alt="Genpact" />
+            <img src="assets/logos/salesforce-2.svg" alt="Salesforce" />
+            <img src="assets/logos/accenture-6.svg" alt="Accenture" />
+            <img src="assets/logos/amazon-2-logo-svgrepo-com.svg" alt="Amazon" />
+            <img src="assets/logos/cgi-logo.svg" alt="CGI" />
+            <img src="assets/logos/cognizant-1.svg" alt="Cognizant" />
+            <img src="assets/logos/deloitte-2.svg" alt="Deloitte" />
+            <img src="assets/logos/infosys-3.svg" alt="Infosys" />
+            <img src="assets/logos/kpmg-1.svg" alt="KPMG" />
+            <img src="assets/logos/max-3.svg" alt="MAX" />
+            <img src="assets/logos/meta-3.svg" alt="META" />
+            <img src="assets/logos/microsoft-6.svg" alt="MICROSOFT" />
+            <img src="assets/logos/myntra-1.svg" alt="Myntra" />
+            <img src="assets/logos/zoho-1.svg" alt="ZOHO" />
 
-      <div class="kit-card blue">
-        <div class="kit-icon">SPRING</div>
-        <span class="kit-tag">Backend</span>
-        <h3>Spring Boot Interview Kit</h3>
-        <div class="kit-enroll">👥 11.3k+ enrolled</div>
-        <span class="discount">⚡ 90% OFF</span>
-        <div class="price">₹199 <span>₹1999</span></div>
-        <a routerLink="/kits/spring-boot" class="kit-btn blue">Get Access →</a>
-      </div>
-
-      <div class="kit-card gradient featured">
-        <div class="bestseller">⭐ BESTSELLER</div>
-        <div class="kit-icon">&lt;/&gt;</div>
-        <span class="kit-tag">All-in-One</span>
-        <h3>Java Full Stack Interview Kit</h3>
-        <div class="kit-enroll">👥 15.9k+ enrolled</div>
-        <span class="discount">⚡ 90% OFF</span>
-        <div class="price">₹299 <span>₹2999</span></div>
-        <a routerLink="/kits/fullstack-java" class="kit-btn gradient">
-          Get Access →
-        </a>
-      </div>
-
-      <div class="kit-card green">
-        <div class="kit-icon">MS</div>
-        <span class="kit-tag">Advanced</span>
-        <h3>Microservices Interview Kit</h3>
-        <div class="kit-enroll">👥 6.5k+ enrolled</div>
-        <span class="discount">⚡ 90% OFF</span>
-        <div class="price">₹299 <span>₹2999</span></div>
-        <a routerLink="/kits/microservices" class="kit-btn green">
-          Get Access →
-        </a>
-      </div>
-
+        </div>
     </div>
 
-  </div>
 </section>
 
-<!-- ================= FAQ ================= -->
-<section class="faq-section">
-  <div class="container">
+<!-- ================= HIGHLIGHT STRIP ================= -->
+<section class="highlight-strip">
+    <div class="highlight">🔥 Interview-First Learning</div>
+    <div class="highlight">🧠 Deep Concept Clarity</div>
+    <div class="highlight">📈 Career-Oriented Roadmaps</div>
+    <div class="highlight">🔁 Lifetime Content Updates</div>
+</section>
 
-    <span class="faq-badge">FAQ</span>
-    <h2 class="faq-title">Common Questions</h2>
-    <p class="faq-subtitle">Everything you need to know</p>
+<!-- ================= WHY DIFFERENT ================= -->
+<section class="why-different">
+    <h2>Why JavaArray Is Different</h2>
 
-    <div class="faq-list">
+    <p class="section-intro">
+        Most platforms teach concepts. JavaArray trains you for interviews.
+        This difference alone changes how you prepare and how you perform.
+    </p>
 
-      <div class="faq-item"
-           *ngFor="let f of faqs; let i = index"
-           [class.active]="activeFaq === i">
-
-        <!-- QUESTION -->
-        <div class="faq-question"
-             (click)="i > 1 ? null : toggleFaq(i)">
-          <span class="faq-icon">❓</span>
-          {{ f.q }}
-          <span *ngIf="i > 1">🔒</span>
-          <span class="arrow">{{ activeFaq === i ? '▲' : '▼' }}</span>
+    <div class="why-grid">
+        <div class="why-card">
+            <h4>🎯 Interview-First Design</h4>
+            <p>
+                Every topic is designed by analyzing real interview questions from
+                service-based and product-based companies. You learn what interviewers
+                actually ask, not just textbook theory.
+            </p>
         </div>
 
-        <!-- ANSWER -->
-        <div class="faq-answer"
-             *ngIf="activeFaq === i && i <= 1">
-          {{ f.a }}
+        <div class="why-card">
+            <h4>🧠 Thinking Over Memorization</h4>
+            <p>
+                JavaArray trains you to explain answers clearly and logically, which is
+                exactly what interviewers evaluate during technical discussions.
+            </p>
         </div>
 
-        <!-- LOCKED -->
-        <div class="faq-answer locked"
-             *ngIf="activeFaq === i && i > 1">
-          🔒 Please login to unlock this answer
+        <div class="why-card">
+            <h4>📚 Structured Roadmaps</h4>
+            <p>
+                No random videos or disconnected topics. You follow a clear learning
+                path from Core Java to Spring Boot to Backend and System Design.
+            </p>
         </div>
 
-      </div>
+        <div class="why-card">
+            <h4>🔁 Lifetime Growth</h4>
+            <p>
+                Content evolves with industry trends. Once you join, you grow with
+                JavaArray — no additional charges for updates.
+            </p>
+        </div>
+    </div>
+</section>
 
+<!-- =====================================================
+     DAILY PRACTICE & INTERVIEW CHALLENGES
+===================================================== -->
+<section class="daily-practice">
+
+    <!-- HEADER -->
+    <div class="daily-header">
+        <span class="badge">🔥 Gamified Interview Preparation</span>
+        <h2>Practice Daily. Build Real Interview Confidence.</h2>
+
+        <p class="section-intro">
+            JavaArray transforms interview preparation into a daily habit.
+            Solve curated challenges, maintain streaks, analyze progress,
+            and compete with other serious learners — all focused on
+            how interviews actually work.
+        </p>
     </div>
 
-  </div>
+    <!-- MAIN GRID -->
+    <div class="daily-layout">
+
+        <!-- ================= LEFT COLUMN ================= -->
+        <div class="daily-left">
+
+            <!-- FEATURES -->
+            <div class="practice-grid">
+                <div class="practice-card" *ngFor="let f of dailyFeatures">
+                    <div class="icon-wrap">
+                        <span class="icon">{{ f.icon }}</span>
+                    </div>
+                    <h4>{{ f.title }}</h4>
+                    <p>{{ f.desc }}</p>
+                </div>
+            </div>
+
+            <!-- TODAY CHALLENGE -->
+            <div class="challenge-preview">
+                <h3>🧩 How Today’s Interview Challenge Looks</h3>
+
+                <div class="challenge-card">
+                    <div class="challenge-header">
+                        <span class="challenge-title">Java Core • Interview Favorite</span>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+
+                    <p class="challenge-question">
+                        Explain the difference between
+                        <strong>HashMap</strong> and
+                        <strong>ConcurrentHashMap</strong>.
+                        <br /><br />
+                        When would you use each one in a real production system?
+                    </p>
+
+                    <div class="challenge-meta">
+                        <span>⏱ 15–20 mins</span>
+                        <span>🧠 Concept Depth</span>
+                        <span>🎯 Asked in Interviews</span>
+                    </div>
+
+                    <a routerLink="/daily-challenge" class="btn-attempt">
+                        Try Today’s Challenge →
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= RIGHT COLUMN ================= -->
+        <div class="daily-right">
+
+            <!-- STREAK -->
+            <div class="streak-card">
+                <h4>🔥 Your Practice Streak</h4>
+
+                <div class="streak-visual">
+
+                    <!-- STREAK IMAGE -->
+                    <div class="streak-image-wrap">
+                        <img src="assets/badges/streak.png" alt="Streak Badge" class="streak-image" />
+                    </div>
+
+                    <!-- DAYS COUNT -->
+                    <div class="streak-text">
+                        <strong>{{ streakDays }}</strong>
+                        <span>Day Streak</span>
+                    </div>
+
+                </div>
+
+                <p class="streak-caption">
+                    Consistent daily practice builds clarity, confidence,
+                    and strong interview performance.
+                </p>
+            </div>
+
+            <!-- LEADERBOARD -->
+            <div class="leaderboard">
+                <h4>🏆 Today’s Top Performers</h4>
+
+                <div class="leaderboard-item gold">
+                    <span>🥇 Naveen</span>
+                    <span>98%</span>
+                </div>
+
+                <div class="leaderboard-item bronze">
+                    <span>🥈 Kiran</span>
+                    <span>95%</span>
+                </div>
+
+                <div class="leaderboard-item Silver">
+                    <span>🥉 karthik</span>
+                    <span>93%</span>
+                </div>
+
+                <p class="leaderboard-note">
+                    Practice daily to appear on this board.
+                </p>
+            </div>
+
+            <!-- ================= PROGRESS ANALYTICS ================= -->
+            <section class="progress-analytics">
+
+                <h3>📊 Weekly Practice Analytics</h3>
+                <p class="analytics-intro">
+                    Track your daily consistency. Regular practice directly improves
+                    clarity, confidence, and interview performance.
+                </p>
+
+                <div class="graph-wrapper">
+
+                    <div class="graph">
+
+                        <div class="bar day1"><span>Mon</span></div>
+                        <div class="bar day2"><span>Tue</span></div>
+                        <div class="bar day3"><span>Wed</span></div>
+                        <div class="bar day4"><span>Thu</span></div>
+                        <div class="bar day5 active"><span>Fri</span></div>
+
+                    </div>
+
+                </div>
+                <p class="graph-note">
+                    Today’s effort is your highest this week 🚀
+                </p>
+
+            </section>
+
+        </div>
+
+
+    </div>
+    <!-- ================= STREAK REWARDS ================= -->
+    <section class="streak-rewards">
+
+        <h3>🎖️ Streak Rewards & Achievements</h3>
+        <p class="rewards-intro">
+            Consistency is rewarded. Maintain your daily practice streak and unlock
+            exclusive badges that reflect your discipline and interview readiness.
+        </p>
+
+        <div class="badge-grid">
+
+            <div class="badge-card unlocked">
+                <div class="badge-icon">🔥</div>
+                <h4>7-Day Streak</h4>
+                <p>Proves you’ve built a daily coding habit.</p>
+                <span class="badge-status">Unlocked</span>
+            </div>
+
+            <div class="badge-card unlocked">
+                <div class="badge-icon">⚡</div>
+                <h4>14-Day Streak</h4>
+                <p>Shows growing consistency and discipline.</p>
+                <span class="badge-status">Unlocked</span>
+            </div>
+
+            <div class="badge-card locked">
+                <div class="badge-icon">🏆</div>
+                <h4>30-Day Streak</h4>
+                <p>Strong interview mindset & focus.</p>
+                <span class="badge-status">Locked</span>
+            </div>
+
+            <div class="badge-card locked">
+                <div class="badge-icon">👑</div>
+                <h4>60-Day Streak</h4>
+                <p>Elite preparation & top-tier discipline.</p>
+                <span class="badge-status">Locked</span>
+            </div>
+
+        </div>
+    </section>
 </section>
 
-<!-- ================= STICKY CTA ================= -->
-<div class="sticky-cta" *ngIf="showStickyCTA">
-  <span>🔥 Crack Java Interviews Faster</span>
-  <button (click)="buyNow()">Buy Complete Java Kit →</button>
-</div>
+<!-- ================= COMPARISON TABLE ================= -->
+<section class="comparison-table">
+    <h2>JavaArray vs Other Options</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>JavaArray</th>
+                <th>YouTube</th>
+                <th>Offline Coaching</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Interview-focused content</td>
+                <td>✅</td>
+                <td>❌</td>
+                <td>⚠️</td>
+            </tr>
+            <tr>
+                <td>Structured roadmap</td>
+                <td>✅</td>
+                <td>❌</td>
+                <td>⚠️</td>
+            </tr>
+            <tr>
+                <td>Lifetime access</td>
+                <td>✅</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Cost-effective</td>
+                <td>✅</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ================= AUDIENCE ================= -->
+<section class="audience">
+    <h2>Who Should Use JavaArray?</h2>
+
+    <div class="audience-grid">
+        <div class="aud-card">
+            👨‍🎓
+            <h4>Students & Freshers</h4>
+            <p>
+                Build strong fundamentals in Java and backend development while learning
+                how to confidently explain concepts during interviews. Perfect for your
+                first technical job.
+            </p>
+        </div>
+
+        <div class="aud-card">
+            👨‍💻
+            <h4>Working Professionals</h4>
+            <p>
+                Prepare for interviews without wasting time. JavaArray gives focused,
+                interview-relevant content that helps you switch or upgrade jobs faster.
+            </p>
+        </div>
+
+        <div class="aud-card">
+            🧑‍💼
+            <h4>Career Switchers</h4>
+            <p>
+                Switching to backend roles becomes easier with a clear roadmap that tells
+                you exactly what to learn and how it will be asked in interviews.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="how-it-works">
+    <h2>How JavaArray Helps You Crack Interviews</h2>
+
+    <p class="section-intro">
+        JavaArray follows a proven, step-by-step interview preparation system
+        designed to build confidence, clarity, and real interview skills.
+    </p>
+
+    <div class="steps">
+        <div class="step">
+            <span>1</span>
+            <h4>Select a Roadmap</h4>
+            <p>Core Java → Spring Boot → Microservices</p>
+        </div>
+        <div class="step">
+            <span>2</span>
+            <h4>Practice Interview Questions</h4>
+            <p>Real questions with clear explanations</p>
+        </div>
+        <div class="step">
+            <span>3</span>
+            <h4>Build Thinking Ability</h4>
+            <p>Learn how to reason and explain clearly</p>
+        </div>
+        <div class="step">
+            <span>4</span>
+            <h4>Crack Interviews Confidently</h4>
+            <p>Face interviews with confidence and clarity</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= WHAT YOU WILL MASTER ================= -->
+<section class="mastery">
+    <h2>What You Will Master with JavaArray</h2>
+
+    <div class="mastery-grid">
+        <div>✔ Core Java interview questions with deep explanations</div>
+        <div>✔ Spring Boot & backend interview scenarios</div>
+        <div>✔ REST APIs, databases, and backend architecture basics</div>
+        <div>✔ System design thinking for real-world problems</div>
+        <div>✔ Clear communication of technical answers</div>
+        <div>✔ Confidence for technical and HR interview rounds</div>
+    </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="testimonials">
+    <h2>What Learners Say About JavaArray</h2>
+
+    <p class="section-intro">
+        Thousands of learners across India have prepared smarter, gained confidence,
+        and cracked interviews they once found difficult.
+    </p>
+
+    <div class="testimonial">
+        <p>“{{ testimonials[activeTestimonial].text }}”</p>
+        <strong>{{ testimonials[activeTestimonial].name }}</strong>
+        <span>{{ testimonials[activeTestimonial].role }}</span>
+    </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section class="pricing">
+    <h2>Simple & Honest Pricing</h2>
+
+    <p class="pricing-context">
+        Traditional coaching programs charge anywhere between ₹15,000 and ₹30,000.
+        JavaArray gives you the same structured interview preparation at a fraction
+        of the cost, with lifetime access and continuous updates.
+    </p>
+
+    <p class="pricing-note">
+        You are not paying for videos. You are investing in clarity, confidence,
+        and a proven interview preparation system.
+    </p>
+
+    <div class="toggle">
+        <button [class.active]="billing === 'monthly'" (click)="toggleBilling('monthly')">
+            Monthly
+        </button>
+        <button [class.active]="billing === 'lifetime'" (click)="toggleBilling('lifetime')">
+            Lifetime
+        </button>
+    </div>
+
+    <div class="price-box">
+        <h3>Java Interview Preparation Kit</h3>
+        <p class="price">
+            {{ billing === 'monthly' ? '₹199 / month' : '₹299 One-Time' }}
+        </p>
+
+        <a [routerLink]="(isLoggedIn$ | async) ? '/dashboard' : '/register'" class="btn-primary">
+            {{ (isLoggedIn$ | async) ? 'Continue Learning →' : 'Get Started Now →' }}
+        </a>
+    </div>
+</section>
+
+<section class="faq">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+        <h4>Is JavaArray suitable for beginners?</h4>
+        <p>
+            Yes. JavaArray is designed to support beginners, students, and freshers
+            by starting from Core Java fundamentals and gradually moving toward
+            advanced backend and system design topics. Each concept is explained
+            clearly with interview context so beginners don’t feel lost.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h4>How is JavaArray different from YouTube tutorials?</h4>
+        <p>
+            YouTube tutorials usually focus on teaching concepts randomly.
+            JavaArray focuses on how those concepts are asked in real interviews.
+            You don’t just learn Java — you learn how to explain Java in interviews.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h4>Will JavaArray help me crack product-based companies?</h4>
+        <p>
+            JavaArray prepares you with problem-solving mindset, clean explanations,
+            and backend concepts required for both service-based and product-based
+            company interviews.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h4>Do I get lifetime access?</h4>
+        <p>
+            Yes. Once you purchase JavaArray, you get lifetime access to the content
+            along with future updates based on interview trends.
+        </p>
+    </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final-cta">
+    <h2>Prepare Smart. Not Random.</h2>
+
+    <p>
+        Interviews don’t reward how many tutorials you watch.
+        They reward how clearly you think and explain.
+        JavaArray helps you build that mindset — step by step.
+    </p>
+
+    <a [routerLink]="(isLoggedIn$ | async) ? '/dashboard' : '/register'" class="btn-primary big">
+        {{ (isLoggedIn$ | async) ? 'Go to Dashboard →' : 'Start Free Today →' }}
+    </a>
+</section>

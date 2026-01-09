@@ -1,3 +1,5 @@
+<!-- 🐞 BUG HUNTER ANALYTICS -->
+
 <h2>🐞 Bug Hunter – Most Wrong Bug Categories</h2>
 
 <table class="analytics-table">
@@ -47,3 +49,66 @@
     </tr>
   </tbody>
 </table>
+
+<!-- 📊 DAILY CHALLENGE ANALYTICS -->
+
+<section class="analytics">
+
+  <h2>📊 Daily Challenge Analytics</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <span>Total Submissions</span>
+      <strong>{{ stats?.totalSubmissions }}</strong>
+    </div>
+
+    <div class="kpi success">
+      <span>Success Rate</span>
+      <strong>{{ stats?.successRate }}%</strong>
+    </div>
+
+    <div class="kpi xp">
+      <span>Avg XP</span>
+      <strong>{{ stats?.averageXp }}</strong>
+    </div>
+  </div>
+
+  <div class="charts">
+    <div class="chart-card">
+      <h4>📈 Submissions Trend</h4>
+      <canvas #trendChart></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h4>🎯 Success vs Failure</h4>
+      <canvas #successChart></canvas>
+    </div>
+  </div>
+
+  <!-- DATE FILTER -->
+  <div class="filter-bar">
+    <div>
+      <label>From</label>
+      <input type="date" [(ngModel)]="fromDate">
+    </div>
+
+    <div>
+      <label>To</label>
+      <input type="date" [(ngModel)]="toDate">
+    </div>
+
+    <button (click)="applyFilter()">Apply</button>
+
+    <div class="export-actions">
+      <button class="btn outline" (click)="download('csv')">
+        ⬇ Export CSV
+      </button>
+
+      <button class="btn primary" (click)="download('excel')">
+        ⬇ Export Excel
+      </button>
+    </div>
+
+  </div>
+
+</section>

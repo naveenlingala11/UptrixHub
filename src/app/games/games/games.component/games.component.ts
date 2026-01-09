@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { BugHunterService, BugHunterQuestion } from '../../services/bug-hunter.service';
 import { Achievement } from '../../services/achievements.service';
 import { StreakWidgetComponent } from '../../streak-widget.component/streak-widget.component';
@@ -12,7 +12,8 @@ import { XpCardComponent } from '../../xp-card.component/xp-card.component';
   imports: [
     CommonModule,
     XpCardComponent,
-    StreakWidgetComponent
+    StreakWidgetComponent,
+    RouterLink
   ],
   templateUrl: './games.component.html',
   styleUrls: ['./games.component.css']

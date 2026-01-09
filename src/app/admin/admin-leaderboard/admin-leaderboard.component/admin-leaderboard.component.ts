@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BugHunterLeaderboardRow, BugHunterAnalyticsService } from '../../services/admin-analytics.service';
+import { BugHunterLeaderboardRow, AnalyticsService } from '../../services/admin-analytics.service';
 
 
 @Component({
@@ -13,7 +13,7 @@ export class AdminLeaderboardComponent implements OnInit {
 
   leaderboard: BugHunterLeaderboardRow[] = [];
 
-  constructor(private service: BugHunterAnalyticsService) {}
+  constructor(private service: AnalyticsService) {}
 
   ngOnInit() {
     this.service.getLeaderboard()

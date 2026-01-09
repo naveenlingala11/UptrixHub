@@ -1,0 +1,210 @@
+/* ===== PAGE (NO THEME HERE) ===== */
+.game-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 🔥 CENTER VERTICALLY */
+  background: radial-gradient(circle at top,
+      #0b1220,
+      #020617);
+  padding: 16px;
+}
+
+/* ===== GAME PANEL (THEME APPLIES HERE) ===== */
+.game-panel {
+  --bg: #052e16;
+  --board-bg: #14532d;
+  --cell-bg: #064e3b;
+  --cell-hover: #065f46;
+  --x-color: #fb7185;
+  --o-color: #22d3ee;
+  --accent: #22c55e;
+  --text: #ecfdf5;
+
+  background: var(--bg);
+  color: var(--text);
+  width: 100%;
+  max-width: 360px;
+  /* 🔥 MOBILE PERFECT */
+  padding: 20px 18px;
+  border-radius: 20px;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 🔥 CENTER EVERYTHING */
+  gap: 14px;
+}
+
+/* ===== THEMES (ONLY PANEL) ===== */
+
+.game-panel.theme-neon {
+  --bg: #000;
+  --cell-bg: #000;
+  --cell-hover: #111;
+  --x-color: #00ffff;
+  --o-color: #ff00ff;
+  --accent: #00ff88;
+}
+
+.game-panel.theme-ocean {
+  --bg: #0e7490;
+  --board-bg: #155e75;
+  --cell-bg: #164e63;
+  --cell-hover: #0e7490;
+  --x-color: #67e8f9;
+  --o-color: #fde68a;
+}
+
+.game-panel.theme-sunset {
+  --bg: #7c2d12;
+  --board-bg: #9a3412;
+  --cell-bg: #431407;
+  --cell-hover: #7c2d12;
+  --x-color: #fde047;
+  --o-color: #fb7185;
+}
+
+.game-panel.theme-forest {
+  --bg: #052e16;
+  --board-bg: #14532d;
+  --cell-bg: #064e3b;
+  --cell-hover: #065f46;
+  --x-color: #86efac;
+  --o-color: #fde68a;
+}
+
+/* ===== CONTROLS ===== */
+.controls {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+
+select,
+button,
+input {
+  width: 100%;
+  background: var(--cell-bg);
+  color: var(--text);
+  border: none;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+
+/* ===== BOARD ===== */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 86px);
+  grid-template-rows: repeat(3, 86px);
+  gap: 10px;
+  justify-content: center;
+  margin: 10px 0 6px;
+}
+
+.cell {
+  background: linear-gradient(180deg,
+      var(--cell-bg),
+      rgba(0, 0, 0, 0.15));
+  font-size: 2.3rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s;
+}
+
+.cell:hover {
+  transform: translateY(-2px) scale(1.03);
+  background: var(--cell-hover);
+}
+
+.hint {
+  border: 2px dashed var(--accent);
+}
+
+.reset {
+  margin-top: 8px;
+  background: linear-gradient(135deg,
+      var(--accent),
+      #16a34a);
+  color: #052e16;
+  font-weight: 600;
+}
+
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.title .x {
+  color: var(--x-color);
+  font-size: 1.6rem;
+}
+
+.title .o {
+  color: var(--o-color);
+  font-size: 1.6rem;
+}
+
+p,
+h2 {
+  margin: 4px 0;
+  text-align: center;
+}
+
+.cell.win {
+  animation: winPulse 0.6s ease-in-out infinite alternate;
+  background: linear-gradient(135deg,
+      var(--accent),
+      var(--cell-bg));
+}
+
+@keyframes winPulse {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.08);
+  }
+}.cell {
+  position: relative;
+  overflow: hidden;
+}
+
+.cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.35) 10%,
+    transparent 11%
+  );
+  opacity: 0;
+  transform: scale(0);
+}
+
+.cell:active::after {
+  opacity: 1;
+  transform: scale(2.5);
+  transition: transform 0.4s, opacity 0.8s;
+}

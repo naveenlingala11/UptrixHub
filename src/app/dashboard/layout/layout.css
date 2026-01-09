@@ -16,11 +16,12 @@
 /* ===========================
    GLOBAL SAFETY (NAV FIX)
 =========================== */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
-    overflow-x: hidden !important;
+  overflow-x: hidden !important;
 }
 
 body.menu-open,
@@ -38,7 +39,8 @@ body.catalog-open {
   z-index: 3000;
   height: 76px;
   width: 100%;
-  overflow: hidden; /* 🔥 prevents navbar scroll */
+  overflow: hidden;
+  /* 🔥 prevents navbar scroll */
   border-bottom: 1px solid #e5e7eb;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
   backdrop-filter: saturate(180%) blur(6px);
@@ -104,7 +106,7 @@ body.catalog-open {
 }
 
 /* MAIN LINK */
-.nav-item > a {
+.nav-item>a {
   font-size: 15px;
   font-weight: 700;
   color: var(--text-dark);
@@ -114,14 +116,14 @@ body.catalog-open {
 }
 
 /* HOVER TEXT */
-.nav-item:hover > a {
+.nav-item:hover>a {
   background: var(--gradient);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* UNDERLINE */
-.nav-item > a::after {
+.nav-item>a::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -134,50 +136,82 @@ body.catalog-open {
   transition: width .3s ease;
 }
 
-.nav-item:hover > a::after {
+.nav-item:hover>a::after {
   width: 100%;
 }
 
 /* ===========================
-   DROPDOWN (STABLE)
+   NAV DROPDOWN – CLICK ONLY
 =========================== */
+
+/* Dropdown hidden by default */
 .dropdown {
   position: absolute;
   top: calc(100% + 12px);
   left: 0;
-  min-width: 320px;
-  padding: 22px;
+
+  min-width: 280px;
+  padding: 20px;
+
   border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, var(--blue-soft), var(--purple-soft));
+  background: #ffffff;
+
   box-shadow: var(--shadow-strong);
   border: 1px solid #e5e7eb;
+
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(10px);
   pointer-events: none;
-  transition: all .25s ease;
+
+  transition: opacity .25s ease, transform .25s ease;
 }
 
-/* Hover bridge */
-.nav-item::before {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  height: 16px;
-  width: 100%;
-}
-
-.nav-item:hover > .dropdown,
-.dropdown:hover {
+/* 👇 ONLY OPEN WHEN ANGULAR ADDS CLASS */
+.nav-item.open>.dropdown {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
+/* Dropdown links */
+.dropdown a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-decoration: none;
+
+  transition: background .2s ease, color .2s ease;
+}
+
+.dropdown a:hover {
+  background: var(--blue-soft);
+  color: var(--purple);
+}
+
+.nav-item.open>.dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Arrow rotate animation */
+.nav-item .caret {
+  font-size: 12px;
+  transition: transform 0.25s ease;
+}
+
+.nav-item.open .caret {
+  transform: rotate(180deg);
+}
+
 /* ===========================
    PRO BADGE
 =========================== */
-.nav-item.pro > a::before {
+.nav-item.pro>a::before {
   content: "PRO";
   font-size: 10px;
   font-weight: 900;
@@ -186,6 +220,23 @@ body.catalog-open {
   border-radius: 999px;
   background: linear-gradient(135deg, #facc15, #f59e0b);
   color: #000;
+}
+
+/* =====================================================
+   NAV DROPDOWN OVERLAY (BODY LEVEL)
+===================================================== */
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 2500;
+}
+
+/* Dropdown must stay ABOVE overlay */
+.dropdown {
+  z-index: 3000;
 }
 
 /* ===========================
@@ -229,7 +280,8 @@ body.catalog-open {
     background: #ffffff;
     padding: 16px;
     gap: 6px;
-    overflow-y: auto; /* ✅ menu scroll only */
+    overflow-y: auto;
+    /* ✅ menu scroll only */
     display: none;
     z-index: 2999;
   }
@@ -238,13 +290,61 @@ body.catalog-open {
     display: flex;
   }
 
-  .nav-item > a {
+  .nav-item>a {
     font-size: 16px;
     padding: 14px 10px;
     width: 100%;
   }
+
   .nav-actions .btn {
     display: none;
+  }
+}
+
+/* ===========================
+   DROPDOWN BUTTON STYLE
+=========================== */
+
+.nav-item.catalog>.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* caret animation */
+.nav-item.catalog .caret {
+  font-size: 12px;
+  transition: transform .25s ease;
+}
+
+/* rotate caret on open */
+.nav-item.catalog.open .caret {
+  transform: rotate(180deg);
+}
+
+/* ❌ disable hover opening effect */
+.nav-item.catalog:hover>.nav-link {
+  background: none;
+  -webkit-text-fill-color: initial;
+  color: var(--text-dark);
+}
+
+@media (max-width: 768px) {
+
+  /* Dropdown inside mobile menu */
+  .dropdown {
+    position: static;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+    box-shadow: none;
+    border: none;
+    padding: 0 0 10px;
+  }
+
+  .nav-item.open>.dropdown {
+    display: block;
   }
 }
 
@@ -788,7 +888,8 @@ body.catalog-open {
 @media (max-width: 768px) {
 
   /* ===== GLOBAL SAFETY ===== */
-  html, body {
+  html,
+  body {
     overflow-x: hidden !important;
   }
 
@@ -852,7 +953,7 @@ body.catalog-open {
     width: 100%;
   }
 
-  .nav-item > a {
+  .nav-item>a {
     width: 100%;
     padding: 14px 12px;
     font-size: 16px;
@@ -860,7 +961,7 @@ body.catalog-open {
   }
 
   /* ❌ Disable underline animation */
-  .nav-item > a::after {
+  .nav-item>a::after {
     display: none !important;
   }
 
@@ -894,24 +995,4 @@ body.catalog-open {
   main.page-container {
     padding-top: 56px;
   }
-}
-/* ===========================
-   GLOBAL OVERLAY (BODY LEVEL)
-=========================== */
-.body-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(2px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
-  z-index: 2500;
-}
-
-/* ACTIVE STATE */
-body.menu-open .body-overlay,
-body.catalog-open .body-overlay {
-  opacity: 1;
-  pointer-events: auto;
 }

@@ -35,8 +35,15 @@ export class AdminDashboardComponent implements OnInit {
       desc: 'Central XP brain for all games',
       icon: '🧠',
       route: '/admin/xp-rules'
+    },
+    {
+      title: 'Roadmaps',
+      desc: 'Upload & manage course roadmaps',
+      icon: '🗺️',
+      route: '/admin/roadmaps'
     }
+
   ];
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

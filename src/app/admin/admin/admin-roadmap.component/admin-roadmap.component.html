@@ -1,0 +1,96 @@
+<section class="admin-roadmap">
+
+    <!-- HEADER -->
+    <header class="page-header">
+        <h1>🗺 Roadmap Management</h1>
+        <p>Create, preview, reorder & publish course roadmaps</p>
+    </header>
+
+    <!-- JSON UPLOAD -->
+    <section class="card">
+        <h2>📄 Upload Roadmap (JSON)</h2>
+
+        <textarea rows="10" placeholder="Paste roadmap JSON here..." [(ngModel)]="roadmapJson">
+    </textarea>
+
+        <button (click)="upload()">⬆ Upload JSON (Draft)</button>
+
+        <p class="error" *ngIf="errorDetails">{{ errorDetails }}</p>
+    </section>
+
+    <!-- EXCEL UPLOAD -->
+    <section class="card">
+        <h2>📊 Upload Roadmap (Excel)</h2>
+
+        <input type="file" accept=".xlsx" (change)="onFileChange($event)" />
+
+        <button (click)="uploadExcel()">⬆ Upload Excel (Draft)</button>
+    </section>
+
+    <section class="card">
+        <h2>👀 Preview Draft Roadmap</h2>
+
+        <div class="preview-controls">
+
+            <select [(ngModel)]="selectedCourseId">
+                <option value="">-- Select Course --</option>
+                <option *ngFor="let c of courses" [value]="c.id">
+                    {{ c.title }}
+                </option>
+            </select>
+
+            <button (click)="preview()">Preview Draft</button>
+
+        </div>
+
+        <p class="error" *ngIf="message">{{ message }}</p>
+    </section>
+
+    <div class="alert success" *ngIf="uploadSuccess">
+        ✅ Roadmap uploaded successfully (Draft)
+    </div>
+<!-- 
+    <div class="alert error" *ngIf="uploadError">
+        {{ uploadError }}
+    </div> -->
+
+    <pre class="error-details" *ngIf="errorDetails">
+        {{ errorDetails }}
+    </pre>
+
+    <!-- ROADMAP PREVIEW -->
+    <section class="card" *ngIf="roadmap">
+
+        <h2>
+            🧭 {{ roadmap.courseTitle }}
+            <span class="meta">
+                v{{ roadmap.version }} ·
+                {{ roadmap.published ? 'LIVE' : 'DRAFT' }}
+            </span>
+        </h2>
+
+        <div class="level" *ngFor="let l of roadmap.levels">
+
+            <h3>{{ l.level }}</h3>
+
+            <div class="topic-list" cdkDropList (cdkDropListDropped)="drop(l, $event)">
+
+                <div class="topic" *ngFor="let t of l.topics" cdkDrag>
+                    ☰ {{ t }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="actions">
+            <button (click)="saveOrder()">💾 Save Order</button>
+            <button class="publish" (click)="publish()">🚀 Publish</button>
+        </div>
+
+    </section>
+
+    <!-- STATUS -->
+    <p class="success" *ngIf="message && !errorDetails">{{ message }}</p>
+
+</section>

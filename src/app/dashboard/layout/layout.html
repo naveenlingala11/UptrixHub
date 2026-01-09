@@ -72,9 +72,11 @@
         </li>
 
         <!-- ================= INTERVIEW PREP ================= -->
-        <li class="nav-item">
-          <a routerLink="/interview-prep" (click)="closeMobileMenu()">Interview Prep</a>
-          <div class="dropdown">
+        <li class="nav-item" (click)="toggleOnClick('interview', $event)" [class.open]="activeDropdown === 'interview'">
+
+          <a href="javascript:void(0)">Interview Prep</a>
+
+          <div class="dropdown" (click)="$event.stopPropagation()">
             <div class="dropdown-section">
               <h6>Preparation</h6>
               <a routerLink="/interview-prep/java">Java Interviews</a>
@@ -104,7 +106,7 @@
 
         <!-- ================= ROADMAPS ================= -->
         <li class="nav-item">
-          <a routerLink="/roadmaps" (click)="closeMobileMenu()">Roadmaps</a>
+          <a routerLink="/roadmap" (click)="closeMobileMenu()">Roadmaps</a>
           <div class="dropdown">
             <div class="dropdown-section">
               <a routerLink="/roadmaps/java">Java Developer</a>
@@ -224,6 +226,10 @@
     </div>
 
   </div>
+  <!-- DROPDOWN OVERLAY -->
+  <div class="nav-overlay" *ngIf="activeDropdown" (click)="closeDropdown()">
+  </div>
+
 </nav>
 
 <!-- ================= PAGE CONTENT ================= -->
