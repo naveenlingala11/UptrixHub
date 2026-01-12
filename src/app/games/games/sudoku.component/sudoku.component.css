@@ -1,0 +1,310 @@
+/* =====================================================
+   THEME VARIABLES
+===================================================== */
+
+/* 🌑 DARK */
+[data-theme="dark"] {
+    --bg: radial-gradient(circle at top, #0f172a, #020617);
+    --panel: #020617;
+    --cell-bg: #f8fafc;
+    --cell-text: #020617;
+    --fixed-bg: #020617;
+    --fixed-text: #38bdf8;
+    --accent: #38bdf8;
+    --danger: #ef4444;
+    --muted: #64748b;
+}
+
+/* 🌕 LIGHT */
+[data-theme="light"] {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --cell-bg: #ffffff;
+    --cell-text: #020617;
+    --fixed-bg: #e5e7eb;
+    --fixed-text: #1e3a8a;
+    --accent: #2563eb;
+    --danger: #dc2626;
+    --muted: #64748b;
+}
+
+/* 🟣 PURPLE */
+[data-theme="purple"] {
+    --bg: radial-gradient(circle at top, #2e1065, #020617);
+    --panel: #020617;
+    --cell-bg: #faf5ff;
+    --cell-text: #2e1065;
+    --fixed-bg: #020617;
+    --fixed-text: #c084fc;
+    --accent: #c084fc;
+    --danger: #fb7185;
+    --muted: #a78bfa;
+}
+
+/* 🟢 MATRIX */
+[data-theme="matrix"] {
+    --bg: radial-gradient(circle at top, #052e16, #020617);
+    --panel: #020617;
+    --cell-bg: #ecfdf5;
+    --cell-text: #052e16;
+    --fixed-bg: #020617;
+    --fixed-text: #22c55e;
+    --accent: #22c55e;
+    --danger: #f43f5e;
+    --muted: #4ade80;
+}
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.sudoku-container {
+    min-height: 100vh;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+    font-family: Inter, system-ui, sans-serif;
+    color: var(--accent);
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+}
+
+/* =====================================================
+   CONTROLS
+===================================================== */
+
+.top-controls,
+.theme-switcher,
+.actions,
+.speed,
+.solver-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+select {
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--accent);
+    background: var(--panel);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.grid {
+    background: var(--panel);
+    padding: 14px;
+    border-radius: 18px;
+    width: fit-content;
+    box-shadow:
+        0 0 0 3px var(--accent),
+        0 25px 50px rgba(0, 0, 0, 0.6);
+}
+
+.row {
+    display: flex;
+    width: fit-content;
+}
+
+/* =====================================================
+   CELL
+===================================================== */
+
+.cell {
+    position: relative;
+    width: 56px;
+    height: 56px;
+}
+
+input {
+    width: 56px;
+    height: 56px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    background: var(--cell-bg);
+    color: var(--cell-text);
+    border: 1px solid var(--muted);
+    outline: none;
+    caret-color: transparent;
+    transition: all 0.15s ease;
+}
+
+/* 3×3 BOLD BORDERS */
+.row:nth-child(3n) input {
+    border-bottom: 3px solid var(--accent);
+}
+
+.cell:nth-child(3n) input {
+    border-right: 3px solid var(--accent);
+}
+
+/* =====================================================
+   STATES
+===================================================== */
+
+input:focus {
+    background: #fde68a;
+    box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.fixed {
+    background: var(--fixed-bg);
+    color: var(--fixed-text);
+}
+
+.selected {
+    box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.same {
+    background: transparent !important;
+    box-shadow: inset 0 0 0 2px rgba(56, 189, 248, 0.6);
+    color: inherit;
+}
+
+.error {
+    background: #fee2e2 !important;
+    color: #7f1d1d !important;
+    border: 3px solid var(--danger) !important;
+    animation: shake 0.15s linear 2;
+}
+
+/* =====================================================
+   PENCIL NOTES
+===================================================== */
+
+.notes {
+    position: absolute;
+    inset: 4px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    pointer-events: none;
+}
+
+.notes span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notes span.active {
+    color: var(--accent);
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+button {
+    padding: 9px 16px;
+    border-radius: 12px;
+    border: none;
+    background: var(--accent);
+    color: #020617;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.active {
+    box-shadow: inset 0 0 0 3px #020617;
+}
+
+/* =====================================================
+   TIMER / MESSAGE
+===================================================== */
+
+.timer {
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.msg {
+    margin-top: 14px;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+/* =====================================================
+   SPEED
+===================================================== */
+
+.speed {
+    align-items: center;
+}
+
+.speed input {
+    width: 160px;
+}
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-3px);
+    }
+
+    50% {
+        transform: translateX(3px);
+    }
+
+    75% {
+        transform: translateX(-3px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .cell,
+    input {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+
+    .grid {
+        padding: 10px;
+    }
+}

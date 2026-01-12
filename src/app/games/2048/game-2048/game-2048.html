@@ -1,0 +1,40 @@
+<section class="game-2048">
+
+    <header>
+        <h1>2048</h1>
+        <div class="score">
+            SCORE<br />
+            <strong>{{ game.score }}</strong>
+        </div>
+    </header>
+
+    <div class="board">
+        <div class="row" *ngFor="let row of game.grid">
+            <div *ngFor="let cell of row" [class]="tileClass(cell)">
+                {{ cell || '' }}
+            </div>
+        </div>
+    </div>
+
+    <div class="status win" *ngIf="game.won">🎉 You Win!</div>
+    <div class="status lose" *ngIf="game.gameOver">❌ Game Over</div>
+
+    <div class="controls">
+        <button (click)="restart()">🔁 Restart</button>
+        <button (click)="startAi()">🤖 AI Play</button>
+    </div>
+
+    <div class="controls">
+        <button (click)="restart()">Normal Game</button>
+        <button (click)="startDaily()">📅 Daily Challenge</button>
+        <button (click)="startAi()">🤖 AI</button>
+    </div>
+
+    <div class="medal" *ngIf="medal">
+        🏅 Medal Earned:
+        <strong>{{ medal }}</strong>
+    </div>
+
+    <app-2048-leaderboard></app-2048-leaderboard>
+
+</section>

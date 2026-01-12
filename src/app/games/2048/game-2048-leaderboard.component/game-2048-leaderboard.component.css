@@ -1,0 +1,36 @@
+.leaderboard {
+  margin-top: 24px;
+  background: #020617;
+  padding: 20px;
+  border-radius: 18px;
+  color: #f8fafc;
+}
+
+h2 {
+  margin-bottom: 12px;
+  color: #facc15;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: #1e293b;
+}
+
+tr:nth-child(even) {
+  background: #0f172a;
+}
+
+.rank {
+  margin-top: 14px;
+  font-size: 1.1rem;
+  color: #38bdf8;
+}

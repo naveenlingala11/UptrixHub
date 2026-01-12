@@ -129,13 +129,8 @@
 
         <!-- ================= FAQ ================= -->
         <li class="nav-item">
-          <a routerLink="/faq" (click)="closeMobileMenu()">FAQ</a>
+          <a routerLink="/games" (click)="closeMobileMenu()">Games</a>
           <div class="dropdown">
-            <div class="dropdown-section">
-              <a routerLink="/faq#general">General</a>
-              <a routerLink="/faq#billing">Billing</a>
-              <a routerLink="/faq#courses">Courses</a>
-            </div>
           </div>
         </li>
 
@@ -183,6 +178,12 @@
           </div>
         </li>
 
+        <li class="nav-item">
+          <a routerLink="/games" (click)="closeMobileMenu()">Games</a>
+          <div class="dropdown">
+          </div>
+        </li>
+        
         <!-- ================= CART ================= -->
         <li class="nav-item cart">
           <a routerLink="/cart" class="cart-link" (click)="closeMobileMenu()">

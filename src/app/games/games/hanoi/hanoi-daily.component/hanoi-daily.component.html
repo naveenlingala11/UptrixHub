@@ -1,0 +1,14 @@
+<div class="daily">
+  <h3>🌟 Daily Challenge</h3>
+
+  <div *ngIf="challenge">
+    <p>Date: {{challenge.date}}</p>
+    <p>Disks: {{challenge.disks}}</p>
+    <p>Seed: {{challenge.seed}}</p>
+
+    <button routerLink="/games/hanoi"
+            [queryParams]="{ disks: challenge.disks, seed: challenge.seed }">
+      ▶ Play Daily Challenge
+    </button>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<section class="sudoku-container" [attr.data-theme]="theme">
+
+    <h1>🧩 Sudoku</h1>
+
+    <div class="top-controls">
+        <select [(ngModel)]="difficulty" (change)="reset()">
+            <option value="EASY">Easy</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HARD">Hard</option>
+        </select>
+    </div>
+
+    <div class="theme-switcher">
+        <button (click)="theme='dark'">🌑</button>
+        <button (click)="theme='light'">🌕</button>
+        <button (click)="theme='purple'">🟣</button>
+        <button (click)="theme='matrix'">🟢</button>
+    </div>
+
+    <div class="timer">
+        ⏱ {{ (appState.time$ | async)! + penalties }}s
+    </div>
+
+    <div class="grid">
+        <div class="row" *ngFor="let row of puzzle; let r=index">
+            <div class="cell" *ngFor="let cell of row; let c=index">
+                <input type="text" maxlength="1" [ngModel]="puzzle[r][c] === 0 ? '' : puzzle[r][c]"
+                    [ngModelOptions]="{ standalone: true }" (ngModelChange)="handleCellInput(r, c, $event)"
+                    (focus)="selectCell(r,c)" (keydown)="blockInvalid($event)" [disabled]="isFixed(r,c) || solving"
+                    [class.fixed]="isFixed(r,c)" [class.error]="errors[r][c]" (keydown)="onKeyNavigate($event, r, c)"
+                    [class.selected]="selected?.r === r && selected?.c === c" [class.same]="
+                    highlightSame &&
+                    selectedValue !== null &&
+                    puzzle[r][c] === selectedValue &&
+                    puzzle[r][c] !== 0
+                    " />
+
+                <div class="notes" *ngIf="notes[r][c].size && cell===0">
+                    <span *ngFor="let n of [1,2,3,4,5,6,7,8,9]" [class.active]="notes[r][c].has(n)">
+                        {{n}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button (click)="undo()">↩ Undo</button>
+        <button (click)="redo()">↪ Redo</button>
+        <button (click)="pencilMode=!pencilMode" [class.active]="pencilMode">✏ Pencil</button>
+    </div>
+
+    <div class="actions">
+        <button (click)="solveSudoku()">🤖 Auto Solve</button>
+        <button (click)="reset()">🔁 Reset</button>
+        <button (click)="highlightSame = !highlightSame">
+            🔍 Same Number
+        </button>
+    </div>
+    <div class="number-pad">
+        <button *ngFor="let n of [1,2,3,4,5,6,7,8,9]" (click)="enterNumber(n)">
+            {{ n }}
+        </button>
+        <button class="clear" (click)="enterNumber(0)">⌫</button>
+    </div>
+    <div class="lives">
+        ❤️ {{ MAX_MISTAKES - mistakes }}
+    </div>
+
+    <div class="solver-controls" *ngIf="solving">
+        <button *ngIf="!paused" (click)="pause()">⏸ Pause</button>
+        <button *ngIf="paused" (click)="resume()">▶ Resume</button>
+    </div>
+
+    <div class="speed">
+        Speed <input type="range" min="30" max="500" step="50" [(ngModel)]="delay">
+    </div>
+
+    <p class="msg">{{ message }}</p>
+
+</section>

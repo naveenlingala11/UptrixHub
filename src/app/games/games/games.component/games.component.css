@@ -1,14 +1,25 @@
+/* ================= GLOBAL ================= */
+section {
+  width: 100%;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 30px;
+}
+
 /* ================= HERO ================= */
 .games-hero {
   max-width: 900px;
-  margin: 80px auto 50px;
+  margin: 90px auto 60px;
   text-align: center;
 }
 
 .games-hero h1 {
-  font-size: 3rem;
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
   font-weight: 900;
-  background: linear-gradient(135deg,#2563eb,#7c3aed);
+  background: linear-gradient(135deg,#22d3ee,#7c3aed);
   background-clip: text;
   color: transparent;
 }
@@ -16,70 +27,78 @@
 .games-hero p {
   margin-top: 14px;
   font-size: 1.15rem;
-  color: #6b7280;
+  color: #9ca3af;
 }
 
-/* ================= FEATURED GAME ================= */
+/* ================= FEATURED ================= */
 .featured-game {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
   padding: 20px;
 }
 
 .featured-card {
   position: relative;
-  background: linear-gradient(135deg,#0f172a,#1f2937);
+  height: 340px;
+  border-radius: 32px;
+  overflow: hidden;
+  background: linear-gradient(135deg,#020617,#1e293b);
+  box-shadow: 0 50px 120px rgba(0,0,0,.6);
+}
+
+.featured-content {
+  position: relative;
+  z-index: 2;
+  padding: 60px;
   color: #fff;
-  border-radius: 28px;
-  padding: 46px;
-  box-shadow: 0 40px 100px rgba(0,0,0,.45);
+  max-width: 600px;
 }
 
-.badge {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: linear-gradient(135deg,#22c55e,#16a34a);
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: .75rem;
-  font-weight: 800;
-}
-
-.featured-card h2 {
-  font-size: 2.4rem;
+.featured-content h2 {
+  font-size: 2.6rem;
   font-weight: 900;
 }
 
-.tagline {
-  margin-top: 12px;
-  color: #d1d5db;
-}
-
-.features {
-  margin-top: 22px;
-  padding-left: 18px;
-}
-
-.features li {
-  margin-bottom: 10px;
-  font-weight: 600;
+.featured-content p {
+  margin-top: 14px;
   color: #e5e7eb;
+  line-height: 1.6;
 }
 
 .actions {
-  margin-top: 30px;
+  margin-top: 28px;
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
 }
 
+.featured-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top right,#7c3aed66,transparent 60%),
+    radial-gradient(circle at bottom left,#22d3ee66,transparent 60%);
+}
+
+.badge {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  background: linear-gradient(135deg,#22c55e,#16a34a);
+  padding: 6px 16px;
+  font-size: .75rem;
+  font-weight: 900;
+  border-radius: 999px;
+  z-index: 3;
+}
+
+/* ================= BUTTONS ================= */
 .btn {
   padding: 14px 28px;
   border-radius: 999px;
-  font-weight: 800;
-  cursor: pointer;
+  font-weight: 900;
   border: none;
+  cursor: pointer;
 }
 
 .btn.primary {
@@ -93,30 +112,83 @@
   color: #a5b4fc;
 }
 
+/* ================= GAMES GRID ================= */
+.games-showcase {
+  max-width: 1200px;
+  margin: 100px auto;
+  padding: 0 20px;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap: 30px;
+}
+
+.game-card {
+  height: 260px;
+  border-radius: 28px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,.35);
+  transition: transform .35s, box-shadow .35s;
+}
+
+.game-card:hover {
+  transform: translateY(-10px) scale(1.04);
+  box-shadow: 0 50px 140px rgba(0,0,0,.65);
+}
+
+.game-card h3 {
+  position: absolute;
+  bottom: 48px;
+  left: 26px;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+.game-card span {
+  position: absolute;
+  bottom: 22px;
+  left: 26px;
+  font-size: .9rem;
+  color: #e5e7eb;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,transparent 40%,rgba(0,0,0,.8));
+}
+
+/* ================= GAME BACKGROUNDS ================= */
+.tic     { background: url('/assets/games/tictactoe.png') center/cover; }
+.sudoku  { background: url('/assets/games/sudoko.png') center/cover; }
+.g2048   { background: url('/assets/games/2048.png') center/cover; }
+.hanoi   { background: url('/assets/games/hanoi.png') center/cover; }
+.unblock { background: url('/assets/games/unblock.png') center/cover; }
+.chess   { background: url('/assets/games/chess.png') center/cover; }
+
 /* ================= STATS ================= */
 .stats-section {
   max-width: 1100px;
-  margin: 60px auto;
+  margin: 80px auto;
   padding: 0 20px;
   display: grid;
-  gap: 24px;
+  gap: 30px;
 }
 
 /* ================= ACHIEVEMENTS ================= */
 .achievements-strip {
   max-width: 1100px;
-  margin: 60px auto;
+  margin: 80px auto;
   padding: 0 20px;
 }
 
-.achievements-strip h3 {
-  font-size: 1.4rem;
-  font-weight: 800;
-  margin-bottom: 14px;
-}
-
 .badges img {
-  width: 40px;
+  width: 42px;
   margin-right: 10px;
   transition: .25s;
 }
@@ -126,58 +198,14 @@
   filter: grayscale(1);
 }
 
-/* ================= UPCOMING ================= */
-.upcoming-games {
-  max-width: 1100px;
-  margin: 80px auto;
-  padding: 0 20px;
-}
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .featured-content {
+    padding: 40px;
+  }
 
-.upcoming-games h2 {
-  font-size: 1.8rem;
-  font-weight: 800;
-  margin-bottom: 24px;
-}
-
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-  gap: 24px;
-}
-
-.game-tile {
-  background: #fff;
-  border-radius: 20px;
-  padding: 26px;
-  box-shadow: 0 14px 40px rgba(0,0,0,.08);
-  position: relative;
-}
-
-.game-tile h3 {
-  font-weight: 800;
-}
-
-.game-tile p {
-  margin-top: 8px;
-  color: #6b7280;
-}
-
-.lock {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  color: #9ca3af;
-}
-
-.locked {
-  opacity: .7;
-}
-.done {
-  margin-top: 40px;
-  background: linear-gradient(135deg,#2563eb,#7c3aed);
-  color: #fff;
-  padding: 30px;
-  border-radius: 22px;
-  text-align: center;
-  font-weight: 800;
+  .featured-card {
+    height: auto;
+    padding-bottom: 40px;
+  }
 }

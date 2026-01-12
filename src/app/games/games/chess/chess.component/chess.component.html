@@ -1,0 +1,211 @@
+<section class="chess-app">
+    <h1>♟ Chess</h1>
+    <div class="clock-bar">
+        <div class="clock white">
+            ♙ {{ whiteTime | date:'mm:ss':'UTC' }}
+        </div>
+        <div class="clock black">
+            ♟ {{ blackTime | date:'mm:ss':'UTC' }}
+        </div>
+    </div>
+    <!-- ================= THEMES ================= -->
+    <div class="theme-panel">
+        <span class="theme-title">🎨 Theme</span>
+
+        <div class="theme-buttons">
+            <button *ngFor="let t of themes" class="ctrl-btn" [class.active]="theme === t.key"
+                (click)="setTheme(t.key)">
+                {{ t.label }}
+            </button>
+        </div>
+    </div>
+
+    <div class="chess-layout">
+
+        <!-- ♙ White Captured -->
+        <div class="captured white" *ngIf="showCaptured">
+            <h3>White Lost (−{{ whiteMaterialLoss }})</h3>
+            <div class="pieces">
+                <span *ngFor="let p of capturedWhite">{{ pieceIcon(p) }}</span>
+            </div>
+        </div>
+
+        <!-- BOARD -->
+        <div class="board" [class.blurred]="aiThinking" [class.check]="isCheck" [class.checkmate]="isCheckmate"
+            [attr.data-theme]="theme">
+            <div class="row" *ngFor="let row of board; let r=index">
+                <div class="cell" *ngFor="let cell of row; let c=index" [class.dark]="(r+c)%2===1"
+                    [class.selected]="selected?.r===r && selected?.c===c" [class.move]="isPossibleMove(r,c)"
+                    (click)="selectCell(r,c)" [class.last]="lastMove?.tr===r && lastMove?.tc===c">
+                    <span *ngIf="cell" [class.white-piece]="cell.color==='WHITE'"
+                        [class.black-piece]="cell.color==='BLACK'">
+                        {{ pieceIcon(cell) }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ♟ Black Captured -->
+        <div class="captured black" *ngIf="showCaptured">
+            <h3>
+                Black Lost
+                <span class="material-badge">−{{ blackMaterialLoss }}</span>
+            </h3>
+
+            <div class="pieces black-pieces">
+                <span *ngFor="let p of capturedBlack" class="captured-piece">
+                    {{ pieceIcon(p) }}
+                </span>
+            </div>
+        </div>
+
+        <div class="mobile-captured" *ngIf="!showCaptured">
+            <div class="row">
+                <span *ngFor="let p of capturedWhite">{{ pieceIcon(p) }}</span>
+            </div>
+            <div class="row">
+                <span *ngFor="let p of capturedBlack">{{ pieceIcon(p) }}</span>
+            </div>
+        </div>
+
+        <button class="ctrl-btn" (click)="showCaptured = !showCaptured">
+            🧩 Captures
+        </button>
+
+        <div class="history-panel" (click)="showMoves = true">
+            <h3>📜 Moves</h3>
+            <div class="moves-preview">
+                {{ moveHistory.length }} moves
+            </div>
+        </div>
+        <div class="moves-overlay" *ngIf="showMoves">
+            <div class="moves-modal">
+                <h2>📜 Move History</h2>
+
+                <div class="moves-list">
+                    <div *ngFor="let m of moveHistory; let i=index">
+                        <span class="move-no" *ngIf="i % 2 === 0">
+                            {{ (i/2 + 1) | number:'1.0-0' }}.
+                        </span>
+                        <span class="move">{{ m }}</span>
+                    </div>
+                </div>
+
+                <button class="ctrl-btn primary" (click)="showMoves = false">
+                    Close
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PROMOTION -->
+    <div class="promotion" *ngIf="promotingPawn">
+        <button (click)="promote('Q')">♕</button>
+        <button (click)="promote('R')">♖</button>
+        <button (click)="promote('B')">♗</button>
+        <button (click)="promote('N')">♘</button>
+    </div>
+
+    <!-- ================= CONTROLS ================= -->
+    <div class="controls">
+
+        <div class="left-controls">
+            <button class="ctrl-btn" (click)="undo()">↩ Undo</button>
+            <button class="ctrl-btn" (click)="redo()">↪ Redo</button>
+            <button class="ctrl-btn danger" (click)="resetGame()">⟲ Reset</button>
+        </div>
+
+        <div class="center-controls">
+            <button class="ctrl-btn primary" (click)="showHint()">💡 Hint</button>
+            <button class="ctrl-btn info" (click)="toggleHelp()">📘 Help</button>
+        </div>
+
+        <div class="right-controls">
+            <button class="ctrl-btn" [class.active]="mode==='PVP'" (click)="mode='PVP'">
+                👥 PVP
+            </button>
+            <button class="ctrl-btn" [class.active]="mode==='PVC'" (click)="mode='PVC'">
+                🤖 Vs AI
+            </button>
+        </div>
+        <div class="difficulty-panel">
+
+            <span class="difficulty-title">
+                Difficulty:
+                <strong>{{ difficultyLabel }}</strong>
+            </span>
+
+            <div class="difficulty-buttons">
+                <button *ngFor="let d of difficultyLevels" class="ctrl-btn" [class.active]="difficulty === d.value"
+                    (click)="setDifficulty(d.value)">
+                    {{ d.label }}
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================= HELP MODAL ================= -->
+    <div class="help-overlay" *ngIf="showHelp">
+
+        <div class="help-modal">
+
+            <h2>♟ Chess – How to Play</h2>
+
+            <ul>
+                <li>♙ White always moves first</li>
+                <li>♜ Click a piece to see legal moves</li>
+                <li>💡 Hint shows a suggested move</li>
+                <li>🤖 Vs AI lets you play against system</li>
+                <li>↩ Undo / ↪ Redo allowed anytime</li>
+                <li>⏱ Game ends on checkmate or timeout</li>
+            </ul>
+
+            <h3>Controls</h3>
+            <p>
+                PVP → Player vs Player<br>
+                Vs AI → Player vs System<br>
+                Reset → Restart match
+            </p>
+
+            <button class="ctrl-btn primary" (click)="toggleHelp()">
+                Got it 👍
+            </button>
+
+        </div>
+    </div>
+
+    <p class="status" *ngIf="status">{{ status }}</p>
+    <div class="result-overlay" *ngIf="gameOver">
+        <div class="result-box">
+
+            <ng-container *ngIf="status === 'CHECKMATE'">
+                🏆 {{ winner }} Wins!
+                <div class="sub">
+                    ❌ {{ loser }} is Checkmated
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="status === 'STALEMATE'">
+                🤝 Draw
+                <div class="sub">Stalemate</div>
+            </ng-container>
+
+            <button class="ctrl-btn primary" (click)="resetGame()">
+                Play Again
+            </button>
+        </div>
+    </div>
+
+</section>
+
+<div class="ai-overlay" *ngIf="aiThinking">
+    <div class="ai-box">
+        🤖 AI thinking…
+    </div>
+</div>
+<div class="fly-piece" *ngIf="flyingPiece">
+    {{ flyingPiece.icon }}
+</div>

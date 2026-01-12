@@ -1,0 +1,148 @@
+<section class="unblock-container" [attr.data-theme]="theme">
+
+    <!-- ================= TOP HUD ================= -->
+    <header class="hud">
+
+        <!-- GAME TITLE -->
+        <div class="hud-left">
+            <h1 class="game-title">🚗 Unblock Me Deluxe</h1>
+            <span class="subtitle">Logic Puzzle</span>
+        </div>
+
+        <!-- THEME SELECTOR -->
+        <div class="hud-right">
+            <select class="theme-select" #themeSel (change)="setTheme(themeSel.value)">
+                <option value="dark">🌑 Dark</option>
+                <option value="neon">💠 Neon</option>
+                <option value="light">☀️ Light</option>
+            </select>
+        </div>
+
+    </header>
+
+    <!-- ================= LEVEL BAR ================= -->
+    <section class="level-bar glass">
+
+        <div class="level-meta">
+            <span class="badge {{ levels[currentLevelIndex]?.difficulty | lowercase }}">
+                {{ levels[currentLevelIndex]?.difficulty }}
+            </span>
+
+            <span class="level-number">
+                Level {{ currentLevelIndex + 1 }}
+            </span>
+        </div>
+
+        <!-- PROGRESS -->
+        <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="((currentLevelIndex + 1) / (unlockedLevelIndex + 1)) * 100">
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ================= MAIN GAME AREA ================= -->
+    <main class="game-layout">
+
+        <!-- ===== LEFT PANEL (LEVELS) ===== -->
+        <aside class="side-panel glass">
+            <h3>Levels</h3>
+            <div class="action-group">
+                <button (click)="loadLevel(currentLevelIndex - 1)" [disabled]="currentLevelIndex === 0">
+                    ⬅ Prev
+                </button>
+
+                <button (click)="loadLevel(currentLevelIndex + 1)" [disabled]="currentLevelIndex >= unlockedLevelIndex">
+                    Next ➜
+                </button>
+            </div>
+
+            <div class="level-list">
+                <button *ngFor="let lvl of levels; let i = index" (click)="loadLevel(i)"
+                    [disabled]="i > unlockedLevelIndex" [class.active]="i === currentLevelIndex"
+                    [class.locked]="i > unlockedLevelIndex">
+                    {{ i + 1 }}
+                    <span *ngIf="i > unlockedLevelIndex">🔒</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ===== CENTER BOARD ===== -->
+        <section class="board-section">
+
+            <div class="board glass">
+
+                <!-- BLOCKS -->
+                <div class="block" *ngFor="let b of blocks" [class.target]="b.isTarget"
+                    [class.hint]="b.id === hintBlockId" [class.blocked]="b.id === blockedBlockId"
+                    [style.transform]="'translate(' + (b.col * cellSize) + 'px,' + (b.row * cellSize) + 'px)'"
+                    [style.width.px]="b.direction === 'H' ? b.length * cellSize : cellSize"
+                    [style.height.px]="b.direction === 'V' ? b.length * cellSize : cellSize"
+                    (pointerdown)="onPointerDown($event, b)" (pointermove)="onPointerMove($event)"
+                    (pointerup)="onPointerUp($event)">
+                    <span class="car-id">{{ b.id }}</span>
+
+                    <!-- HINT ARROW -->
+                    <div *ngIf="hintArrow?.blockId === b.id" class="hint-arrow"
+                        [class.left]="hintArrow?.direction === 'LEFT'" [class.right]="hintArrow?.direction === 'RIGHT'"
+                        [class.up]="hintArrow?.direction === 'UP'" [class.down]="hintArrow?.direction === 'DOWN'">
+                    </div>
+                </div>
+
+                <!-- EXIT -->
+                <div class="exit">
+                    <div class="gate" [class.open]="gateOpen"></div>
+                    <span>EXIT ➜</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ===== RIGHT PANEL (STATS + ACTIONS) ===== -->
+        <aside class="side-panel glass">
+
+            <h3>Stats</h3>
+            <div class="stat-row">Moves <b>{{ moves }}</b></div>
+            <div class="stat-row">Best <b>{{ levels[currentLevelIndex]?.minMoves }}</b></div>
+
+            <hr />
+
+            <h3>Actions</h3>
+            <div class="action-group">
+                <button (click)="reset()">🔁 Reset</button>
+                <button (click)="undo()" [disabled]="!undoStack.length">↩ Undo</button>
+                <button (click)="redo()" [disabled]="!redoStack.length">↪ Redo</button>
+            </div>
+
+            <div class="action-group">
+                <button (click)="giveHint()">💡 Hint</button>
+                <button (click)="solveGame()">🤖 Solve</button>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <!-- ================= WIN TOAST ================= -->
+    <div class="toast toast-animate" *ngIf="won">
+        <div class="toast-content">
+            <div class="toast-title">🎉 Level Completed!</div>
+
+            <!-- ⭐ STAR RATING -->
+            <div class="stars">
+                <span *ngFor="let s of stars; let i = index" [class.filled]="i < earnedStars">★</span>
+            </div>
+
+            <button class="next-btn" (click)="nextLevel()">Next ➜</button>
+        </div>
+    </div>
+
+    <!-- 🎉 CONFETTI CELEBRATION -->
+    <div class="confetti-layer" *ngIf="won">
+        <span class="confetti" *ngFor="let c of confettiArray" [style.left.%]="c.left" [style.--h]="c.hue"
+            [style.--fall]="c.fall + 's'" [style.--spin]="c.spin + 's'">
+        </span>
+    </div>
+
+</section>

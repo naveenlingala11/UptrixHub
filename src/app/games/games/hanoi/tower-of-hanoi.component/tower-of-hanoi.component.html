@@ -1,0 +1,103 @@
+<section class="hanoi" [attr.data-theme]="theme">
+
+  <!-- ================= HEADER ================= -->
+  <header class="header">
+    <h1>🗼 Tower of Hanoi</h1>
+
+    <div class="theme-switch">
+      <button (click)="theme='dark'">🌑</button>
+      <button (click)="theme='light'">🌕</button>
+      <button (click)="theme='purple'">🟣</button>
+      <button (click)="theme='matrix'">🟢</button>
+    </div>
+  </header>
+
+  <!-- ================= STATS BAR ================= -->
+  <section class="stats">
+    <div>
+      🧩 Disks
+      <select [(ngModel)]="disks" (change)="reset()">
+        <option *ngFor="let n of [3,4,5,6,7]" [value]="n">{{ n }}</option>
+      </select>
+    </div>
+
+    <div>🔁 Moves <b>{{ moves }}</b></div>
+    <div>⭐ Optimal <b>{{ optimalMoves }}</b></div>
+    <div>⚡ Efficiency <b>{{ efficiency }}%</b></div>
+    <div>⏱ Time <b>{{ totalTime }}s</b></div>
+  </section>
+
+  <!-- ================= START BUTTON ================= -->
+  <div class="start-area" *ngIf="!gameStarted">
+    <button class="start-btn" (click)="startGame()">▶ Start Game</button>
+  </div>
+
+  <!-- ================= GAME AREA ================= -->
+  <section class="game-area">
+
+    <!-- ===== BOARD ===== -->
+    <div class="board">
+
+      <div class="rod" *ngFor="let rod of rods; let i = index" [class.drop-target]="hoverRod === asRod(i)"
+        (click)="selectRod(asRod(i))" (dragover)="onDragOver($event, asRod(i))" (dragleave)="hoverRod = null"
+        (drop)="onDrop(asRod(i))" (touchstart)="onTouchRod(asRod(i))">
+
+        <div class="disk" *ngFor="let d of rod" draggable="true" (dragstart)="onDragStart(i, d)"
+          [style.width.%]="d * 12">
+          {{ d }}
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= SIDE PANEL ================= -->
+    <aside class="side-panel">
+
+      <!-- PLAYER PROFILE -->
+      <section class="profile">
+        <h3>🧑 Player</h3>
+        <p><span>Level</span><b>{{ playerProfile.level }}</b></p>
+        <p><span>Total XP</span><b>{{ playerProfile.totalXp }}</b></p>
+        <p><span>Hanoi Wins</span><b>{{ playerProfile.hanoiWins }}</b></p>
+        <p><span>Fastest</span><b>{{ playerProfile.fastestTime }}s</b></p>
+      </section>
+
+      <!-- CONTROLS -->
+      <section class="controls">
+        <button (click)="undo()" [disabled]="!gameStarted">↩ Undo</button>
+        <button (click)="redo()" [disabled]="!gameStarted">↪ Redo</button>
+        <button (click)="reset()">🔁 Restart</button>
+      </section>
+
+      <!-- REPLAY SCRUBBER -->
+      <section class="replay" *ngIf="replayMoves.length">
+        <h3>🎥 Replay</h3>
+        <input type="range" min="0" [max]="replayMoves.length - 1" [(ngModel)]="replayIndex"
+          (input)="replayStep(replayIndex)" />
+        <p>Move {{ replayIndex + 1 }} / {{ replayMoves.length }}</p>
+      </section>
+
+      <!-- GLOBAL LEADERBOARD -->
+      <section class="leaderboard">
+        <h3>🌍 Global Top</h3>
+        <div class="lb-row" *ngFor="let s of globalLeaderboard | slice:0:5; let i = index">
+          <span>#{{ i + 1 }}</span>
+          <span>{{ s.userId || 'Player' }}</span>
+          <span>{{ s.time }}s</span>
+        </div>
+      </section>
+
+    </aside>
+  </section>
+
+  <!-- ================= STATUS MESSAGE ================= -->
+  <p class="msg" *ngIf="message">{{ message }}</p>
+
+  <!-- ================= ACHIEVEMENT POPUP ================= -->
+  <div class="achievement-popup" *ngIf="showAchievements">
+    <h3>🎖 Achievements Unlocked</h3>
+    <div *ngFor="let a of unlockedAchievements">{{ a }}</div>
+  </div>
+
+</section>

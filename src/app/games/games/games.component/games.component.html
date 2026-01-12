@@ -1,111 +1,101 @@
 <!-- ================= HERO ================= -->
 <section class="games-hero">
-  <h1>🎮 Logic Games</h1>
-  <p>
-    Not just quizzes.
-    Real-world developer mindset building games.
-  </p>
+  <h1>🎮 Play. Think. Master Logic.</h1>
+  <p>Developer-grade logic games crafted for sharp minds</p>
 </section>
 
 <!-- ================= FEATURED GAME ================= -->
 <section class="featured-game">
-
   <div class="featured-card">
 
-    <div class="badge">FEATURED</div>
+    <div class="badge">🔥 FEATURED</div>
 
-    <h2>🐞 Bug Hunter Pro</h2>
+    <div class="featured-content">
+      <h2>🐞 Bug Hunter Pro</h2>
+      <p>
+        Think like a senior developer.
+        Hunt real-world production bugs and earn XP.
+      </p>
 
-    <p class="tagline">
-      Think like a real developer.
-      Identify bugs, understand root cause, and fix them.
-    </p>
+      <div class="actions">
+        <button class="btn primary" routerLink="/games/bug-hunter">
+          Start Hunting →
+        </button>
+        <button class="btn outline">
+          How it Works
+        </button>
+      </div>
+    </div>
 
-    <ul class="features">
-      <li>✔ 25 real-world bug challenges</li>
-      <li>✔ Java / Backend focused</li>
-      <li>✔ XP, checkpoints & badges</li>
-      <li>✔ Interview-level difficulty</li>
-    </ul>
+    <div class="featured-bg"></div>
+  </div>
+</section>
 
-    <div class="actions">
-      <button class="btn primary" (click)="startBugHunter()">
-        Play Now →
-      </button>
-      <button class="btn outline">
-        How it Works
-      </button>
+<!-- ================= ALL GAMES SHOWCASE ================= -->
+<section class="games-showcase">
+
+  <h2 class="section-title">🕹 All Games</h2>
+
+  <div class="games-grid">
+
+    <div class="game-card tic" routerLink="/games/tic-tac-toe">
+      <div class="overlay"></div>
+      <h3>❌ Tic Tac Toe</h3>
+      <span>Strategy • Reflex</span>
+    </div>
+
+    <div class="game-card sudoku" routerLink="/games/sudoku">
+      <div class="overlay"></div>
+      <h3>🔢 Sudoku</h3>
+      <span>Logic • Focus</span>
+    </div>
+
+    <div class="game-card g2048" routerLink="/games/2048">
+      <div class="overlay"></div>
+      <h3>🧮 2048</h3>
+      <span>Math • Planning</span>
+    </div>
+
+    <div class="game-card hanoi" routerLink="/games/hanoi">
+      <div class="overlay"></div>
+      <h3>🗼 Tower of Hanoi</h3>
+      <span>Recursion • Brain</span>
+    </div>
+
+    <div class="game-card unblock" routerLink="/games/unblock-me">
+      <div class="overlay"></div>
+      <h3>🧱 Unblock Me</h3>
+      <span>Puzzle • Space</span>
+    </div>
+
+    <div class="game-card chess" routerLink="/games/chess">
+      <div class="overlay"></div>
+      <h3>♟ Chess</h3>
+      <span>Strategy • Mastery</span>
     </div>
 
   </div>
 </section>
-<div class="game-tile">
-  <h3>❌ Tic Tac Toe</h3>
-  <p>Classic strategy game</p>
-  <button routerLink="/games/tic-tac-toe">Play</button>
-</div>
+
 <!-- ================= XP + STREAK ================= -->
 <section class="stats-section">
-  <app-xp-card [totalXp]="userXp.totalXp" [level]="userXp.level" [streak]="userXp.currentStreak">
+  <app-xp-card
+    [totalXp]="userXp.totalXp"
+    [level]="userXp.level"
+    [streak]="userXp.currentStreak">
   </app-xp-card>
 
-  <app-streak-widget [streak]="userXp.currentStreak">
-  </app-streak-widget>
+  <app-streak-widget [streak]="userXp.currentStreak"></app-streak-widget>
 </section>
 
 <!-- ================= ACHIEVEMENTS ================= -->
 <section class="achievements-strip">
-
   <h3>🏅 Your Achievements</h3>
 
   <div class="badges">
-    <img *ngFor="let b of achievements" [src]="b.icon" [title]="b.title" [class.locked]="!b.unlocked" />
+    <img *ngFor="let b of achievements"
+         [src]="b.icon"
+         [title]="b.title"
+         [class.locked]="!b.unlocked"/>
   </div>
-
-  <div class="done" *ngIf="currentIndex === questions.length">
-
-    <h2>🎉 Session Completed</h2>
-
-    <p>Correct Answers: <strong>{{ correctCount }}</strong></p>
-
-    <p>
-      XP Earned:
-      <strong>{{ correctCount * question.xp }}</strong>
-    </p>
-
-    <button class="next-btn" (click)="loadSession()">
-      🔁 Play Again
-    </button>
-
-  </div>
-
-</section>
-
-<!-- ================= UPCOMING ================= -->
-<section class="upcoming-games">
-
-  <h2>🚧 More Games Coming Soon</h2>
-
-  <div class="games-grid">
-
-    <div class="game-tile locked">
-      <h3>⚙ Output Predictor</h3>
-      <p>Predict output of tricky Java code</p>
-      <span class="lock">🔒 Locked</span>
-    </div>
-
-    <div class="game-tile locked">
-      <h3>🧩 API Design Puzzle</h3>
-      <p>Design REST APIs the right way</p>
-      <span class="lock">🔒 Locked</span>
-    </div>
-
-    <div class="game-tile locked">
-      <h3>⏱ Time Complexity Battle</h3>
-      <p>Choose the most efficient solution</p>
-      <span class="lock">🔒 Locked</span>
-    </div>
-
-  </div>
-
 </section>

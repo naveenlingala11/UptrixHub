@@ -1,0 +1,17 @@
+<h3>🏆 Leaderboard ({{disks}} disks)</h3>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>User</th>
+    <th>Moves</th>
+    <th>Time</th>
+  </tr>
+
+  <tr *ngFor="let s of scores; let i=index">
+    <td>{{i+1}}</td>
+    <td>{{s.userId || 'Player'}}</td>
+    <td>{{s.moves}}</td>
+    <td>{{s.time}}s</td>
+  </tr>
+</table>

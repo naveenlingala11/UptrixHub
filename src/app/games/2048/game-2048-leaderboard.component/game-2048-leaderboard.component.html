@@ -1,0 +1,25 @@
+<section class="leaderboard">
+
+  <h2>🏆 2048 Leaderboard</h2>
+
+  <table>
+    <tr>
+      <th>#</th>
+      <th>User</th>
+      <th>Best Score</th>
+      <th>Wins</th>
+    </tr>
+
+    <tr *ngFor="let l of leaders; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>User {{ l.userId }}</td>
+      <td>{{ l.bestScore }}</td>
+      <td>{{ l.totalWins }}</td>
+    </tr>
+  </table>
+
+  <div class="rank" *ngIf="myRank">
+    ⭐ Your Rank: <strong>#{{ myRank }}</strong>
+  </div>
+
+</section>

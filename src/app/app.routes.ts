@@ -77,7 +77,11 @@ import { AdminDailyChallengeComponent } from './public/features/admin/admin-dail
 import { RoadmapLandingComponent } from './public/roadmap/roadmap-landing.component/roadmap-landing.component';
 import { AdminRoadmapComponent } from './admin/admin/admin-roadmap.component/admin-roadmap.component';
 import { TicTacToeComponent } from './games/games/tic-tac-toe.component/tic-tac-toe.component';
-
+import { SudokuComponent } from './games/games/sudoku.component/sudoku.component';
+import { Game2048Component } from './games/2048/game-2048/game-2048';
+import { TowerOfHanoiComponent } from './games/games/hanoi/tower-of-hanoi.component/tower-of-hanoi.component';
+import { UnblockMeComponent } from './games/games/unblock-me/unblock-me.component/unblock-me.component';
+import { ChessComponent } from './games/games/chess/chess.component/chess.component';
 export const routes: Routes = [
 
   /* ================= PUBLIC SITE ================= */
@@ -123,6 +127,11 @@ export const routes: Routes = [
       { path: 'games', component: GamesComponent },
       { path: 'games/bug-hunter', component: BugHunterComponent },
       { path: 'games/tic-tac-toe', component: TicTacToeComponent },
+      { path: 'games/sudoku', component: SudokuComponent },
+      { path: 'games/2048', component: Game2048Component },
+      { path: 'games/hanoi', component: TowerOfHanoiComponent },
+      { path: 'games/unblock-me', component: UnblockMeComponent },
+      { path: 'games/chess', component: ChessComponent },
 
       /* ================= PUBLIC LEADERBOARD ================= */
       {
